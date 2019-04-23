@@ -1,0 +1,3 @@
+include decs/*.txt
+include inds/*.txt
+include inds-raw/
