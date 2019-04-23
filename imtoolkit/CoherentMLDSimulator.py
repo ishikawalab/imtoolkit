@@ -17,9 +17,14 @@ from .Simulator import *
 from .Util import *
 
 class CoherentMLDSimulator(Simulator):
-    """Coherent maximum likelihood detection
-    The input codes are stored in the host memory (numpy),
-    while all the calculations are conducted in the device memory (cupy), if possible."""
+    """A simulatror that relies on the coherent maximum likelihood detection.
+
+    The input codes are stored in the host memory (numpy), while all the calculations are conducted in the device memory (cupy), if possible.
+
+    Args:
+        codes (ndarray): an input codebook
+        channel (imtoolkit.Channel): a channel model used though simulation
+    """
 
     def __init__(self, codes, channel):
         super().__init__(codes, channel)
