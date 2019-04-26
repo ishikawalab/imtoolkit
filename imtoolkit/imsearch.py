@@ -81,6 +81,67 @@ def getGoodDecsTable(M, K):
         #print("%.3f percent completed." % (i / imax * 100.0))
     return newdecs
 
+@jit
+def getGoodDecsTableSmallMemory(M, K):
+    minHT = 4
+    indsiter = itertools.combinations(range(M), K)
+    firstivec = np.zeros(M, dtype=np.int)
+    firstind = np.array(next(indsiter))
+    firstivec[firstind] = 1
+    #print(firstivec)
+    firstdec = np.sum(np.power(2, firstind))
+
+    # Extracts the active indices having minHT >= 4
+    indsvec = [firstivec]
+    indsdec = [firstdec]
+    for ind in indsiter:
+        ivec = np.zeros(M, dtype=np.int)
+        npind = np.array(ind)
+        ivec[npind] = 1
+        hd = np.sum(np.logical_xor(firstivec, ivec))
+        if hd < minHT:
+            continue
+        indsvec.append(ivec)
+        indsdec.append(np.sum(np.power(2, npind)))
+    
+    #print(indsdec)
+    #print(len(indsvec))
+    #print(len(indsdec))
+
+    MCK = len(indsvec)
+    newdecs = {}
+    while True:
+        print("minHT = %d" % (minHT))
+        newdecs[minHT] = indsdec
+        #print(newdecs)
+        
+        lennd = len(newdecs[minHT])
+        lstart = 0
+        if minHT == 4:
+            lstart = 1
+        deletepos = []
+        for y in range(lstart, lennd):
+            if y in deletepos:
+                continue
+            for x in range(y + 1, lennd):
+                if x in deletepos:
+                    continue
+                hd = np.sum(np.logical_xor(indsvec[y], indsvec[x]))
+                if hd < minHT:
+                    deletepos.append(x)
+            print("%.2f percent" % (100.0 * y / lennd))
+        #print(deletepos)
+        newdecs[minHT] = list(np.delete(newdecs[minHT], deletepos, axis = 0))
+        if len(newdecs[minHT]) <= 1:
+            del newdecs[minHT]
+            break
+        
+        if len(newdecs[minHT]) == 0:
+            break
+        minHT += 2
+
+    return newdecs
+
 def getAllIndsBasedOnDecFile(M, K, Q):
     basePath = os.path.dirname(os.path.abspath(__file__))
     decfilename = basePath + "/decs/M=%d_K=%d.txt" % (M, K)
@@ -251,8 +312,9 @@ def main():
                 print(cmd)
 
         elif params.mode == "DECSEARCH":                        
-            dectable = getGoodDecsTable(params.M, params.K)
-            decfilename = basePath + "/decs/M=%d_K=%d.txt" % (params.M, params.K)
+            #dectable = getGoodDecsTable(params.M, params.K)
+            dectable = getGoodDecsTableSmallMemory(params.M, params.K)
+            decfilename = basePath + "/decs/M=%d_K=%d_option=low.txt" % (params.M, params.K)
             with open(decfilename, mode = 'w') as f:
                 f.write(str(dectable))
             print("Saved to " + decfilename)
@@ -339,19 +401,6 @@ def main():
                 print("    " + vrstr)
                 print("")
             
-            
-            
-
-            #for K in range(1, M):
-            #    ps = getIMParameters(M, K)
-            #    for p in ps:
-            #        fpy = glob.glob(basePath + "/inds/M=%d_K=%d_Q=%d*.txt" % (p[0], p[1], p[2]))
-            #        if len(fpy) > 0:
-            #            Q = p[2]
-#
-            #            inds = getIndexes("opt", M, K, Q)
-                
-            
-
         elapsed_time = time.time() - start_time
         print ("Elapsed time = %.10f seconds" % (elapsed_time))
+
