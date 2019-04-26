@@ -291,6 +291,67 @@ def main():
             print(np.array(convertIndsToVector(inds, params.M)).reshape(-1, params.Q))
             print("Minimum Hamming distance = %d" % getMinimumHammingDistance(inds, params.M))
             print("Inequality L1 = %d" % getInequalityL1(inds, params.M))
+        elif params.mode == "VIEWH":
+            np.set_printoptions(threshold=np.inf)
+            M = params.M
+            titlestr = "M = %d" % M
+
+            def lfs(f):
+                fn = os.path.basename(f).replace(".txt", "")
+                p = Parameters(fn)
+                return (p.M * 32 + p.K) * 10000000 + p.Q
+
+            files = glob.glob(basePath + "/inds/M=%d_*.txt" % M)
+            files.sort(key = lfs)
+
+            def numpyToPythonStr(numpystr):
+                return numpystr.replace(".", "").replace("  ", " ").replace("\n\n", "\n").replace("\n ", ", ").replace(" 0", ", 0").replace(" 1", ", 1")
+
+
+            print("")
+            print("=" * len(titlestr))
+            print(titlestr)
+            print("=" * len(titlestr))
+            print("")
+           
+            for f in files:
+                fn = os.path.basename(f).replace(".txt", "")
+                p = Parameters(fn)
+                inds = np.loadtxt(f, dtype = np.int)
+                inds = inds.reshape(p.Q, p.K).tolist()
+
+                at = np.array(convertIndsToMatrix(inds, M))
+                ats = numpyToPythonStr(str(at))
+                vrstr = numpyToPythonStr(str(np.array(convertIndsToVector(inds, M)).reshape(-1, p.M)))
+                vrstr = vrstr.replace("], ", "],\n     ")
+                
+                ts = fn.replace("M=%d_"%M, "").replace("_minh=%d"%p["minh"], "").replace("_ineq=%d"%p["ineq"], "").replace("_", ", ").replace("=", " = ")
+                print(ts)
+                print("-" * len(ts))
+                print(".. code-block:: python\n")
+                print("    # minimum Hamming distance = %d" % p["minh"])
+                print("    # activation inequality = %d" % p["ineq"])
+                print("    # active indices")
+                print("    a = " + str(inds))
+                print("    # activation tensor")
+                print("    A = " + ats)
+                print("    # vector representation")
+                print("    " + vrstr)
+                print("")
+            
+            
+            
+
+            #for K in range(1, M):
+            #    ps = getIMParameters(M, K)
+            #    for p in ps:
+            #        fpy = glob.glob(basePath + "/inds/M=%d_K=%d_Q=%d*.txt" % (p[0], p[1], p[2]))
+            #        if len(fpy) > 0:
+            #            Q = p[2]
+#
+            #            inds = getIndexes("opt", M, K, Q)
+                
+            
 
         elapsed_time = time.time() - start_time
         print ("Elapsed time = %.10f seconds" % (elapsed_time))

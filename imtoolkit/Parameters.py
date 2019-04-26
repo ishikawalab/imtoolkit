@@ -16,16 +16,16 @@ class Parameters(object):
     Q = 1 # Number of dispersion matrices or active indices
     P = 1 # Number of selected elements
     K = 1 # Number of selected elements
-    O = 1 # Number of embeded symbols in a space-time codeword
+    O = 1 # Number of embedded symbols in a space-time codeword
     IT = 1 # Number of iterations
-    ITo = 1 # Number of outter iterations
+    ITo = 1 # Number of outer iterations
     ITi = 1 # Number of inner iterations
     snrfrom = 0.0 # The beginning of SNR
     to = 50.0 # The end of SNR
     len = 11 # The above SNR range is divided by len
     by = 1.0 # SNR step size
     optsnr = snr = 0.0 # A specific SNR
-    sim = "coh" # Type of simulater
+    sim = "coh" # Type of simulator
     channel = "rayleigh" # Channel environment
     mod = "PSK" # Type of modulation such as PAM, PSK, QAM...
     L = 2 # Number of constellation

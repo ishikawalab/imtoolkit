@@ -1,0 +1,17 @@
+=====
+M = 2
+=====
+
+K = 1, Q = 2
+------------
+.. code-block:: python
+
+    # minimum Hamming distance = 2
+    # activation inequality = 0
+    # active indices
+    a = [[0], [1]]
+    # activation tensor
+    A = [[[1], [0]], [[0], [1]]]
+    # vector representation
+    [[1, 0],
+     [0, 1]]
