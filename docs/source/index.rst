@@ -8,7 +8,7 @@ Overview
 =========
 
 This webpage introduces an open-source index modulation toolkit (IMToolkit).
-This toolkit attempts to enable perfect research reproducibility in the field of wireless communications and IM studies.
+This toolkit attempts to enable reproducible research in the field of wireless communications and IM studies.
 It contains massively parallel algorithms for Monte-Carlo simulations, which are especially designed for Nvidia GPUs.
 
 .. toctree::
@@ -53,7 +53,7 @@ Citations
 =========
 It would be very appreciated if you cite the following references when using IMToolkit.
 
- [1] N. Ishikawa, "IMToolkit: An open-source index modulation toolkit for reproducible research based on massively parallel algorithms," IEEE Access, 2019.
+ [1] N. Ishikawa, "IMToolkit: An open-source index modulation toolkit for reproducible research based on massively parallel algorithms," IEEE Access, submitted.
 
 Of course, if your project relies on CuPy, the following reference is highly recommended.
 

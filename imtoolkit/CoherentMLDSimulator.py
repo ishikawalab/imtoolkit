@@ -19,8 +19,6 @@ from .Util import *
 class CoherentMLDSimulator(Simulator):
     """A simulatror that relies on the coherent maximum likelihood detection.
 
-    The input codes are stored in the host memory (numpy), while all the calculations are conducted in the device memory (cupy), if possible.
-
     Args:
         codes (ndarray): an input codebook
         channel (imtoolkit.Channel): a channel model used though simulation
@@ -30,7 +28,15 @@ class CoherentMLDSimulator(Simulator):
         super().__init__(codes, channel)
 
     def simulateBERReference(self, params, output = True):
-        print("simulateBERReference")
+        """Simulates the BER values at multiple SNRs, where the straightforward reference algorithm is used.
+
+        Args:
+            params (imtoolkit.Parameter): simulation parameters.
+            output (bool): whether output the obtained results to the results/ directory.
+
+        Returns:
+            ret (dict): a dict that has two keys: snr_dB and ber, and the corresponding results.
+        """
 
         IT, M, N, Nc, B, codes = params.IT, params.M, params.N, self.Nc, self.B, self.codes
         snr_dBs = linspace(params.snrfrom, params.to, params.len)
@@ -61,6 +67,15 @@ class CoherentMLDSimulator(Simulator):
         return ret
 
     def simulateBERParallel(self, params, output = True):
+        """Simulates the BER values at multiple SNRs, where the massively parallel algorithm is used.
+
+        Args:
+            params (imtoolkit.Parameter): simulation parameters.
+            output (bool): whether output the obtained results to the results/ directory.
+
+        Returns:
+            ret (dict): a dict that has two keys: snr_dB and ber, and the corresponding results.
+        """
         print("simulateBERParallel")
 
         M, N, ITo, ITi, Nc, B, codes = params.M, params.N, params.ITo, params.ITi, self.Nc, self.B, self.codes
@@ -103,6 +118,15 @@ class CoherentMLDSimulator(Simulator):
 
 
     def simulateAMIReference(self, params, output = True):
+        """Simulates the AMI values at multiple SNRs, where the straightforward reference algorithm is used.
+
+        Args:
+            params (imtoolkit.Parameter): simulation parameters.
+            output (bool): whether output the obtained results to the results/ directory.
+
+        Returns:
+            ret (dict): a dict that has two keys: snr_dB and ami, and the corresponding results.
+        """
         print("simulateAMIReference")
 
         IT, M, N, Nc, B, codes = params.IT, params.M, params.N, self.Nc, self.B, self.codes
@@ -141,6 +165,15 @@ class CoherentMLDSimulator(Simulator):
 
 
     def simulateAMIParallel(self, params, output = True):
+        """Simulates the AMI values at multiple SNRs, where the massively parallel algorithm is used.
+
+        Args:
+            params (imtoolkit.Parameter): simulation parameters.
+            output (bool): whether output the obtained results to the results/ directory.
+
+        Returns:
+            ret (dict): a dict that has two keys: snr_dB and ami, and the corresponding results.
+        """
         M, N, ITo, ITi, Nc, B, codes = params.M, params.N, params.ITo, params.ITi, self.Nc, self.B, self.codes
         snr_dBs = linspace(params.snrfrom, params.to, params.len)
         sigmav2s = 1.0 / inv_dB(snr_dBs)

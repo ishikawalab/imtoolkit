@@ -13,7 +13,10 @@ else:
 
 
 class Simulator(object):
-    """"""
+    """A basis class for an arbitrary simulator, which has some useful functions for output simulation results.
+
+    The input codes are stored in the host memory (numpy), while all the calculations are conducted in the device memory (cupy), if possible.
+    """
 
     def __init__(self, codes, channel):
         self.codes = xp.asarray(codes) # Copy codes to the GPU memory
