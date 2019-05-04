@@ -230,6 +230,13 @@ def getProbabilityOfActivation(inds, M):
         prob[inds[q]] += 1
     return prob / len(inds)
 
+#
+# getHammingDistance([0,1], [1,0]) = 2
+# getHammingDistance([1,1,0,0], [0,0,1,1]) = 4
+@jit
+def getHammingDistance(arr1, arr2):
+    return np.sum(np.logical_xor(arr1, arr2))
+
 def getMinimumHammingDistance(inds, M):
     Q = len(inds)
     indsm = convertIndsToVector(inds, M)

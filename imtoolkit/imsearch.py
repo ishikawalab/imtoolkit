@@ -81,7 +81,7 @@ def getGoodDecsTable(M, K):
         #print("%.3f percent completed." % (i / imax * 100.0))
     return newdecs
 
-@jit
+#@jit
 def getGoodDecsTableSmallMemory(M, K):
     minHT = 4
     indsiter = itertools.combinations(range(M), K)
@@ -98,13 +98,14 @@ def getGoodDecsTableSmallMemory(M, K):
         ivec = np.zeros(M, dtype=np.int)
         npind = np.array(ind)
         ivec[npind] = 1
-        hd = np.sum(np.logical_xor(firstivec, ivec))
+        hd = getHammingDistance(firstivec, ivec)
         if hd < minHT:
             continue
         indsvec.append(ivec)
         indsdec.append(np.sum(np.power(2, npind)))
     
-    #print(indsdec)
+    indsvec = np.array(indsvec)
+    #print(np.take(indsvec, np.array([0, 1]), axis=0))
     #print(len(indsvec))
     #print(len(indsdec))
 
@@ -120,16 +121,47 @@ def getGoodDecsTableSmallMemory(M, K):
         if minHT == 4:
             lstart = 1
         deletepos = []
-        for y in range(lstart, lennd):
-            if y in deletepos:
-                continue
-            for x in range(y + 1, lennd):
-                if x in deletepos:
-                    continue
-                hd = np.sum(np.logical_xor(indsvec[y], indsvec[x]))
-                if hd < minHT:
-                    deletepos.append(x)
+
+        ys = np.array(list(range(lstart, lennd)))
+        #print(ys)
+        #for y in range(lstart, lennd):
+        yi = 0
+        y = ys[yi]
+        while True:
+            #if y in deletepos:
+            #    continue
+
+            xs = np.array(list(range(y + 1, lennd)))
+            #print(xs)
+            #print(deletepos)
+            xs = np.setdiff1d(xs, deletepos)
+            if len(xs) > 0:
+                #print(indsvec[xs])
+                vxs = np.take(indsvec, xs, axis = 0)
+                #print(vxs.shape)
+                #print(vxs)
+                vys = np.tile(indsvec[y], len(xs)).reshape(-1, M)
+                #print(vys)
+                hds = np.sum(np.logical_xor(vxs, vys), axis = 1)
+                #hds = np.apply_along_axis(lambda x: getHammingDistance(indsvec[y], indsvec[x[0]]), 0, xs.reshape(1, len(xs)))
+                #print(hds)
+                #print(list(np.where(hds < minHT)[0]))
+                newdel = list(xs[np.where(hds < minHT)[0]])
+                deletepos.extend(newdel)
+                ys = np.setdiff1d(ys, newdel)
+            #print(ys)
+            #for x in range(y + 1, lennd):
+            #    if x in deletepos:
+            #        continue
+            #    hd = np.sum(np.logical_xor(indsvec[y], indsvec[x]))
+            #    if hd < minHT:
+            #        deletepos.append(x)
             print("%.2f percent" % (100.0 * y / lennd))
+            yi += 1
+            if yi >= len(ys):
+                break
+            y = ys[yi]
+        
         #print(deletepos)
         newdecs[minHT] = list(np.delete(newdecs[minHT], deletepos, axis = 0))
         if len(newdecs[minHT]) <= 1:
@@ -158,27 +190,28 @@ def getAllIndsBasedOnDecFile(M, K, Q):
             print(minh)
             if minh > 0:
                 return convertIndsDecToInds(decs[minh], M)
-    return []
+        return []
+    return None
 
 def outputCPLEXModelFile(M, K, Q):
-    #print("MCK = " + str(MCK))
-    allinds = list(itertools.combinations(range(M), K))
-    allindsvec = convertIndsToVector(allinds, M)
-    allindsmat = np.hstack(allindsvec).T.tolist() # MCK \times M
-    MCK = len(allindsmat)
-    #print("allinds generated.")
-
-    constraints = []
-
     decallinds = getAllIndsBasedOnDecFile(M, K, Q)
+    if decallinds == None:
+        print("The dec file for (%d,%d) does not exist." % (M,K))
+        return None
+
     if len(decallinds) > 0:
         allinds = decallinds
         #print(getMinimumHamming(allinds, M))
         allindsvec = convertIndsToVector(allinds, M)
         allindsmat = np.hstack(allindsvec).T.tolist() # MCK \times M
         MCK = len(allindsmat)
+    else:
+        allinds = list(itertools.combinations(range(M), K))
+        allindsvec = convertIndsToVector(allinds, M)
+        allindsmat = np.hstack(allindsvec).T.tolist() # MCK \times M
+        MCK = len(allindsmat)
     
-    constraints.append("    a[1] == 1;\n")
+    constraints = ["    a[1] == 1;\n"]
     
     #
     #indsv = convertIndsToVector(allinds, M)
@@ -272,10 +305,18 @@ def main():
                 for K in range(1, M):
                     ps = getIMParameters(M, K)
                     for p in ps:
-                        fpy = glob.glob(basePath + "/inds/M=%d_K=%d_Q=%d*.txt" % (p[0], p[1], p[2]))
+                        M, K, Q = p[0], p[1], p[2]
+                        fpy = glob.glob(basePath + "/inds/M=%d_K=%d_Q=%d*.txt" % (M, K, Q))
                         allpossibleparams += 1
                         if len(fpy) == 0:
                             imparams.append(p)
+                        #else:
+                        #    if Q == 2 or Q * K <= M:
+                        #        print("May be wrong: /inds/M=%d_K=%d_Q=%d*.txt" % (M, K, Q))
+                        #        os.remove(fpy[0])
+                        #    fpy = glob.glob(basePath + "/decs/M=%d_K=%d.txt" % (M, K))
+                        #    if (len(fpy)) == 0:
+                        #        print("May be wrong: /inds/M=%d_K=%d_Q=%d*.txt" % (M, K, Q))
                 M += 2
                 if M > params.M:
                     break
@@ -332,21 +373,31 @@ def main():
                     print("actual minh = %d" % (getMinimumHammingDistance(allinds, params.M)))
            
         elif params.mode == "SEARCH":
-            fname = outputCPLEXModelFile(params.M, params.K, params.Q)
-            if ".mod" in fname:
-                os.system("oplrun " + fname)
-                # Convert the obtained solution to a numpy file
-                fcout = glob.glob(basePath + "/inds-raw/M=%d_K=%d_Q=%d*.txt" % (params.M, params.K, params.Q))
-                if len(fcout) > 0:
-                    fcout.sort()
-                    fname = fcout[0]
-                    obj = 0
-                    if "obj=" in fname:
-                        res = re.match(r'.*_obj=(\d+)', fname)
-                        if res:
-                            obj = int(res.group(1))
-                    inds = convertCPLEXOutputToInds(fname, params.M, params.K, params.Q)
-                    outputIndsToFile(inds, params.M)
+            if params.Q == 2 or params.Q * params.K <= params.M:
+                print("A self-evident solution is available for this setup.")
+                #params = Parameters("M=26_K=25_Q=16")
+                qstarts = np.floor(np.arange(params.Q) * (params.M - params.K) / (params.Q - 1) + 0.5)
+                inds = np.zeros((params.Q, params.K), dtype = np.int)
+                for q in range(params.Q):
+                    inds[q] = qstarts[q] + np.arange(params.K)
+
+                outputIndsToFile(inds, params.M)
+            else:
+                fname = outputCPLEXModelFile(params.M, params.K, params.Q)
+                if fname != None and ".mod" in fname:
+                    os.system("oplrun " + fname)
+                    # Convert the obtained solution to a numpy file
+                    fcout = glob.glob(basePath + "/inds-raw/M=%d_K=%d_Q=%d*.txt" % (params.M, params.K, params.Q))
+                    if len(fcout) > 0:
+                        fcout.sort()
+                        fname = fcout[0]
+                        obj = 0
+                        if "obj=" in fname:
+                            res = re.match(r'.*_obj=(\d+)', fname)
+                            if res:
+                                obj = int(res.group(1))
+                        inds = convertCPLEXOutputToInds(fname, params.M, params.K, params.Q)
+                        outputIndsToFile(inds, params.M)
 
         elif params.mode == "EVAL":
             inds = getIndexes(params.dm, params.M, params.K, params.Q)
