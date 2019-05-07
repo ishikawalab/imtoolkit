@@ -9,14 +9,16 @@ Here, the designed active indices having :math:`M > 12` are omitted due to their
    :maxdepth: 2
    :hidden:
    
-   M=2
-   M=4
-   M=6
-   M=8
-   M=10
-   M=12
+   M=2/index
+   M=4/index
+   M=6/index
+   M=8/index
+   M=10/index
+   M=12/index
+   M=14/index
+   M=16/index
 
-:doc:`M=2` / :doc:`M=4` / :doc:`M=6` / :doc:`M=8` / :doc:`M=10` / :doc:`M=12`
+:doc:`M=2/index` / :doc:`M=4/index` / :doc:`M=6/index` / :doc:`M=8/index` / :doc:`M=10/index` / :doc:`M=12/index` / :doc:`M=14/index` / :doc:`M=16/index`
 
 The active indices for the :math:`M > 12` case can be obtained by the ``VIEWIM`` mode.
 For example, for the :math:`(M,K,Q)=(16,8,16)` case, the corresponding active indices are given below.
