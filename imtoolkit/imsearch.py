@@ -381,12 +381,10 @@ def main():
                     ps = getIMParameters(M, K)
                     for p in ps:
                         M, K, Q = p[0], p[1], p[2]
-                        #fpy = glob.glob(basePath + "/inds/M=%d_K=%d_Q=%d_*.txt" % (M, K, Q))
-                        if Q == 2 or Q * K <= M:
-                            imparams.append(p)
+                        fpy = glob.glob(basePath + "/inds/M=%d_K=%d_Q=%d_*.txt" % (M, K, Q))
                         allpossibleparams += 1
-                        #if len(fpy) == 0:
-                        #    imparams.append(p)
+                        if len(fpy) == 0:
+                            imparams.append(p)
 
                         #else:
                         #    if Q == 2 or Q * K <= M:
