@@ -1,0 +1,13 @@
+
+=======================
+M = 18, K = 7, Q = 2048
+=======================
+
+`M=18_K=7_Q=2048_minh=2_ineq=8.txt is available here. <https://github.com/imtoolkit/imtoolkit/blob/master/imtoolkit/inds/M%3D18_K%3D7_Q%3D2048_minh%3D2_ineq%3D8.txt>`_
+
+.. code-block:: python
+
+    # minimum Hamming distance = 2
+    # activation inequality = 8
+    # active indices, activation tensor and its vector representation are omitted.
+

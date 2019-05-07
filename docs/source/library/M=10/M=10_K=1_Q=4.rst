@@ -1,0 +1,21 @@
+
+====================
+M = 10, K = 1, Q = 4
+====================
+
+`M=10_K=1_Q=4_minh=2_ineq=4.txt is available here. <https://github.com/imtoolkit/imtoolkit/blob/master/imtoolkit/inds/M%3D10_K%3D1_Q%3D4_minh%3D2_ineq%3D4.txt>`_
+
+.. code-block:: python
+
+    # minimum Hamming distance = 2
+    # activation inequality = 4
+    # active indices
+    a = [[0], [3], [6], [9]]
+    # activation tensor
+    A = [[[1], [0], [0], [0], [0], [0], [0], [0], [0], [0]], [[0], [0], [0], [1], [0], [0], [0], [0], [0], [0]], [[0], [0], [0], [0], [0], [0], [1], [0], [0], [0]], [[0], [0], [0], [0], [0], [0], [0], [0], [0], [1]]]
+    # vector representation
+    [[1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0, 0, 1]]
+

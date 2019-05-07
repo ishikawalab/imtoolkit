@@ -3,6 +3,9 @@
 M = 2
 =====
 
+
+This webpage provides the designed active indices for the :math:`M = 2` case.
+
 .. toctree::
    :maxdepth: 2
    :hidden:

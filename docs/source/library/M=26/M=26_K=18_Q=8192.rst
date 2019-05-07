@@ -1,0 +1,13 @@
+
+========================
+M = 26, K = 18, Q = 8192
+========================
+
+`M=26_K=18_Q=8192_minh=4_ineq=12.txt is available here. <https://github.com/imtoolkit/imtoolkit/blob/master/imtoolkit/inds/M%3D26_K%3D18_Q%3D8192_minh%3D4_ineq%3D12.txt>`_
+
+.. code-block:: python
+
+    # minimum Hamming distance = 4
+    # activation inequality = 12
+    # active indices, activation tensor and its vector representation are omitted.
+

@@ -3,6 +3,8 @@
 M = 16, K = 3, Q = 8
 ====================
 
+`M=16_K=3_Q=8_minh=4_ineq=9.txt is available here. <https://github.com/imtoolkit/imtoolkit/blob/master/imtoolkit/inds/M%3D16_K%3D3_Q%3D8_minh%3D4_ineq%3D9.txt>`_
+
 .. code-block:: python
 
     # minimum Hamming distance = 4

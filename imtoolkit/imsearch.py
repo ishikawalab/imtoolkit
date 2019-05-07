@@ -273,7 +273,7 @@ def numpyToPythonStr(numpystr):
 
 def convertIndsToRST(basePath, M, K, Q):
     titlestr = "M = %d, K = %d, Q = %d" % (M, K, Q)
-    filepat = basePath + "/inds/M=%d_K=%d_Q=%d*.txt" % (M, K, Q)
+    filepat = basePath + "/inds/M=%d_K=%d_Q=%d_*.txt" % (M, K, Q)
     files = glob.glob(filepat)
     if len(files) == 0:
         print(filepat + " does not exist.")
@@ -294,16 +294,22 @@ def convertIndsToRST(basePath, M, K, Q):
             f.write(titlestr + "\n")
             f.write("=" * len(titlestr) + "\n")
             f.write("\n")
-            
-            fn = os.path.basename(fninds).replace(".txt", "")
-            p = Parameters(fn)
-            inds = np.loadtxt(fninds, dtype = np.int)
-            inds = inds.reshape(p.Q, p.K).tolist()
 
-            at = np.array(convertIndsToMatrix(inds, M))
-            ats = numpyToPythonStr(str(at))
-            vrstr = numpyToPythonStr(str(np.array(convertIndsToVector(inds, M)).reshape(-1, p.M)))
-            vrstr = vrstr.replace("], ", "],\n     ")
+            fn = os.path.basename(fninds)
+            iurl = "https://github.com/imtoolkit/imtoolkit/blob/master/imtoolkit/inds/" + fn.replace("=", "%3D")
+            f.write("`" + fn + " is available here. <" + iurl + ">`_\n\n")
+            
+            fn = fn.replace(".txt", "")
+            p = Parameters(fn)
+            if p.Q <= 1024:
+                inds = np.loadtxt(fninds, dtype = np.int)
+                inds = inds.reshape(p.Q, p.K).tolist()
+
+                if p.Q <= 128:
+                    at = np.array(convertIndsToMatrix(inds, M))
+                    ats = numpyToPythonStr(str(at))
+                    vrstr = numpyToPythonStr(str(np.array(convertIndsToVector(inds, M)).reshape(-1, p.M)))
+                    vrstr = vrstr.replace("], ", "],\n     ")
             
             #ts = fn.replace("M=%d_"%M, "").replace("_minh=%d"%p["minh"], "").replace("_ineq=%d"%p["ineq"], "").replace("_", ", ").replace("=", " = ")
             #print(ts)
@@ -311,15 +317,19 @@ def convertIndsToRST(basePath, M, K, Q):
             f.write(".. code-block:: python\n\n")
             f.write("    # minimum Hamming distance = %d\n" % p["minh"])
             f.write("    # activation inequality = %d\n" % p["ineq"])
-            f.write("    # active indices\n")
-            f.write("    a = " + str(inds) + "\n")
-            if p.M * p.K * p.Q <= 1000000:
-                f.write("    # activation tensor\n")
-                f.write("    A = " + ats + "\n")
+            if p.Q <= 1024:
+                f.write("    # active indices\n")
+                f.write("    a = " + str(inds) + "\n")
+                if p.Q <= 128:  
+                    f.write("    # activation tensor\n")
+                    f.write("    A = " + ats + "\n")
+                    f.write("    # vector representation\n")
+                    f.write("    " + vrstr + "\n")
+                else:
+                    f.write("    # activation tensor and its vector representation are omitted.\n")
             else:
-                f.write("    # activation tensor is omitted due to its excessive text length.\n")
-            f.write("    # vector representation\n")
-            f.write("    " + vrstr + "\n")
+                f.write("    # active indices, activation tensor and its vector representation are omitted.\n")
+            
             f.write("\n")
             
         print("The generated rst was saved to " + fname)
@@ -329,7 +339,7 @@ def main():
     #print("DEBUG MODE ENABLED")
     #np.set_printoptions(threshold=np.inf)
     #basePath = os.path.dirname(os.path.abspath(__file__))
-    #convertIndsToRST(basePath, 16, 9, 8192)
+    #convertIndsToRST(basePath, 16, 5, 2)
     #quit()
 
     if len(sys.argv) <= 1:
@@ -350,6 +360,8 @@ def main():
         print("DECSEARCH_M=16_K=8")
         print("DECEVAL_M=16_K=8")
         print("MINH")
+        print("DOCMUPDATE_M=32")
+        print("DOCMINDEX")
         quit()
 
     args = sys.argv[1:]
@@ -369,7 +381,7 @@ def main():
                     ps = getIMParameters(M, K)
                     for p in ps:
                         M, K, Q = p[0], p[1], p[2]
-                        fpy = glob.glob(basePath + "/inds/M=%d_K=%d_Q=%d*.txt" % (M, K, Q))
+                        fpy = glob.glob(basePath + "/inds/M=%d_K=%d_Q=%d_*.txt" % (M, K, Q))
                         allpossibleparams += 1
                         if len(fpy) == 0:
                             imparams.append(p)
@@ -450,7 +462,7 @@ def main():
                 if fname != None and ".mod" in fname:
                     os.system("oplrun " + fname)
                     # Convert the obtained solution to a numpy file
-                    fcout = glob.glob(basePath + "/inds-raw/M=%d_K=%d_Q=%d*.txt" % (params.M, params.K, params.Q))
+                    fcout = glob.glob(basePath + "/inds-raw/M=%d_K=%d_Q=%d_*.txt" % (params.M, params.K, params.Q))
                     if len(fcout) > 0:
                         fcout.sort()
                         fname = fcout[0]
@@ -502,14 +514,15 @@ def main():
                     f.write("=" * len(titlestr) + "\n")
                     f.write(titlestr + "\n")
                     f.write("=" * len(titlestr) + "\n")
-                    f.write("\n")
+                    f.write("\n\n")
+                    f.write("This webpage provides the designed active indices for the :math:`M = %d` case.\n\n" % M)
 
                     frsts = [os.path.basename(frst).replace(".rst", "") for frst in files]
+                    f.write(".. toctree::\n")
+                    f.write("   :maxdepth: 2\n")
+                    f.write("   :hidden:\n")
+                    f.write("   \n")
                     for frst in frsts:
-                        f.write(".. toctree::\n")
-                        f.write("   :maxdepth: 2\n")
-                        f.write("   :hidden:\n")
-                        f.write("   \n")
                         f.write("   " + frst + "\n")
                     f.write("\n")
                     

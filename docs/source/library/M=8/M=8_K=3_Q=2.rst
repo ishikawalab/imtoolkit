@@ -1,0 +1,19 @@
+
+===================
+M = 8, K = 3, Q = 2
+===================
+
+`M=8_K=3_Q=2_minh=6_ineq=3.txt is available here. <https://github.com/imtoolkit/imtoolkit/blob/master/imtoolkit/inds/M%3D8_K%3D3_Q%3D2_minh%3D6_ineq%3D3.txt>`_
+
+.. code-block:: python
+
+    # minimum Hamming distance = 6
+    # activation inequality = 3
+    # active indices
+    a = [[0, 1, 2], [5, 6, 7]]
+    # activation tensor
+    A = [[[1, 0, 0], [0, 1, 0], [0, 0, 1], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 1]]]
+    # vector representation
+    [[1, 1, 1, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 1, 1, 1]]
+
