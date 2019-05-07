@@ -268,7 +268,70 @@ def convertCPLEXOutputToInds(fname, M, K, Q):
         inds = np.take(allinds, np.nonzero(inds)[0], axis = 0)
         return inds
 
+def numpyToPythonStr(numpystr):
+    return numpystr.replace(".", "").replace("  ", " ").replace("\n\n", "\n").replace("\n ", ", ").replace(" 0", ", 0").replace(" 1", ", 1")
+
+def convertIndsToRST(basePath, M, K, Q):
+    titlestr = "M = %d, K = %d, Q = %d" % (M, K, Q)
+    filepat = basePath + "/inds/M=%d_K=%d_Q=%d*.txt" % (M, K, Q)
+    files = glob.glob(filepat)
+    if len(files) == 0:
+        print(filepat + " does not exist.")
+        return
+
+    fninds = files[0]
+    
+    mpath = basePath + "/../docs/source/library/M=%d/" % (M)
+    if not os.path.exists(mpath):
+        os.mkdir(mpath)
+
+    fname = mpath + "M=%d_K=%d_Q=%d.rst" % (M, K, Q)
+    
+    if not os.path.exists(fname) or (os.path.exists(fname) and os.stat(fname).st_mtime < os.stat(fninds).st_mtime):
+        with open(fname, mode = 'w') as f:
+            f.write("\n")
+            f.write("=" * len(titlestr) + "\n")
+            f.write(titlestr + "\n")
+            f.write("=" * len(titlestr) + "\n")
+            f.write("\n")
+            
+            fn = os.path.basename(fninds).replace(".txt", "")
+            p = Parameters(fn)
+            inds = np.loadtxt(fninds, dtype = np.int)
+            inds = inds.reshape(p.Q, p.K).tolist()
+
+            at = np.array(convertIndsToMatrix(inds, M))
+            ats = numpyToPythonStr(str(at))
+            vrstr = numpyToPythonStr(str(np.array(convertIndsToVector(inds, M)).reshape(-1, p.M)))
+            vrstr = vrstr.replace("], ", "],\n     ")
+            
+            #ts = fn.replace("M=%d_"%M, "").replace("_minh=%d"%p["minh"], "").replace("_ineq=%d"%p["ineq"], "").replace("_", ", ").replace("=", " = ")
+            #print(ts)
+            #print("-" * len(ts))
+            f.write(".. code-block:: python\n\n")
+            f.write("    # minimum Hamming distance = %d\n" % p["minh"])
+            f.write("    # activation inequality = %d\n" % p["ineq"])
+            f.write("    # active indices\n")
+            f.write("    a = " + str(inds) + "\n")
+            if p.M * p.K * p.Q <= 1000000:
+                f.write("    # activation tensor\n")
+                f.write("    A = " + ats + "\n")
+            else:
+                f.write("    # activation tensor is omitted due to its excessive text length.\n")
+            f.write("    # vector representation\n")
+            f.write("    " + vrstr + "\n")
+            f.write("\n")
+            
+        print("The generated rst was saved to " + fname)
+
 def main():
+
+    #print("DEBUG MODE ENABLED")
+    #np.set_printoptions(threshold=np.inf)
+    #basePath = os.path.dirname(os.path.abspath(__file__))
+    #convertIndsToRST(basePath, 16, 9, 8192)
+    #quit()
+
     if len(sys.argv) <= 1:
         print("DECPARAMS_M=32")
         print("DECPARAMSDO_M=32")
@@ -405,70 +468,17 @@ def main():
             print("Minimum Hamming distance = %d" % getMinimumHammingDistance(inds, params.M))
             print("Inequality L1 = %d" % getInequalityL1(inds, params.M))
         elif params.mode == "DOCMUPDATE":
-            def numpyToPythonStr(numpystr):
-                return numpystr.replace(".", "").replace("  ", " ").replace("\n\n", "\n").replace("\n ", ", ").replace(" 0", ", 0").replace(" 1", ", 1")
-            
-            def convertIndsToRST(M, K, Q):
-                titlestr = "M = %d, K = %d, Q = %d" % (M, K, Q)
-                filepat = basePath + "/inds/M=%d_K=%d_Q=%d*.txt" % (M, K, Q)
-                files = glob.glob(filepat)
-                if len(files) == 0:
-                    print(filepat + " does not exist.")
-                    return
-
-                fninds = files[0]
-                
-                mpath = basePath + "/../docs/source/library/M=%d/" % (M)
-                if not os.path.exists(mpath):
-                    os.mkdir(mpath)
-
-                fname = mpath + "M=%d_K=%d_Q=%d.rst" % (M, K, Q)
-                
-                if not os.path.exists(fname) or (os.path.exists(fname) and os.stat(fname).st_mtime < os.stat(fninds).st_mtime):
-                    with open(fname, mode = 'w') as f:
-                        f.write("\n")
-                        f.write("=" * len(titlestr) + "\n")
-                        f.write(titlestr + "\n")
-                        f.write("=" * len(titlestr) + "\n")
-                        f.write("\n")
-                        
-                        fn = os.path.basename(fninds).replace(".txt", "")
-                        p = Parameters(fn)
-                        inds = np.loadtxt(fninds, dtype = np.int)
-                        inds = inds.reshape(p.Q, p.K).tolist()
-
-                        at = np.array(convertIndsToMatrix(inds, M))
-                        ats = numpyToPythonStr(str(at))
-                        vrstr = numpyToPythonStr(str(np.array(convertIndsToVector(inds, M)).reshape(-1, p.M)))
-                        vrstr = vrstr.replace("], ", "],\n     ")
-                        
-                        #ts = fn.replace("M=%d_"%M, "").replace("_minh=%d"%p["minh"], "").replace("_ineq=%d"%p["ineq"], "").replace("_", ", ").replace("=", " = ")
-                        #print(ts)
-                        #print("-" * len(ts))
-                        f.write(".. code-block:: python\n\n")
-                        f.write("    # minimum Hamming distance = %d\n" % p["minh"])
-                        f.write("    # activation inequality = %d\n" % p["ineq"])
-                        f.write("    # active indices\n")
-                        f.write("    a = " + str(inds) + "\n")
-                        f.write("    # activation tensor\n")
-                        f.write("    A = " + ats + "\n")
-                        f.write("    # vector representation\n")
-                        f.write("    " + vrstr + "\n")
-                        f.write("\n")
-                        
-                    print("The generated rst was saved to " + fname)
-
+            np.set_printoptions(threshold=np.inf)
             M = 2
             while True:
                 for K in range(1, M):
                     ps = getIMParameters(M, K)
                     for p in ps:
                         M, K, Q = p[0], p[1], p[2]
-                        convertIndsToRST(M, K, Q)
+                        convertIndsToRST(basePath, M, K, Q)
                 M += 2
                 if M > params.M:
                     break
-            
         elif params.mode == "DOCMINDEX":
             np.set_printoptions(threshold=np.inf)
             def lfs(f):
@@ -509,4 +519,3 @@ def main():
 
         elapsed_time = time.time() - start_time
         print ("Elapsed time = %.10f seconds" % (elapsed_time))
-
