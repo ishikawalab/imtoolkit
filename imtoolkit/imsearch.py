@@ -380,9 +380,9 @@ def main():
                 for K in range(1, M):
                     ps = getIMParameters(M, K)
                     for p in ps:
+                        allpossibleparams += 1
                         M, K, Q = p[0], p[1], p[2]
                         fpy = glob.glob(basePath + "/inds/M=%d_K=%d_Q=%d_*.txt" % (M, K, Q))
-                        allpossibleparams += 1
                         if len(fpy) == 0:
                             imparams.append(p)
 
