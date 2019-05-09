@@ -281,7 +281,7 @@ def convertIndsToRST(basePath, M, K, Q):
 
     fninds = files[0]
     
-    mpath = basePath + "/../docs/source/library/M=%d/" % (M)
+    mpath = basePath + "/../docs/source/db/M=%d/" % (M)
     if not os.path.exists(mpath):
         os.mkdir(mpath)
 
@@ -396,6 +396,9 @@ def main():
                 M += 2
                 if M > params.M:
                     break
+            
+            print("Possible IM parameters = %d" % allpossibleparams)
+            print("Supported IM parameters = %d" % (allpossibleparams - len(imparams)))
             print("Search coverage = %.2f percent" % (100.0 - 100.0 * len(imparams) / allpossibleparams))
             imparams.sort(key = lambda x:x[2])
             cmds = []
@@ -499,7 +502,7 @@ def main():
                 p = Parameters(fn)
                 return (p.M * 32 + p.K) * 10000000 + p.Q
             
-            dirs = glob.glob(basePath + "/../docs/source/library/M=*")
+            dirs = glob.glob(basePath + "/../docs/source/db/M=*")
 
             for mdir in dirs:
                 print(mdir)

@@ -18,7 +18,7 @@ It contains massively parallel algorithms for Monte-Carlo simulations, which are
 
    self
    tutorial
-   library/index
+   db/index
 
 Installation Guide
 ==================
@@ -47,7 +47,7 @@ The IMToolkit development team is welcome to incorporate other researchers contr
 How to Use
 ==========
 - :doc:`A detailed tutorial for the installed imtoolkit command. <tutorial>`
-- :doc:`A comprehensive library of the designed active indices. <library/index>`
+- :doc:`A comprehensive database of the designed active indices. <db/index>`
 
 Citations
 =========

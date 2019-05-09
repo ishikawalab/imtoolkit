@@ -1,11 +1,18 @@
-======================
-Active Indices Library
-======================
+=======================
+Active Indices Database
+=======================
 
-This webpage introduces a comprehensive library of the active indices designed for the generalized spatial modulation and the subcarrier index modulation schemes, which are representative members of index modulation family.
+This webpage introduces a comprehensive database of the active indices designed for the generalized spatial modulation and the subcarrier index modulation schemes, which are representative members of index modulation family.
 The designed active indices are provided in three formats: pure indices, activation tensor, and its vector representation.
 Note that the activation tensor is omitted for the :math:`Q \cdot M \cdot K > 10^6` case.
 Additionally, the designed active indices having :math:`M > 32` are omitted due to their large file size, but are supported by the IMToolkit search algorithm.
+
+.. csv-table::
+   :header: , Coverage
+   :widths: 5, 5
+
+   :math:`M \leq 16`, 100%
+
 
 .. toctree::
    :maxdepth: 2
