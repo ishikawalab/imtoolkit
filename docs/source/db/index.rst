@@ -11,8 +11,12 @@ Additionally, the designed active indices having :math:`M > 32` are omitted due 
    :header: , Coverage
    :widths: 5, 5
 
-   :math:`M \leq 16`, 100%
-
+   :math:`M \leq 16`, 100.00%
+   :math:`M \leq 20`, 99.02%
+   :math:`M \leq 24`, 93.68%
+   :math:`M \leq 28`, 82.58%
+   :math:`M \leq 32`, 65.22%
+.. imsearch COVERAGE
 
 .. toctree::
    :maxdepth: 2

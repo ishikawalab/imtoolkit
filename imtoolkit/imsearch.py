@@ -372,7 +372,25 @@ def main():
         basePath = os.path.dirname(os.path.abspath(__file__))
 
         start_time = time.time()
-        if params.mode == "SEARCHPARAMS" or params.mode == "SEARCHPARAMSDO":
+        if params.mode == "COVERAGE":
+            allpossibleparams = 0
+            hitcount = 0
+            M = 2
+            while True:
+                for K in range(1, M):
+                    ps = getIMParameters(M, K)
+                    for p in ps:
+                        allpossibleparams += 1
+                        M, K, Q = p[0], p[1], p[2]
+                        fpy = glob.glob(basePath + "/inds/M=%d_K=%d_Q=%d_*.txt" % (M, K, Q))
+                        if len(fpy) > 0:
+                            hitcount += 1
+                M += 2
+                print("M <= %d, %d / %d = %2.2f" % (M, hitcount, allpossibleparams, 100.0 * hitcount / allpossibleparams))
+                if M == 32:
+                    break
+
+        elif params.mode == "SEARCHPARAMS" or params.mode == "SEARCHPARAMSDO":
             imparams = []
             allpossibleparams = 0
             M = 2
