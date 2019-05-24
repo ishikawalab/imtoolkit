@@ -1,7 +1,7 @@
 # IMToolkit
 
-IMToolkit, an open-source index modulation toolkit, attempts to enable reproducible research in the field of wireless communications and index modulation (IM) studies.
-It relies on the massively parallel algorithms proposed in [1], which are especially designed for Nvidia GPUs.
+IMToolkit, an open-source index modulation toolkit, attempts to accelerate reproducible research in the field of wireless communications and index modulation (IM) studies.
+It relies on the massively parallel algorithms proposed in [1], which are especially designed for high-performance Nvidia GPUs.
 
 For more information, please refer to the following webpages.
 - [IMToolkit official website](https://ishikawa.cc/imtoolkit/)
@@ -19,7 +19,7 @@ Additionally, it is strongly recommended to install [CuPy](https://cupy.chainer.
 IMToolkit is heavily dependent on CuPy to achieve significantly fast Monte-Carlo simulations.
 [The key components required by CuPy are listed here.](https://docs-cupy.chainer.org/en/stable/install.html)
 In case CuPy is not installed in your environment, IMToolkit uses NumPy only.
-Note that the CuPy-based ideal simulation is 145 times faster than this NumPy-based calculation, as reported in [1].
+Note that the CuPy-based simulation is 145 times faster than the NumPy-based calculation, as reported in [1].
 
 [A detailed tutorial for the installed imtoolkit command is available here.](https://ishikawa.cc/imtoolkit/tutorial.html)
 

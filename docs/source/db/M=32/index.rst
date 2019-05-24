@@ -48,6 +48,8 @@ This webpage provides the designed active indices for the :math:`M = 32` case.
    M=32_K=4_Q=2048
    M=32_K=4_Q=4096
    M=32_K=4_Q=8192
+   M=32_K=4_Q=16384
+   M=32_K=4_Q=32768
    M=32_K=5_Q=2
    M=32_K=5_Q=4
    M=32_K=5_Q=8
@@ -61,6 +63,10 @@ This webpage provides the designed active indices for the :math:`M = 32` case.
    M=32_K=5_Q=2048
    M=32_K=5_Q=4096
    M=32_K=5_Q=8192
+   M=32_K=5_Q=16384
+   M=32_K=5_Q=32768
+   M=32_K=5_Q=65536
+   M=32_K=5_Q=131072
    M=32_K=6_Q=2
    M=32_K=6_Q=4
    M=32_K=6_Q=8
@@ -74,6 +80,10 @@ This webpage provides the designed active indices for the :math:`M = 32` case.
    M=32_K=6_Q=2048
    M=32_K=6_Q=4096
    M=32_K=6_Q=8192
+   M=32_K=6_Q=16384
+   M=32_K=6_Q=32768
+   M=32_K=6_Q=65536
+   M=32_K=6_Q=131072
    M=32_K=7_Q=2
    M=32_K=7_Q=4
    M=32_K=7_Q=8
@@ -85,6 +95,11 @@ This webpage provides the designed active indices for the :math:`M = 32` case.
    M=32_K=7_Q=512
    M=32_K=7_Q=1024
    M=32_K=7_Q=2048
+   M=32_K=7_Q=4096
+   M=32_K=7_Q=8192
+   M=32_K=7_Q=16384
+   M=32_K=7_Q=32768
+   M=32_K=7_Q=65536
    M=32_K=8_Q=2
    M=32_K=8_Q=4
    M=32_K=9_Q=2
@@ -114,6 +129,11 @@ This webpage provides the designed active indices for the :math:`M = 32` case.
    M=32_K=25_Q=512
    M=32_K=25_Q=1024
    M=32_K=25_Q=2048
+   M=32_K=25_Q=4096
+   M=32_K=25_Q=8192
+   M=32_K=25_Q=16384
+   M=32_K=25_Q=32768
+   M=32_K=25_Q=65536
    M=32_K=26_Q=2
    M=32_K=26_Q=4
    M=32_K=26_Q=8
@@ -127,6 +147,10 @@ This webpage provides the designed active indices for the :math:`M = 32` case.
    M=32_K=26_Q=2048
    M=32_K=26_Q=4096
    M=32_K=26_Q=8192
+   M=32_K=26_Q=16384
+   M=32_K=26_Q=32768
+   M=32_K=26_Q=65536
+   M=32_K=26_Q=131072
    M=32_K=27_Q=2
    M=32_K=27_Q=4
    M=32_K=27_Q=8
@@ -140,6 +164,10 @@ This webpage provides the designed active indices for the :math:`M = 32` case.
    M=32_K=27_Q=2048
    M=32_K=27_Q=4096
    M=32_K=27_Q=8192
+   M=32_K=27_Q=16384
+   M=32_K=27_Q=32768
+   M=32_K=27_Q=65536
+   M=32_K=27_Q=131072
    M=32_K=28_Q=2
    M=32_K=28_Q=4
    M=32_K=28_Q=8
@@ -153,6 +181,8 @@ This webpage provides the designed active indices for the :math:`M = 32` case.
    M=32_K=28_Q=2048
    M=32_K=28_Q=4096
    M=32_K=28_Q=8192
+   M=32_K=28_Q=16384
+   M=32_K=28_Q=32768
    M=32_K=29_Q=2
    M=32_K=29_Q=4
    M=32_K=29_Q=8
@@ -213,6 +243,8 @@ This webpage provides the designed active indices for the :math:`M = 32` case.
 - :doc:`M=32_K=4_Q=2048`
 - :doc:`M=32_K=4_Q=4096`
 - :doc:`M=32_K=4_Q=8192`
+- :doc:`M=32_K=4_Q=16384`
+- :doc:`M=32_K=4_Q=32768`
 - :doc:`M=32_K=5_Q=2`
 - :doc:`M=32_K=5_Q=4`
 - :doc:`M=32_K=5_Q=8`
@@ -226,6 +258,10 @@ This webpage provides the designed active indices for the :math:`M = 32` case.
 - :doc:`M=32_K=5_Q=2048`
 - :doc:`M=32_K=5_Q=4096`
 - :doc:`M=32_K=5_Q=8192`
+- :doc:`M=32_K=5_Q=16384`
+- :doc:`M=32_K=5_Q=32768`
+- :doc:`M=32_K=5_Q=65536`
+- :doc:`M=32_K=5_Q=131072`
 - :doc:`M=32_K=6_Q=2`
 - :doc:`M=32_K=6_Q=4`
 - :doc:`M=32_K=6_Q=8`
@@ -239,6 +275,10 @@ This webpage provides the designed active indices for the :math:`M = 32` case.
 - :doc:`M=32_K=6_Q=2048`
 - :doc:`M=32_K=6_Q=4096`
 - :doc:`M=32_K=6_Q=8192`
+- :doc:`M=32_K=6_Q=16384`
+- :doc:`M=32_K=6_Q=32768`
+- :doc:`M=32_K=6_Q=65536`
+- :doc:`M=32_K=6_Q=131072`
 - :doc:`M=32_K=7_Q=2`
 - :doc:`M=32_K=7_Q=4`
 - :doc:`M=32_K=7_Q=8`
@@ -250,6 +290,11 @@ This webpage provides the designed active indices for the :math:`M = 32` case.
 - :doc:`M=32_K=7_Q=512`
 - :doc:`M=32_K=7_Q=1024`
 - :doc:`M=32_K=7_Q=2048`
+- :doc:`M=32_K=7_Q=4096`
+- :doc:`M=32_K=7_Q=8192`
+- :doc:`M=32_K=7_Q=16384`
+- :doc:`M=32_K=7_Q=32768`
+- :doc:`M=32_K=7_Q=65536`
 - :doc:`M=32_K=8_Q=2`
 - :doc:`M=32_K=8_Q=4`
 - :doc:`M=32_K=9_Q=2`
@@ -279,6 +324,11 @@ This webpage provides the designed active indices for the :math:`M = 32` case.
 - :doc:`M=32_K=25_Q=512`
 - :doc:`M=32_K=25_Q=1024`
 - :doc:`M=32_K=25_Q=2048`
+- :doc:`M=32_K=25_Q=4096`
+- :doc:`M=32_K=25_Q=8192`
+- :doc:`M=32_K=25_Q=16384`
+- :doc:`M=32_K=25_Q=32768`
+- :doc:`M=32_K=25_Q=65536`
 - :doc:`M=32_K=26_Q=2`
 - :doc:`M=32_K=26_Q=4`
 - :doc:`M=32_K=26_Q=8`
@@ -292,6 +342,10 @@ This webpage provides the designed active indices for the :math:`M = 32` case.
 - :doc:`M=32_K=26_Q=2048`
 - :doc:`M=32_K=26_Q=4096`
 - :doc:`M=32_K=26_Q=8192`
+- :doc:`M=32_K=26_Q=16384`
+- :doc:`M=32_K=26_Q=32768`
+- :doc:`M=32_K=26_Q=65536`
+- :doc:`M=32_K=26_Q=131072`
 - :doc:`M=32_K=27_Q=2`
 - :doc:`M=32_K=27_Q=4`
 - :doc:`M=32_K=27_Q=8`
@@ -305,6 +359,10 @@ This webpage provides the designed active indices for the :math:`M = 32` case.
 - :doc:`M=32_K=27_Q=2048`
 - :doc:`M=32_K=27_Q=4096`
 - :doc:`M=32_K=27_Q=8192`
+- :doc:`M=32_K=27_Q=16384`
+- :doc:`M=32_K=27_Q=32768`
+- :doc:`M=32_K=27_Q=65536`
+- :doc:`M=32_K=27_Q=131072`
 - :doc:`M=32_K=28_Q=2`
 - :doc:`M=32_K=28_Q=4`
 - :doc:`M=32_K=28_Q=8`
@@ -318,6 +376,8 @@ This webpage provides the designed active indices for the :math:`M = 32` case.
 - :doc:`M=32_K=28_Q=2048`
 - :doc:`M=32_K=28_Q=4096`
 - :doc:`M=32_K=28_Q=8192`
+- :doc:`M=32_K=28_Q=16384`
+- :doc:`M=32_K=28_Q=32768`
 - :doc:`M=32_K=29_Q=2`
 - :doc:`M=32_K=29_Q=4`
 - :doc:`M=32_K=29_Q=8`

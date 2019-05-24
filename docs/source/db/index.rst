@@ -4,18 +4,22 @@ Active Indices Database
 
 This webpage introduces a comprehensive database of the active indices designed for the generalized spatial modulation and the subcarrier index modulation schemes, which are representative members of index modulation family.
 The designed active indices are provided in three formats: pure indices, activation tensor, and its vector representation.
-Note that the activation tensor is omitted for the :math:`Q \cdot M \cdot K > 10^6` case.
-Additionally, the designed active indices having :math:`M > 32` are omitted due to their large file size, but are supported by the IMToolkit search algorithm.
+Note that the designed active indices for the :math:`Q > 1024` case are omitted in this webpage, although they are supported by this toolkit.
+Additionally, the activation tensor is omitted for the :math:`Q > 128` case due to its large file size.
 
+:doc:`M=2/index` / :doc:`M=4/index` / :doc:`M=6/index` / :doc:`M=8/index` / :doc:`M=10/index` / :doc:`M=12/index` / :doc:`M=14/index` / :doc:`M=16/index` / :doc:`M=18/index` / :doc:`M=20/index` / :doc:`M=22/index` / :doc:`M=24/index` / :doc:`M=26/index` / :doc:`M=28/index` / :doc:`M=30/index` / :doc:`M=32/index`
+
+The following table summarizes the coverage for IM parameter set :math:`(M, K, Q)`.
+As shown in this table, all of the IM parameters are perfectly supported for the :math:`M \leq 16` case.
 .. csv-table::
    :header: , Coverage
    :widths: 5, 5
 
    :math:`M \leq 16`, 100.00%
-   :math:`M \leq 20`, 99.02%
-   :math:`M \leq 24`, 93.68%
-   :math:`M \leq 28`, 82.58%
-   :math:`M \leq 32`, 65.22%
+   :math:`M \leq 20`, 99.67%
+   :math:`M \leq 24`, 99.04%
+   :math:`M \leq 28`, 89.93%
+   :math:`M \leq 32`, 72.14%
 .. imsearch COVERAGE
 
 .. toctree::
@@ -39,9 +43,7 @@ Additionally, the designed active indices having :math:`M > 32` are omitted due 
    M=30/index
    M=32/index
 
-:doc:`M=2/index` / :doc:`M=4/index` / :doc:`M=6/index` / :doc:`M=8/index` / :doc:`M=10/index` / :doc:`M=12/index` / :doc:`M=14/index` / :doc:`M=16/index` / :doc:`M=18/index` / :doc:`M=20/index` / :doc:`M=22/index` / :doc:`M=24/index` / :doc:`M=26/index` / :doc:`M=28/index` / :doc:`M=30/index` / :doc:`M=32/index`
-
-The active indices can be also obtained by the ``VIEWIM`` mode.
+One can also obtain the designed active indices by the ``VIEWIM`` mode.
 For example, for the :math:`(M,K,Q)=(16,8,16)` case, the corresponding active indices are obtained by executing the following command.
 
 .. code-block:: bash

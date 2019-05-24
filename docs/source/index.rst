@@ -8,7 +8,7 @@ Overview
 =========
 
 This webpage introduces an open-source index modulation toolkit (IMToolkit).
-This toolkit attempts to enable reproducible research in the field of wireless communications and IM studies.
+This toolkit attempts to accelerate reproducible research in the field of wireless communications and IM studies.
 It contains massively parallel algorithms for Monte-Carlo simulations, which are especially designed for Nvidia GPUs.
 
 .. toctree::
@@ -34,7 +34,7 @@ Additionally, it is strongly recommended to install `CuPy <https://cupy.chainer.
 IMToolkit is heavily dependent on CuPy to achieve significantly fast Monte-Carlo simulations.
 `The key components required by CuPy are listed here. <https://docs-cupy.chainer.org/en/stable/install.html>`_
 In case CuPy is not installed in your environment, IMToolkit uses NumPy only.
-Note that the CuPy-based ideal simulation is 145 times faster than this NumPy-based calculation, as reported in [1].
+Note that the CuPy-based simulation is 145 times faster than the NumPy-based calculation, as reported in [1].
 
 The latest development version is also available from `GitHub <https://github.com/imtoolkit/imtoolkit>`_.
 

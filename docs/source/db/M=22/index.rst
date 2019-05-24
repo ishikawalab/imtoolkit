@@ -71,6 +71,8 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
    M=22_K=6_Q=4096
    M=22_K=6_Q=8192
    M=22_K=6_Q=16384
+   M=22_K=6_Q=32768
+   M=22_K=6_Q=65536
    M=22_K=7_Q=2
    M=22_K=7_Q=4
    M=22_K=7_Q=8
@@ -85,6 +87,9 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
    M=22_K=7_Q=4096
    M=22_K=7_Q=8192
    M=22_K=7_Q=16384
+   M=22_K=7_Q=32768
+   M=22_K=7_Q=65536
+   M=22_K=7_Q=131072
    M=22_K=8_Q=2
    M=22_K=8_Q=4
    M=22_K=8_Q=8
@@ -99,6 +104,10 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
    M=22_K=8_Q=4096
    M=22_K=8_Q=8192
    M=22_K=8_Q=16384
+   M=22_K=8_Q=32768
+   M=22_K=8_Q=65536
+   M=22_K=8_Q=131072
+   M=22_K=8_Q=262144
    M=22_K=9_Q=2
    M=22_K=9_Q=4
    M=22_K=9_Q=8
@@ -113,6 +122,10 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
    M=22_K=9_Q=4096
    M=22_K=9_Q=8192
    M=22_K=9_Q=16384
+   M=22_K=9_Q=32768
+   M=22_K=9_Q=65536
+   M=22_K=9_Q=131072
+   M=22_K=9_Q=262144
    M=22_K=10_Q=2
    M=22_K=10_Q=4
    M=22_K=10_Q=8
@@ -127,6 +140,10 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
    M=22_K=10_Q=4096
    M=22_K=10_Q=8192
    M=22_K=10_Q=16384
+   M=22_K=10_Q=32768
+   M=22_K=10_Q=65536
+   M=22_K=10_Q=131072
+   M=22_K=10_Q=262144
    M=22_K=11_Q=2
    M=22_K=11_Q=4
    M=22_K=11_Q=8
@@ -141,6 +158,9 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
    M=22_K=11_Q=4096
    M=22_K=11_Q=8192
    M=22_K=11_Q=16384
+   M=22_K=11_Q=32768
+   M=22_K=11_Q=65536
+   M=22_K=11_Q=131072
    M=22_K=12_Q=2
    M=22_K=12_Q=4
    M=22_K=12_Q=8
@@ -155,6 +175,10 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
    M=22_K=12_Q=4096
    M=22_K=12_Q=8192
    M=22_K=12_Q=16384
+   M=22_K=12_Q=32768
+   M=22_K=12_Q=65536
+   M=22_K=12_Q=131072
+   M=22_K=12_Q=262144
    M=22_K=13_Q=2
    M=22_K=13_Q=4
    M=22_K=13_Q=8
@@ -169,6 +193,9 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
    M=22_K=13_Q=4096
    M=22_K=13_Q=8192
    M=22_K=13_Q=16384
+   M=22_K=13_Q=32768
+   M=22_K=13_Q=65536
+   M=22_K=13_Q=131072
    M=22_K=14_Q=2
    M=22_K=14_Q=4
    M=22_K=14_Q=8
@@ -183,6 +210,10 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
    M=22_K=14_Q=4096
    M=22_K=14_Q=8192
    M=22_K=14_Q=16384
+   M=22_K=14_Q=32768
+   M=22_K=14_Q=65536
+   M=22_K=14_Q=131072
+   M=22_K=14_Q=262144
    M=22_K=15_Q=2
    M=22_K=15_Q=4
    M=22_K=15_Q=8
@@ -197,6 +228,9 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
    M=22_K=15_Q=4096
    M=22_K=15_Q=8192
    M=22_K=15_Q=16384
+   M=22_K=15_Q=32768
+   M=22_K=15_Q=65536
+   M=22_K=15_Q=131072
    M=22_K=16_Q=2
    M=22_K=16_Q=4
    M=22_K=16_Q=8
@@ -211,6 +245,8 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
    M=22_K=16_Q=4096
    M=22_K=16_Q=8192
    M=22_K=16_Q=16384
+   M=22_K=16_Q=32768
+   M=22_K=16_Q=65536
    M=22_K=17_Q=2
    M=22_K=17_Q=4
    M=22_K=17_Q=8
@@ -255,6 +291,7 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
    M=22_K=20_Q=64
    M=22_K=20_Q=128
    M=22_K=21_Q=2
+   M=22_K=21_Q=4
 
 - :doc:`M=22_K=1_Q=2`
 - :doc:`M=22_K=1_Q=4`
@@ -317,6 +354,8 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
 - :doc:`M=22_K=6_Q=4096`
 - :doc:`M=22_K=6_Q=8192`
 - :doc:`M=22_K=6_Q=16384`
+- :doc:`M=22_K=6_Q=32768`
+- :doc:`M=22_K=6_Q=65536`
 - :doc:`M=22_K=7_Q=2`
 - :doc:`M=22_K=7_Q=4`
 - :doc:`M=22_K=7_Q=8`
@@ -331,6 +370,9 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
 - :doc:`M=22_K=7_Q=4096`
 - :doc:`M=22_K=7_Q=8192`
 - :doc:`M=22_K=7_Q=16384`
+- :doc:`M=22_K=7_Q=32768`
+- :doc:`M=22_K=7_Q=65536`
+- :doc:`M=22_K=7_Q=131072`
 - :doc:`M=22_K=8_Q=2`
 - :doc:`M=22_K=8_Q=4`
 - :doc:`M=22_K=8_Q=8`
@@ -345,6 +387,10 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
 - :doc:`M=22_K=8_Q=4096`
 - :doc:`M=22_K=8_Q=8192`
 - :doc:`M=22_K=8_Q=16384`
+- :doc:`M=22_K=8_Q=32768`
+- :doc:`M=22_K=8_Q=65536`
+- :doc:`M=22_K=8_Q=131072`
+- :doc:`M=22_K=8_Q=262144`
 - :doc:`M=22_K=9_Q=2`
 - :doc:`M=22_K=9_Q=4`
 - :doc:`M=22_K=9_Q=8`
@@ -359,6 +405,10 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
 - :doc:`M=22_K=9_Q=4096`
 - :doc:`M=22_K=9_Q=8192`
 - :doc:`M=22_K=9_Q=16384`
+- :doc:`M=22_K=9_Q=32768`
+- :doc:`M=22_K=9_Q=65536`
+- :doc:`M=22_K=9_Q=131072`
+- :doc:`M=22_K=9_Q=262144`
 - :doc:`M=22_K=10_Q=2`
 - :doc:`M=22_K=10_Q=4`
 - :doc:`M=22_K=10_Q=8`
@@ -373,6 +423,10 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
 - :doc:`M=22_K=10_Q=4096`
 - :doc:`M=22_K=10_Q=8192`
 - :doc:`M=22_K=10_Q=16384`
+- :doc:`M=22_K=10_Q=32768`
+- :doc:`M=22_K=10_Q=65536`
+- :doc:`M=22_K=10_Q=131072`
+- :doc:`M=22_K=10_Q=262144`
 - :doc:`M=22_K=11_Q=2`
 - :doc:`M=22_K=11_Q=4`
 - :doc:`M=22_K=11_Q=8`
@@ -387,6 +441,9 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
 - :doc:`M=22_K=11_Q=4096`
 - :doc:`M=22_K=11_Q=8192`
 - :doc:`M=22_K=11_Q=16384`
+- :doc:`M=22_K=11_Q=32768`
+- :doc:`M=22_K=11_Q=65536`
+- :doc:`M=22_K=11_Q=131072`
 - :doc:`M=22_K=12_Q=2`
 - :doc:`M=22_K=12_Q=4`
 - :doc:`M=22_K=12_Q=8`
@@ -401,6 +458,10 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
 - :doc:`M=22_K=12_Q=4096`
 - :doc:`M=22_K=12_Q=8192`
 - :doc:`M=22_K=12_Q=16384`
+- :doc:`M=22_K=12_Q=32768`
+- :doc:`M=22_K=12_Q=65536`
+- :doc:`M=22_K=12_Q=131072`
+- :doc:`M=22_K=12_Q=262144`
 - :doc:`M=22_K=13_Q=2`
 - :doc:`M=22_K=13_Q=4`
 - :doc:`M=22_K=13_Q=8`
@@ -415,6 +476,9 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
 - :doc:`M=22_K=13_Q=4096`
 - :doc:`M=22_K=13_Q=8192`
 - :doc:`M=22_K=13_Q=16384`
+- :doc:`M=22_K=13_Q=32768`
+- :doc:`M=22_K=13_Q=65536`
+- :doc:`M=22_K=13_Q=131072`
 - :doc:`M=22_K=14_Q=2`
 - :doc:`M=22_K=14_Q=4`
 - :doc:`M=22_K=14_Q=8`
@@ -429,6 +493,10 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
 - :doc:`M=22_K=14_Q=4096`
 - :doc:`M=22_K=14_Q=8192`
 - :doc:`M=22_K=14_Q=16384`
+- :doc:`M=22_K=14_Q=32768`
+- :doc:`M=22_K=14_Q=65536`
+- :doc:`M=22_K=14_Q=131072`
+- :doc:`M=22_K=14_Q=262144`
 - :doc:`M=22_K=15_Q=2`
 - :doc:`M=22_K=15_Q=4`
 - :doc:`M=22_K=15_Q=8`
@@ -443,6 +511,9 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
 - :doc:`M=22_K=15_Q=4096`
 - :doc:`M=22_K=15_Q=8192`
 - :doc:`M=22_K=15_Q=16384`
+- :doc:`M=22_K=15_Q=32768`
+- :doc:`M=22_K=15_Q=65536`
+- :doc:`M=22_K=15_Q=131072`
 - :doc:`M=22_K=16_Q=2`
 - :doc:`M=22_K=16_Q=4`
 - :doc:`M=22_K=16_Q=8`
@@ -457,6 +528,8 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
 - :doc:`M=22_K=16_Q=4096`
 - :doc:`M=22_K=16_Q=8192`
 - :doc:`M=22_K=16_Q=16384`
+- :doc:`M=22_K=16_Q=32768`
+- :doc:`M=22_K=16_Q=65536`
 - :doc:`M=22_K=17_Q=2`
 - :doc:`M=22_K=17_Q=4`
 - :doc:`M=22_K=17_Q=8`
@@ -501,3 +574,4 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
 - :doc:`M=22_K=20_Q=64`
 - :doc:`M=22_K=20_Q=128`
 - :doc:`M=22_K=21_Q=2`
+- :doc:`M=22_K=21_Q=4`

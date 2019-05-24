@@ -1,0 +1,13 @@
+
+=========================
+M = 22, K = 9, Q = 262144
+=========================
+
+`M=22_K=9_Q=262144_minh=2_ineq=27162.txt is available here. <https://github.com/imtoolkit/imtoolkit/blob/master/imtoolkit/inds/M%3D22_K%3D9_Q%3D262144_minh%3D2_ineq%3D27162.txt>`_
+
+.. code-block:: python
+
+    # minimum Hamming distance = 2
+    # activation inequality = 27162
+    # active indices, activation tensor and its vector representation are omitted.
+

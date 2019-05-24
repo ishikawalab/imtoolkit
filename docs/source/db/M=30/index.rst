@@ -46,6 +46,7 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
    M=30_K=4_Q=2048
    M=30_K=4_Q=4096
    M=30_K=4_Q=8192
+   M=30_K=4_Q=16384
    M=30_K=5_Q=2
    M=30_K=5_Q=4
    M=30_K=5_Q=8
@@ -59,6 +60,10 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
    M=30_K=5_Q=2048
    M=30_K=5_Q=4096
    M=30_K=5_Q=8192
+   M=30_K=5_Q=16384
+   M=30_K=5_Q=32768
+   M=30_K=5_Q=65536
+   M=30_K=5_Q=131072
    M=30_K=6_Q=2
    M=30_K=6_Q=4
    M=30_K=6_Q=8
@@ -72,6 +77,10 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
    M=30_K=6_Q=2048
    M=30_K=6_Q=4096
    M=30_K=6_Q=8192
+   M=30_K=6_Q=16384
+   M=30_K=6_Q=32768
+   M=30_K=6_Q=65536
+   M=30_K=6_Q=131072
    M=30_K=7_Q=2
    M=30_K=7_Q=4
    M=30_K=7_Q=8
@@ -83,7 +92,28 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
    M=30_K=7_Q=512
    M=30_K=7_Q=1024
    M=30_K=7_Q=2048
+   M=30_K=7_Q=4096
+   M=30_K=7_Q=8192
+   M=30_K=7_Q=16384
+   M=30_K=7_Q=32768
+   M=30_K=7_Q=131072
    M=30_K=8_Q=2
+   M=30_K=8_Q=4
+   M=30_K=8_Q=8
+   M=30_K=8_Q=16
+   M=30_K=8_Q=32
+   M=30_K=8_Q=64
+   M=30_K=8_Q=128
+   M=30_K=8_Q=256
+   M=30_K=8_Q=512
+   M=30_K=8_Q=1024
+   M=30_K=8_Q=2048
+   M=30_K=8_Q=4096
+   M=30_K=8_Q=8192
+   M=30_K=8_Q=16384
+   M=30_K=8_Q=32768
+   M=30_K=8_Q=65536
+   M=30_K=8_Q=131072
    M=30_K=9_Q=2
    M=30_K=10_Q=2
    M=30_K=11_Q=2
@@ -109,6 +139,10 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
    M=30_K=23_Q=512
    M=30_K=23_Q=1024
    M=30_K=23_Q=2048
+   M=30_K=23_Q=4096
+   M=30_K=23_Q=8192
+   M=30_K=23_Q=16384
+   M=30_K=23_Q=32768
    M=30_K=24_Q=2
    M=30_K=24_Q=4
    M=30_K=24_Q=8
@@ -122,6 +156,9 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
    M=30_K=24_Q=2048
    M=30_K=24_Q=4096
    M=30_K=24_Q=8192
+   M=30_K=24_Q=16384
+   M=30_K=24_Q=32768
+   M=30_K=24_Q=65536
    M=30_K=25_Q=2
    M=30_K=25_Q=4
    M=30_K=25_Q=8
@@ -135,6 +172,10 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
    M=30_K=25_Q=2048
    M=30_K=25_Q=4096
    M=30_K=25_Q=8192
+   M=30_K=25_Q=16384
+   M=30_K=25_Q=32768
+   M=30_K=25_Q=65536
+   M=30_K=25_Q=131072
    M=30_K=26_Q=2
    M=30_K=26_Q=4
    M=30_K=26_Q=8
@@ -148,6 +189,7 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
    M=30_K=26_Q=2048
    M=30_K=26_Q=4096
    M=30_K=26_Q=8192
+   M=30_K=26_Q=16384
    M=30_K=27_Q=2
    M=30_K=27_Q=4
    M=30_K=27_Q=8
@@ -205,6 +247,7 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
 - :doc:`M=30_K=4_Q=2048`
 - :doc:`M=30_K=4_Q=4096`
 - :doc:`M=30_K=4_Q=8192`
+- :doc:`M=30_K=4_Q=16384`
 - :doc:`M=30_K=5_Q=2`
 - :doc:`M=30_K=5_Q=4`
 - :doc:`M=30_K=5_Q=8`
@@ -218,6 +261,10 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
 - :doc:`M=30_K=5_Q=2048`
 - :doc:`M=30_K=5_Q=4096`
 - :doc:`M=30_K=5_Q=8192`
+- :doc:`M=30_K=5_Q=16384`
+- :doc:`M=30_K=5_Q=32768`
+- :doc:`M=30_K=5_Q=65536`
+- :doc:`M=30_K=5_Q=131072`
 - :doc:`M=30_K=6_Q=2`
 - :doc:`M=30_K=6_Q=4`
 - :doc:`M=30_K=6_Q=8`
@@ -231,6 +278,10 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
 - :doc:`M=30_K=6_Q=2048`
 - :doc:`M=30_K=6_Q=4096`
 - :doc:`M=30_K=6_Q=8192`
+- :doc:`M=30_K=6_Q=16384`
+- :doc:`M=30_K=6_Q=32768`
+- :doc:`M=30_K=6_Q=65536`
+- :doc:`M=30_K=6_Q=131072`
 - :doc:`M=30_K=7_Q=2`
 - :doc:`M=30_K=7_Q=4`
 - :doc:`M=30_K=7_Q=8`
@@ -242,7 +293,28 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
 - :doc:`M=30_K=7_Q=512`
 - :doc:`M=30_K=7_Q=1024`
 - :doc:`M=30_K=7_Q=2048`
+- :doc:`M=30_K=7_Q=4096`
+- :doc:`M=30_K=7_Q=8192`
+- :doc:`M=30_K=7_Q=16384`
+- :doc:`M=30_K=7_Q=32768`
+- :doc:`M=30_K=7_Q=131072`
 - :doc:`M=30_K=8_Q=2`
+- :doc:`M=30_K=8_Q=4`
+- :doc:`M=30_K=8_Q=8`
+- :doc:`M=30_K=8_Q=16`
+- :doc:`M=30_K=8_Q=32`
+- :doc:`M=30_K=8_Q=64`
+- :doc:`M=30_K=8_Q=128`
+- :doc:`M=30_K=8_Q=256`
+- :doc:`M=30_K=8_Q=512`
+- :doc:`M=30_K=8_Q=1024`
+- :doc:`M=30_K=8_Q=2048`
+- :doc:`M=30_K=8_Q=4096`
+- :doc:`M=30_K=8_Q=8192`
+- :doc:`M=30_K=8_Q=16384`
+- :doc:`M=30_K=8_Q=32768`
+- :doc:`M=30_K=8_Q=65536`
+- :doc:`M=30_K=8_Q=131072`
 - :doc:`M=30_K=9_Q=2`
 - :doc:`M=30_K=10_Q=2`
 - :doc:`M=30_K=11_Q=2`
@@ -268,6 +340,10 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
 - :doc:`M=30_K=23_Q=512`
 - :doc:`M=30_K=23_Q=1024`
 - :doc:`M=30_K=23_Q=2048`
+- :doc:`M=30_K=23_Q=4096`
+- :doc:`M=30_K=23_Q=8192`
+- :doc:`M=30_K=23_Q=16384`
+- :doc:`M=30_K=23_Q=32768`
 - :doc:`M=30_K=24_Q=2`
 - :doc:`M=30_K=24_Q=4`
 - :doc:`M=30_K=24_Q=8`
@@ -281,6 +357,9 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
 - :doc:`M=30_K=24_Q=2048`
 - :doc:`M=30_K=24_Q=4096`
 - :doc:`M=30_K=24_Q=8192`
+- :doc:`M=30_K=24_Q=16384`
+- :doc:`M=30_K=24_Q=32768`
+- :doc:`M=30_K=24_Q=65536`
 - :doc:`M=30_K=25_Q=2`
 - :doc:`M=30_K=25_Q=4`
 - :doc:`M=30_K=25_Q=8`
@@ -294,6 +373,10 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
 - :doc:`M=30_K=25_Q=2048`
 - :doc:`M=30_K=25_Q=4096`
 - :doc:`M=30_K=25_Q=8192`
+- :doc:`M=30_K=25_Q=16384`
+- :doc:`M=30_K=25_Q=32768`
+- :doc:`M=30_K=25_Q=65536`
+- :doc:`M=30_K=25_Q=131072`
 - :doc:`M=30_K=26_Q=2`
 - :doc:`M=30_K=26_Q=4`
 - :doc:`M=30_K=26_Q=8`
@@ -307,6 +390,7 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
 - :doc:`M=30_K=26_Q=2048`
 - :doc:`M=30_K=26_Q=4096`
 - :doc:`M=30_K=26_Q=8192`
+- :doc:`M=30_K=26_Q=16384`
 - :doc:`M=30_K=27_Q=2`
 - :doc:`M=30_K=27_Q=4`
 - :doc:`M=30_K=27_Q=8`
