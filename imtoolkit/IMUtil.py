@@ -182,18 +182,19 @@ def getRandomIndexesList(M, K, Q):
 def getOptimizedIndexesList(M, K, Q, minh = 0):
     basePath = os.path.dirname(os.path.abspath(__file__))
     if minh == 0:
-        files = glob.glob(basePath + "/inds/M=%d_K=%d_Q=%d*.txt"%(M, K, Q))
+        files = glob.glob(basePath + "/inds/M=%d_K=%d_Q=%d_*.txt"%(M, K, Q))
     else:
         files = glob.glob(basePath + "/inds/M=%d_K=%d_Q=%d_minh=%d*.txt"%(M, K, Q, minh))
 
 
     if len(files) == 0:
         print("No file found")
-        quit()
+        return []
 
     files.sort() # TODO: must consider minh, ineq
     print("Read " + files[0])
     inds = np.loadtxt(files[0], dtype = np.int)
+    print(inds)
     inds = inds.reshape(Q, K).tolist()
     return inds
 
@@ -214,6 +215,27 @@ def getIndexes(type, M, K, Q):
         #print("Q is automatically set to " + str(len(inds)))
     elif type == "rand":
         inds = getRandomIndexesList(M, K, Q)
+    elif type == "ga": # Genetic algorithm aided design
+        if M == 16 and K == 8 and Q == 16:
+            inds = [
+                [0, 1, 2, 4,  7,  8, 11, 15],
+                [0, 1, 2, 4, 10, 13, 14, 15],
+                [0, 2, 3, 4,  6,  7, 12, 14],
+                [0, 2, 4, 5,  6,  8, 11, 12],
+                [0, 2, 5, 8, 10, 11, 13, 15],
+                [0, 3, 4, 5,  6,  9, 11, 15],
+                [0, 3, 4, 7, 10, 11, 13, 15],
+                [0, 3, 7, 8,  9, 10, 13, 14],
+                [1, 2, 3, 9, 10, 12, 13, 15],
+                [1, 2, 6, 9, 10, 11, 12, 14],
+                [1, 3, 5, 6,  7,  8, 11, 13],
+                [1, 4, 5, 7,  8, 12, 13, 14],
+                [1, 4, 5, 8,  9, 10, 14, 15],
+                [1, 5, 6, 7,  9, 10, 12, 15],
+                [2, 3, 5, 6,  8,  9, 12, 14],
+                [3, 6, 7, 9, 11, 12, 13, 14]]
+    else:
+        print("Error: The type of active indices is not specified.")
     
     if len(inds) == 0:
         print("The specified indexes set is not available.")

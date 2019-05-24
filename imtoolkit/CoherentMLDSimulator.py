@@ -163,7 +163,6 @@ class CoherentMLDSimulator(Simulator):
         return ret
         
 
-
     def simulateAMIParallel(self, params, output = True):
         """Simulates the AMI values at multiple SNRs, where the massively parallel algorithm is used.
 

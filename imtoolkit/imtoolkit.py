@@ -80,16 +80,13 @@ def main():
             print("Minimum Hamming distance = %d" % getMinimumHammingDistance(code.inds, params.M))
             print("Inequality L1 = %d" % getInequalityL1(code.inds, params.M))
         elif params.mode == "VIEWIMTEX":
-            
-            print("$\\A(%d,%d,%d) = [$" % (params.M, params.K, params.Q))
+            print("$\\a$(%d, %d, %d) $=$ [" % (params.M, params.K, params.Q))
             #[\e_1 ~ \e_2], [\e_1 ~ \e_3], [\e_2 ~ \e_4], [\e_3 ~ \e_4] 
             #for iarr in code.inds:
             #    print(" ~ ".join(["\\e_{%d}" % i for i in iarr]))
-            es = [" ~ ".join(["\\e_{%d}" % i for i in iarr]) for iarr in code.inds]
-            print(",\n".join(["$[" + e + "]$" for e in es]))
+            es = [", ".join(["%d" % (i+1) for i in iarr]) for iarr in code.inds]
+            print(", ".join(["[" + e + "]" for e in es]) + "].")
             #print(",".join(["[" + iarrstr + "]\n" for iarrstr in " ~ ".join(["\\e_{%d}" % i for i in iarr])]))
-            print("$] \\inbb{B}{%d \\times %d \\times %d}.$" % (params.Q, params.M, params.K))
-            
 
         elapsed_time = time.time() - start_time
         print ("Elapsed time = %.10f seconds" % (elapsed_time))

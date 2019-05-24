@@ -195,11 +195,11 @@ def getAllIndsBasedOnDecFile(M, K, Q):
 
 def outputCPLEXModelFile(M, K, Q):
     decallinds = getAllIndsBasedOnDecFile(M, K, Q)
-    if decallinds == None:
+    if K > 1 and K < M-1 and decallinds == None:
         print("The dec file for (%d,%d) does not exist." % (M,K))
         return None
 
-    if len(decallinds) > 0:
+    if decallinds != None and len(decallinds) > 0:
         allinds = decallinds
         #print(getMinimumHamming(allinds, M))
         allindsvec = convertIndsToVector(allinds, M)
@@ -252,7 +252,7 @@ def outputCPLEXModelFile(M, K, Q):
 def convertCPLEXOutputToInds(fname, M, K, Q):
     allinds = np.array(list(itertools.combinations(range(M), K)))
     decallinds = getAllIndsBasedOnDecFile(M, K, Q)
-    if len(decallinds) > 0:
+    if decallinds != None and len(decallinds) > 0:
         allinds = decallinds
 
     with open(fname, mode='r') as f:
