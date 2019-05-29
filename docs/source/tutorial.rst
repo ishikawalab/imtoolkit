@@ -8,13 +8,13 @@ This webpage introduces a detailed tutorial for the ``imtoolkit`` command, which
 Basic Usage
 ===========
 
-The command line option is specified by a sentence concatenated by underscores.
+The command line option is specified by a sentence that concatenates parameters by underscores, such as
 
 .. code-block:: bash
 
     > imtoolkit {MODE}_code=index_dm={dic,wen,opt}_ + other parameters
 
-Here, the CuPy-aided operation is enabled by setting an environment variable ``USECUPY=1`` before executing ``imtoolkit``.
+Before executing the ``imtoolkit`` command, the CuPy-aided acceleration is enabled by setting an environment variable ``USECUPY=1``.
 
 .. code-block:: bash
 
@@ -29,6 +29,9 @@ In case you would like to use Numpy, please unset the environment variable.
 Usage Examples
 ===============
 
+The followings are instant usage examples.
+All the variables are the same as those used in the IEEE Access paper.
+
 Check the transmission rate of the IM codebook having :math:`(M,K,Q)=(2,1,2)` and BPSK constellation.
 
 .. code-block:: bash
@@ -36,7 +39,7 @@ Check the transmission rate of the IM codebook having :math:`(M,K,Q)=(2,1,2)` an
     > imtoolkit RATE_code=index_dm=dic_M=2_K=1_Q=2_L=2_mod=PSK
     B = B1 + B2 = 1 + 1 = 2 [bits/symbol]
 
-Check the IM codebooks having various parameters.
+Check the IM codebooks relying on the combinatorial (dic), equiprobable (wen), and integer linear programming (opt) methods.
 
 .. code-block:: bash
 
@@ -44,7 +47,7 @@ Check the IM codebooks having various parameters.
     > imtoolkit VIEW_code=index_dm=wen_M=16_K=8_Q=16_L=1_mod=PSK
     > imtoolkit VIEW_code=index_dm=opt_M=16_K=8_Q=16_L=1_mod=PSK
 
-Check the active indeces having :math:`(M,K,Q)=(16,8,16)`.
+Check the designed active indices having :math:`(M,K,Q)=(16,8,16)`.
 
 .. code-block:: bash
 
