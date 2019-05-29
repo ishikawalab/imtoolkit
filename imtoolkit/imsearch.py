@@ -345,7 +345,7 @@ def main():
     if len(sys.argv) <= 1:
         print("DECPARAMS_M=32")
         print("DECPARAMSDO_M=32")
-        print("SEARCHPARAMS_M=32")
+        print("SEARCHPARAMS_M=32_P=2")
         print("SEARCHPARAMSDO_M=32")
         print("SEARCH_M=2_K=1_Q=2")
         print("SEARCH_M=4_K=1_Q=2")
@@ -423,8 +423,17 @@ def main():
             for p in imparams:
                 cmd = "imsearch SEARCH_M=%d_K=%d_Q=%d" % (p[0], p[1], p[2])
                 cmds.append(cmd)
-                print(cmd)
-            if params.mode == "SEARCHPARAMSDO":
+            
+            if params.mode == "SEARCHPARAMS":
+                for p in range(params.P):
+                    print("Set %d ====================================" % p)
+                    i = 0
+                    for cmd in cmds:
+                        if i % params.P == p:
+                            print(cmd)
+                        i += 1
+                    print("")
+            elif params.mode == "SEARCHPARAMSDO":
                 for cmd in cmds:
                     os.system(cmd)
 

@@ -8,8 +8,12 @@ Overview
 =========
 
 This webpage introduces an open-source index modulation toolkit (IMToolkit).
-This toolkit attempts to accelerate reproducible research in the field of wireless communications and IM studies.
-It contains massively parallel algorithms for Monte-Carlo simulations, which are especially designed for Nvidia GPUs.
+This toolkit attempts to facilitate reproducible research in the field of wireless communications and IM studies.
+The major advantages of this toolkit are highlited as follows:
+
+- With the aid of state-of-the-art Nvidia GPUs, it accelerates bit error ratio and average mutual information simulations by invoking massively parallel algorithms.
+- In addition to the IM family, it also supports the conventional spatial multiplexing scheme for ideal MIMO and OFDM scenarios.
+- It contains a comprehensive database of designed active indices, that determine the achievable performance of the generalized spatial modulation or the subcarrier-index modulation.
 
 .. toctree::
    :maxdepth: 2
@@ -60,9 +64,9 @@ Of course, if your project relies on CuPy, the following reference is highly rec
  [2] R. Okuta, Y. Unno, D. Nishino, S. Hido, and C. Loomis, "CuPy: A numPy-compatible library for NVIDIA GPU calculations," in Conference on Neural Information Processing Systems Workshop, Long Beach, CA, USA, Dec. 4-9, 2017.
 
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. Indices and tables
+.. ==================
+.. 
+.. * :ref:`genindex`
+.. * :ref:`modindex`
+.. * :ref:`search`

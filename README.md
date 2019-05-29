@@ -1,12 +1,13 @@
 # IMToolkit
 
-IMToolkit, an open-source index modulation toolkit, attempts to accelerate reproducible research in the field of wireless communications and index modulation (IM) studies.
+IMToolkit, an open-source index modulation toolkit, attempts to facilitate reproducible research in the field of wireless communications and index modulation (IM) studies.
 It relies on the massively parallel algorithms proposed in [1], which are especially designed for high-performance Nvidia GPUs.
+In addition to the IM family, it also supports the conventional spatial multiplexing scheme for ideal MIMO and OFDM scenarios.
 
 For more information, please refer to the following webpages.
 - [IMToolkit official website](https://ishikawa.cc/imtoolkit/)
 - [A detailed tutorial for the imtoolkit command](https://ishikawa.cc/imtoolkit/tutorial.html)
-- [Fork me on GitHub](https://github.com/imtoolkit/imtoolkit)
+- [A comprehensive database of the designed active indices](https://ishikawa.cc/imtoolkit/db/index.html)
 
 ## Quick Start Guide
 
