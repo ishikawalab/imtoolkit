@@ -362,6 +362,7 @@ def main():
         print("MINH")
         print("DOCMUPDATE_M=32")
         print("DOCMINDEX")
+        print("COVERAGE")
         quit()
 
     args = sys.argv[1:]
