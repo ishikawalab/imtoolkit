@@ -6,6 +6,7 @@ import sys
 import glob
 import re
 import time
+import shutil
 from scipy import special
 import numpy as np
 import itertools
@@ -280,6 +281,13 @@ def convertIndsToRST(basePath, M, K, Q):
         return
 
     fninds = files[0]
+
+    # copy the original file to the build/html/
+    bpath = basePath + "/../docs/build/html/db/M=%d/M=%d_K=%d_Q=%d.txt" % (M, M, K, Q)
+    if not os.path.exists(os.path.dirname(bpath)):
+        os.mkdir(os.path.dirname(bpath))
+    if not os.path.exists(bpath) or (os.path.exists(bpath) and os.stat(bpath).st_mtime < os.stat(fninds).st_mtime):
+        shutil.copyfile(fninds, bpath)
     
     mpath = basePath + "/../docs/source/db/M=%d/" % (M)
     if not os.path.exists(mpath):

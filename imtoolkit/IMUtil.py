@@ -4,6 +4,7 @@
 import re
 import glob
 import itertools
+import urllib.request
 import numpy as np
 from scipy import special
 from numba import jit
@@ -179,17 +180,50 @@ def getRandomIndexesList(M, K, Q):
             ret.append(row)
     return ret
 
+def downloadOptimizedIndexesList(basePath, M, K, Q, source):
+    print("Trying to obtain the active indices file from " + source + ".")
+    txtfilename = "M=%d_K=%d_Q=%d.txt" % (M, K, Q)
+    txtdstpath = basePath + "/inds/" + txtfilename
+
+    if not os.path.exists(basePath + "/inds/"):
+        os.mkdir(basePath + "/inds/")
+
+    if source == "GitHub":
+        txturl = "https://raw.githubusercontent.com/imtoolkit/imtoolkit/master/docs/build/html/db/M=" + str(M) + "/" + txtfilename
+    else:
+        txturl = "https://ishikawa.cc/imtoolkit/db/M=" + str(M) + "/" + txtfilename
+    
+    try:
+        urllib.request.urlretrieve(txturl, txtdstpath)
+    except:
+        print("Perhaps...")
+        print("    " + source + " is currently not available.")
+        print("    You need the root permission.")
+        print("    The specified IM parameters are invalid or not supported.")
+        import traceback
+        traceback.print_exc()
+        return False
+    
+    return True
+
 def getOptimizedIndexesList(M, K, Q, minh = 0):
     basePath = os.path.dirname(os.path.abspath(__file__))
+
     if minh == 0:
-        files = glob.glob(basePath + "/inds/M=%d_K=%d_Q=%d_*.txt"%(M, K, Q))
+        files = glob.glob(basePath + "/inds/M=%d_K=%d_Q=%d.txt"%(M, K, Q))
+        files += glob.glob(basePath + "/inds/M=%d_K=%d_Q=%d_*.txt"%(M, K, Q))
     else:
         files = glob.glob(basePath + "/inds/M=%d_K=%d_Q=%d_minh=%d*.txt"%(M, K, Q, minh))
 
-
+    # download the active indices from some webpages
     if len(files) == 0:
-        print("No file found")
-        return []
+        if not downloadOptimizedIndexesList(basePath, M, K, Q, "GitHub"):
+            downloadOptimizedIndexesList(basePath, M, K, Q, "ishikawa.cc")
+        
+        files = glob.glob(basePath + "/inds/M=%d_K=%d_Q=%d.txt"%(M, K, Q))
+        if len(files) == 0:
+            print("No file found.")
+            return []
 
     files.sort() # TODO: must consider minh, ineq
     print("Read " + files[0])
