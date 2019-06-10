@@ -292,6 +292,7 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
    M=22_K=20_Q=128
    M=22_K=21_Q=2
    M=22_K=21_Q=4
+   M=22_K=21_Q=8
 
 - :doc:`M=22_K=1_Q=2`
 - :doc:`M=22_K=1_Q=4`
@@ -575,3 +576,4 @@ This webpage provides the designed active indices for the :math:`M = 22` case.
 - :doc:`M=22_K=20_Q=128`
 - :doc:`M=22_K=21_Q=2`
 - :doc:`M=22_K=21_Q=4`
+- :doc:`M=22_K=21_Q=8`

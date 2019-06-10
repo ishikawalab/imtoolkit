@@ -95,6 +95,7 @@ This webpage provides the designed active indices for the :math:`M = 26` case.
    M=26_K=7_Q=16384
    M=26_K=7_Q=32768
    M=26_K=7_Q=65536
+   M=26_K=7_Q=131072
    M=26_K=8_Q=2
    M=26_K=8_Q=4
    M=26_K=8_Q=8
@@ -110,6 +111,8 @@ This webpage provides the designed active indices for the :math:`M = 26` case.
    M=26_K=8_Q=8192
    M=26_K=8_Q=16384
    M=26_K=8_Q=32768
+   M=26_K=8_Q=65536
+   M=26_K=8_Q=131072
    M=26_K=9_Q=2
    M=26_K=9_Q=4
    M=26_K=9_Q=8
@@ -144,9 +147,55 @@ This webpage provides the designed active indices for the :math:`M = 26` case.
    M=26_K=10_Q=65536
    M=26_K=10_Q=131072
    M=26_K=11_Q=2
+   M=26_K=11_Q=4
+   M=26_K=11_Q=8
+   M=26_K=11_Q=16
+   M=26_K=11_Q=32
+   M=26_K=11_Q=64
+   M=26_K=11_Q=128
+   M=26_K=11_Q=256
+   M=26_K=11_Q=512
+   M=26_K=11_Q=1024
+   M=26_K=11_Q=2048
+   M=26_K=11_Q=4096
+   M=26_K=11_Q=8192
+   M=26_K=11_Q=16384
+   M=26_K=11_Q=32768
+   M=26_K=11_Q=65536
+   M=26_K=11_Q=131072
    M=26_K=12_Q=2
+   M=26_K=12_Q=4
+   M=26_K=12_Q=8
+   M=26_K=12_Q=16
+   M=26_K=12_Q=32
+   M=26_K=12_Q=64
+   M=26_K=12_Q=128
+   M=26_K=12_Q=256
+   M=26_K=12_Q=512
+   M=26_K=12_Q=1024
+   M=26_K=12_Q=2048
+   M=26_K=12_Q=4096
+   M=26_K=12_Q=8192
+   M=26_K=12_Q=16384
+   M=26_K=12_Q=32768
+   M=26_K=12_Q=65536
    M=26_K=13_Q=2
    M=26_K=14_Q=2
+   M=26_K=14_Q=4
+   M=26_K=14_Q=8
+   M=26_K=14_Q=16
+   M=26_K=14_Q=32
+   M=26_K=14_Q=64
+   M=26_K=14_Q=128
+   M=26_K=14_Q=256
+   M=26_K=14_Q=512
+   M=26_K=14_Q=1024
+   M=26_K=14_Q=2048
+   M=26_K=14_Q=4096
+   M=26_K=14_Q=8192
+   M=26_K=14_Q=16384
+   M=26_K=14_Q=32768
+   M=26_K=14_Q=65536
    M=26_K=15_Q=2
    M=26_K=16_Q=2
    M=26_K=16_Q=4
@@ -280,6 +329,8 @@ This webpage provides the designed active indices for the :math:`M = 26` case.
    M=26_K=24_Q=128
    M=26_K=24_Q=256
    M=26_K=25_Q=2
+   M=26_K=25_Q=8
+   M=26_K=25_Q=16
 
 - :doc:`M=26_K=1_Q=2`
 - :doc:`M=26_K=1_Q=4`
@@ -366,6 +417,7 @@ This webpage provides the designed active indices for the :math:`M = 26` case.
 - :doc:`M=26_K=7_Q=16384`
 - :doc:`M=26_K=7_Q=32768`
 - :doc:`M=26_K=7_Q=65536`
+- :doc:`M=26_K=7_Q=131072`
 - :doc:`M=26_K=8_Q=2`
 - :doc:`M=26_K=8_Q=4`
 - :doc:`M=26_K=8_Q=8`
@@ -381,6 +433,8 @@ This webpage provides the designed active indices for the :math:`M = 26` case.
 - :doc:`M=26_K=8_Q=8192`
 - :doc:`M=26_K=8_Q=16384`
 - :doc:`M=26_K=8_Q=32768`
+- :doc:`M=26_K=8_Q=65536`
+- :doc:`M=26_K=8_Q=131072`
 - :doc:`M=26_K=9_Q=2`
 - :doc:`M=26_K=9_Q=4`
 - :doc:`M=26_K=9_Q=8`
@@ -415,9 +469,55 @@ This webpage provides the designed active indices for the :math:`M = 26` case.
 - :doc:`M=26_K=10_Q=65536`
 - :doc:`M=26_K=10_Q=131072`
 - :doc:`M=26_K=11_Q=2`
+- :doc:`M=26_K=11_Q=4`
+- :doc:`M=26_K=11_Q=8`
+- :doc:`M=26_K=11_Q=16`
+- :doc:`M=26_K=11_Q=32`
+- :doc:`M=26_K=11_Q=64`
+- :doc:`M=26_K=11_Q=128`
+- :doc:`M=26_K=11_Q=256`
+- :doc:`M=26_K=11_Q=512`
+- :doc:`M=26_K=11_Q=1024`
+- :doc:`M=26_K=11_Q=2048`
+- :doc:`M=26_K=11_Q=4096`
+- :doc:`M=26_K=11_Q=8192`
+- :doc:`M=26_K=11_Q=16384`
+- :doc:`M=26_K=11_Q=32768`
+- :doc:`M=26_K=11_Q=65536`
+- :doc:`M=26_K=11_Q=131072`
 - :doc:`M=26_K=12_Q=2`
+- :doc:`M=26_K=12_Q=4`
+- :doc:`M=26_K=12_Q=8`
+- :doc:`M=26_K=12_Q=16`
+- :doc:`M=26_K=12_Q=32`
+- :doc:`M=26_K=12_Q=64`
+- :doc:`M=26_K=12_Q=128`
+- :doc:`M=26_K=12_Q=256`
+- :doc:`M=26_K=12_Q=512`
+- :doc:`M=26_K=12_Q=1024`
+- :doc:`M=26_K=12_Q=2048`
+- :doc:`M=26_K=12_Q=4096`
+- :doc:`M=26_K=12_Q=8192`
+- :doc:`M=26_K=12_Q=16384`
+- :doc:`M=26_K=12_Q=32768`
+- :doc:`M=26_K=12_Q=65536`
 - :doc:`M=26_K=13_Q=2`
 - :doc:`M=26_K=14_Q=2`
+- :doc:`M=26_K=14_Q=4`
+- :doc:`M=26_K=14_Q=8`
+- :doc:`M=26_K=14_Q=16`
+- :doc:`M=26_K=14_Q=32`
+- :doc:`M=26_K=14_Q=64`
+- :doc:`M=26_K=14_Q=128`
+- :doc:`M=26_K=14_Q=256`
+- :doc:`M=26_K=14_Q=512`
+- :doc:`M=26_K=14_Q=1024`
+- :doc:`M=26_K=14_Q=2048`
+- :doc:`M=26_K=14_Q=4096`
+- :doc:`M=26_K=14_Q=8192`
+- :doc:`M=26_K=14_Q=16384`
+- :doc:`M=26_K=14_Q=32768`
+- :doc:`M=26_K=14_Q=65536`
 - :doc:`M=26_K=15_Q=2`
 - :doc:`M=26_K=16_Q=2`
 - :doc:`M=26_K=16_Q=4`
@@ -551,3 +651,5 @@ This webpage provides the designed active indices for the :math:`M = 26` case.
 - :doc:`M=26_K=24_Q=128`
 - :doc:`M=26_K=24_Q=256`
 - :doc:`M=26_K=25_Q=2`
+- :doc:`M=26_K=25_Q=8`
+- :doc:`M=26_K=25_Q=16`

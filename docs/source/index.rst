@@ -12,8 +12,8 @@ This toolkit attempts to facilitate reproducible research in the field of wirele
 The major advantages of this toolkit are highlited as follows:
 
 - With the aid of state-of-the-art Nvidia GPUs, it accelerates bit error ratio and average mutual information simulations by invoking massively parallel algorithms.
-- In addition to the IM family, it also supports the conventional spatial multiplexing scheme for ideal MIMO and OFDM scenarios.
-- It contains a comprehensive database of designed active indices, that determine the achievable performance of the generalized spatial modulation or the subcarrier-index modulation.
+- In addition to the IM family, it also supports the conventional multiplexing scheme for ideal MIMO and OFDM scenarios.
+- It contains :doc:`a comprehensive database<db/index>` of designed active indices, that determine the achievable performance of the generalized spatial modulation or the subcarrier-index modulation.
 
 .. toctree::
    :maxdepth: 2

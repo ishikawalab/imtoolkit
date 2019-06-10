@@ -96,6 +96,7 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
    M=30_K=7_Q=8192
    M=30_K=7_Q=16384
    M=30_K=7_Q=32768
+   M=30_K=7_Q=65536
    M=30_K=7_Q=131072
    M=30_K=8_Q=2
    M=30_K=8_Q=4
@@ -128,6 +129,21 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
    M=30_K=20_Q=2
    M=30_K=21_Q=2
    M=30_K=22_Q=2
+   M=30_K=22_Q=4
+   M=30_K=22_Q=8
+   M=30_K=22_Q=16
+   M=30_K=22_Q=32
+   M=30_K=22_Q=64
+   M=30_K=22_Q=128
+   M=30_K=22_Q=256
+   M=30_K=22_Q=512
+   M=30_K=22_Q=1024
+   M=30_K=22_Q=2048
+   M=30_K=22_Q=4096
+   M=30_K=22_Q=8192
+   M=30_K=22_Q=16384
+   M=30_K=22_Q=32768
+   M=30_K=22_Q=65536
    M=30_K=23_Q=2
    M=30_K=23_Q=4
    M=30_K=23_Q=8
@@ -210,6 +226,9 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
    M=30_K=28_Q=128
    M=30_K=28_Q=256
    M=30_K=29_Q=2
+   M=30_K=29_Q=4
+   M=30_K=29_Q=8
+   M=30_K=29_Q=16
 
 - :doc:`M=30_K=1_Q=2`
 - :doc:`M=30_K=1_Q=4`
@@ -297,6 +316,7 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
 - :doc:`M=30_K=7_Q=8192`
 - :doc:`M=30_K=7_Q=16384`
 - :doc:`M=30_K=7_Q=32768`
+- :doc:`M=30_K=7_Q=65536`
 - :doc:`M=30_K=7_Q=131072`
 - :doc:`M=30_K=8_Q=2`
 - :doc:`M=30_K=8_Q=4`
@@ -329,6 +349,21 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
 - :doc:`M=30_K=20_Q=2`
 - :doc:`M=30_K=21_Q=2`
 - :doc:`M=30_K=22_Q=2`
+- :doc:`M=30_K=22_Q=4`
+- :doc:`M=30_K=22_Q=8`
+- :doc:`M=30_K=22_Q=16`
+- :doc:`M=30_K=22_Q=32`
+- :doc:`M=30_K=22_Q=64`
+- :doc:`M=30_K=22_Q=128`
+- :doc:`M=30_K=22_Q=256`
+- :doc:`M=30_K=22_Q=512`
+- :doc:`M=30_K=22_Q=1024`
+- :doc:`M=30_K=22_Q=2048`
+- :doc:`M=30_K=22_Q=4096`
+- :doc:`M=30_K=22_Q=8192`
+- :doc:`M=30_K=22_Q=16384`
+- :doc:`M=30_K=22_Q=32768`
+- :doc:`M=30_K=22_Q=65536`
 - :doc:`M=30_K=23_Q=2`
 - :doc:`M=30_K=23_Q=4`
 - :doc:`M=30_K=23_Q=8`
@@ -411,3 +446,6 @@ This webpage provides the designed active indices for the :math:`M = 30` case.
 - :doc:`M=30_K=28_Q=128`
 - :doc:`M=30_K=28_Q=256`
 - :doc:`M=30_K=29_Q=2`
+- :doc:`M=30_K=29_Q=4`
+- :doc:`M=30_K=29_Q=8`
+- :doc:`M=30_K=29_Q=16`

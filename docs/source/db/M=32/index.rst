@@ -204,6 +204,10 @@ This webpage provides the designed active indices for the :math:`M = 32` case.
    M=32_K=30_Q=128
    M=32_K=30_Q=256
    M=32_K=31_Q=2
+   M=32_K=31_Q=4
+   M=32_K=31_Q=8
+   M=32_K=31_Q=16
+   M=32_K=31_Q=32
 
 - :doc:`M=32_K=1_Q=2`
 - :doc:`M=32_K=1_Q=4`
@@ -399,3 +403,7 @@ This webpage provides the designed active indices for the :math:`M = 32` case.
 - :doc:`M=32_K=30_Q=128`
 - :doc:`M=32_K=30_Q=256`
 - :doc:`M=32_K=31_Q=2`
+- :doc:`M=32_K=31_Q=4`
+- :doc:`M=32_K=31_Q=8`
+- :doc:`M=32_K=31_Q=16`
+- :doc:`M=32_K=31_Q=32`

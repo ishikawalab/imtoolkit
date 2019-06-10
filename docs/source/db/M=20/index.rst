@@ -245,6 +245,7 @@ This webpage provides the designed active indices for the :math:`M = 20` case.
    M=20_K=18_Q=128
    M=20_K=19_Q=2
    M=20_K=19_Q=4
+   M=20_K=19_Q=16
 
 - :doc:`M=20_K=1_Q=2`
 - :doc:`M=20_K=1_Q=4`
@@ -481,3 +482,4 @@ This webpage provides the designed active indices for the :math:`M = 20` case.
 - :doc:`M=20_K=18_Q=128`
 - :doc:`M=20_K=19_Q=2`
 - :doc:`M=20_K=19_Q=4`
+- :doc:`M=20_K=19_Q=16`

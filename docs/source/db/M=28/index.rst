@@ -124,6 +124,22 @@ This webpage provides the designed active indices for the :math:`M = 28` case.
    M=28_K=17_Q=2
    M=28_K=18_Q=2
    M=28_K=19_Q=2
+   M=28_K=19_Q=4
+   M=28_K=19_Q=8
+   M=28_K=19_Q=16
+   M=28_K=19_Q=32
+   M=28_K=19_Q=64
+   M=28_K=19_Q=128
+   M=28_K=19_Q=256
+   M=28_K=19_Q=512
+   M=28_K=19_Q=1024
+   M=28_K=19_Q=2048
+   M=28_K=19_Q=4096
+   M=28_K=19_Q=8192
+   M=28_K=19_Q=16384
+   M=28_K=19_Q=32768
+   M=28_K=19_Q=65536
+   M=28_K=19_Q=131072
    M=28_K=20_Q=2
    M=28_K=20_Q=4
    M=28_K=20_Q=8
@@ -224,6 +240,8 @@ This webpage provides the designed active indices for the :math:`M = 28` case.
    M=28_K=26_Q=128
    M=28_K=26_Q=256
    M=28_K=27_Q=2
+   M=28_K=27_Q=4
+   M=28_K=27_Q=16
 
 - :doc:`M=28_K=1_Q=2`
 - :doc:`M=28_K=1_Q=4`
@@ -339,6 +357,22 @@ This webpage provides the designed active indices for the :math:`M = 28` case.
 - :doc:`M=28_K=17_Q=2`
 - :doc:`M=28_K=18_Q=2`
 - :doc:`M=28_K=19_Q=2`
+- :doc:`M=28_K=19_Q=4`
+- :doc:`M=28_K=19_Q=8`
+- :doc:`M=28_K=19_Q=16`
+- :doc:`M=28_K=19_Q=32`
+- :doc:`M=28_K=19_Q=64`
+- :doc:`M=28_K=19_Q=128`
+- :doc:`M=28_K=19_Q=256`
+- :doc:`M=28_K=19_Q=512`
+- :doc:`M=28_K=19_Q=1024`
+- :doc:`M=28_K=19_Q=2048`
+- :doc:`M=28_K=19_Q=4096`
+- :doc:`M=28_K=19_Q=8192`
+- :doc:`M=28_K=19_Q=16384`
+- :doc:`M=28_K=19_Q=32768`
+- :doc:`M=28_K=19_Q=65536`
+- :doc:`M=28_K=19_Q=131072`
 - :doc:`M=28_K=20_Q=2`
 - :doc:`M=28_K=20_Q=4`
 - :doc:`M=28_K=20_Q=8`
@@ -439,3 +473,5 @@ This webpage provides the designed active indices for the :math:`M = 28` case.
 - :doc:`M=28_K=26_Q=128`
 - :doc:`M=28_K=26_Q=256`
 - :doc:`M=28_K=27_Q=2`
+- :doc:`M=28_K=27_Q=4`
+- :doc:`M=28_K=27_Q=16`

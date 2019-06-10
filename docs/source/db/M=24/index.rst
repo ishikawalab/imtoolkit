@@ -146,6 +146,7 @@ This webpage provides the designed active indices for the :math:`M = 24` case.
    M=24_K=10_Q=16384
    M=24_K=10_Q=32768
    M=24_K=10_Q=65536
+   M=24_K=10_Q=131072
    M=24_K=11_Q=2
    M=24_K=11_Q=4
    M=24_K=11_Q=8
@@ -162,6 +163,7 @@ This webpage provides the designed active indices for the :math:`M = 24` case.
    M=24_K=11_Q=16384
    M=24_K=11_Q=32768
    M=24_K=11_Q=65536
+   M=24_K=11_Q=131072
    M=24_K=12_Q=2
    M=24_K=12_Q=4
    M=24_K=12_Q=8
@@ -178,6 +180,7 @@ This webpage provides the designed active indices for the :math:`M = 24` case.
    M=24_K=12_Q=16384
    M=24_K=12_Q=32768
    M=24_K=12_Q=65536
+   M=24_K=12_Q=131072
    M=24_K=13_Q=2
    M=24_K=13_Q=4
    M=24_K=13_Q=8
@@ -194,6 +197,7 @@ This webpage provides the designed active indices for the :math:`M = 24` case.
    M=24_K=13_Q=16384
    M=24_K=13_Q=32768
    M=24_K=13_Q=65536
+   M=24_K=13_Q=131072
    M=24_K=14_Q=2
    M=24_K=14_Q=4
    M=24_K=14_Q=8
@@ -210,6 +214,7 @@ This webpage provides the designed active indices for the :math:`M = 24` case.
    M=24_K=14_Q=16384
    M=24_K=14_Q=32768
    M=24_K=14_Q=65536
+   M=24_K=14_Q=131072
    M=24_K=15_Q=2
    M=24_K=15_Q=4
    M=24_K=15_Q=8
@@ -243,6 +248,7 @@ This webpage provides the designed active indices for the :math:`M = 24` case.
    M=24_K=16_Q=16384
    M=24_K=16_Q=32768
    M=24_K=16_Q=65536
+   M=24_K=16_Q=131072
    M=24_K=17_Q=2
    M=24_K=17_Q=4
    M=24_K=17_Q=8
@@ -325,6 +331,8 @@ This webpage provides the designed active indices for the :math:`M = 24` case.
    M=24_K=22_Q=256
    M=24_K=23_Q=2
    M=24_K=23_Q=4
+   M=24_K=23_Q=8
+   M=24_K=23_Q=16
 
 - :doc:`M=24_K=1_Q=2`
 - :doc:`M=24_K=1_Q=4`
@@ -462,6 +470,7 @@ This webpage provides the designed active indices for the :math:`M = 24` case.
 - :doc:`M=24_K=10_Q=16384`
 - :doc:`M=24_K=10_Q=32768`
 - :doc:`M=24_K=10_Q=65536`
+- :doc:`M=24_K=10_Q=131072`
 - :doc:`M=24_K=11_Q=2`
 - :doc:`M=24_K=11_Q=4`
 - :doc:`M=24_K=11_Q=8`
@@ -478,6 +487,7 @@ This webpage provides the designed active indices for the :math:`M = 24` case.
 - :doc:`M=24_K=11_Q=16384`
 - :doc:`M=24_K=11_Q=32768`
 - :doc:`M=24_K=11_Q=65536`
+- :doc:`M=24_K=11_Q=131072`
 - :doc:`M=24_K=12_Q=2`
 - :doc:`M=24_K=12_Q=4`
 - :doc:`M=24_K=12_Q=8`
@@ -494,6 +504,7 @@ This webpage provides the designed active indices for the :math:`M = 24` case.
 - :doc:`M=24_K=12_Q=16384`
 - :doc:`M=24_K=12_Q=32768`
 - :doc:`M=24_K=12_Q=65536`
+- :doc:`M=24_K=12_Q=131072`
 - :doc:`M=24_K=13_Q=2`
 - :doc:`M=24_K=13_Q=4`
 - :doc:`M=24_K=13_Q=8`
@@ -510,6 +521,7 @@ This webpage provides the designed active indices for the :math:`M = 24` case.
 - :doc:`M=24_K=13_Q=16384`
 - :doc:`M=24_K=13_Q=32768`
 - :doc:`M=24_K=13_Q=65536`
+- :doc:`M=24_K=13_Q=131072`
 - :doc:`M=24_K=14_Q=2`
 - :doc:`M=24_K=14_Q=4`
 - :doc:`M=24_K=14_Q=8`
@@ -526,6 +538,7 @@ This webpage provides the designed active indices for the :math:`M = 24` case.
 - :doc:`M=24_K=14_Q=16384`
 - :doc:`M=24_K=14_Q=32768`
 - :doc:`M=24_K=14_Q=65536`
+- :doc:`M=24_K=14_Q=131072`
 - :doc:`M=24_K=15_Q=2`
 - :doc:`M=24_K=15_Q=4`
 - :doc:`M=24_K=15_Q=8`
@@ -559,6 +572,7 @@ This webpage provides the designed active indices for the :math:`M = 24` case.
 - :doc:`M=24_K=16_Q=16384`
 - :doc:`M=24_K=16_Q=32768`
 - :doc:`M=24_K=16_Q=65536`
+- :doc:`M=24_K=16_Q=131072`
 - :doc:`M=24_K=17_Q=2`
 - :doc:`M=24_K=17_Q=4`
 - :doc:`M=24_K=17_Q=8`
@@ -641,3 +655,5 @@ This webpage provides the designed active indices for the :math:`M = 24` case.
 - :doc:`M=24_K=22_Q=256`
 - :doc:`M=24_K=23_Q=2`
 - :doc:`M=24_K=23_Q=4`
+- :doc:`M=24_K=23_Q=8`
+- :doc:`M=24_K=23_Q=16`
