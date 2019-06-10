@@ -11,10 +11,10 @@ import importlib
 import numpy as np
 if os.getenv("USECUPY") == "1" and importlib.util.find_spec("cupy") != None:
     from cupy import *
-    print("cupy is imported by Util.py")
+    # print("cupy is imported by Util.py")
 else:
     from numpy import *
-    print("numpy is imported by Util.py")
+    # print("numpy is imported by Util.py")
 
 
 def getGrayIndixes(bitWidth):

@@ -8,10 +8,10 @@ from tqdm import tqdm, trange
 import importlib
 if os.getenv("USECUPY") == "1" and importlib.util.find_spec("cupy") != None:
     from cupy import *
-    print("cupy is imported by CoherentMLDSimulator.py")
+    # print("cupy is imported by CoherentMLDSimulator.py")
 else:
     from numpy import *
-    print("numpy is imported by CoherentMLDSimulator.py")
+    # print("numpy is imported by CoherentMLDSimulator.py")
 
 from .Simulator import *
 from .Util import *

@@ -6,10 +6,10 @@ import importlib
 import pandas as pd
 if os.getenv("USECUPY") == "1" and importlib.util.find_spec("cupy") != None:
     import cupy as xp
-    print("cupy is imported by Simulator.py")
+    # print("cupy is imported by Simulator.py")
 else:
     import numpy as xp
-    print("numpy is imported by Simulator.py")
+    # print("numpy is imported by Simulator.py")
 
 
 class Simulator(object):
