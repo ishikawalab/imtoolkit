@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>imtoolkit.CoherentMLDSimulator &mdash; imtoolkit 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> imtoolkit
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../db/index.html">Active Indices Database</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imtoolkit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>imtoolkit.CoherentMLDSimulator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for imtoolkit.CoherentMLDSimulator</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) IMToolkit Development Team</span>
+<span class="c1"># This toolkit is released under the MIT License, see LICENSE.txt</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm</span><span class="p">,</span> <span class="n">trange</span>
+<span class="kn">import</span> <span class="nn">importlib</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;USECUPY&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="ow">and</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;cupy&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">cupy</span> <span class="k">import</span> <span class="o">*</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cupy is imported by CoherentMLDSimulator.py&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">numpy</span> <span class="k">import</span> <span class="o">*</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;numpy is imported by CoherentMLDSimulator.py&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">.Simulator</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.Util</span> <span class="k">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="CoherentMLDSimulator"><a class="viewcode-back" href="../../imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator">[docs]</a><span class="k">class</span> <span class="nc">CoherentMLDSimulator</span><span class="p">(</span><span class="n">Simulator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A simulatror that relies on the coherent maximum likelihood detection.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        codes (ndarray): an input codebook</span>
+<span class="sd">        channel (imtoolkit.Channel): a channel model used though simulation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codes</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CoherentMLDSimulator.simulateBERReference"><a class="viewcode-back" href="../../imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateBERReference">[docs]</a>    <span class="k">def</span> <span class="nf">simulateBERReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">output</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Simulates the BER values at multiple SNRs, where the straightforward reference algorithm is used.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            params (imtoolkit.Parameter): simulation parameters.</span>
+<span class="sd">            output (bool): whether output the obtained results to the results/ directory.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ret (dict): a dict that has two keys: snr_dB and ber, and the corresponding results.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">IT</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">Nc</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">codes</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">IT</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">codes</span>
+        <span class="n">snr_dBs</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">snrfrom</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">to</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">len</span><span class="p">)</span>
+        <span class="n">sigmav2s</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">inv_dB</span><span class="p">(</span><span class="n">snr_dBs</span><span class="p">)</span>
+        <span class="n">errorTable</span> <span class="o">=</span> <span class="n">getErrorBitsTable</span><span class="p">(</span><span class="n">Nc</span><span class="p">)</span>
+
+        <span class="n">bers</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">snr_dBs</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">trange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">snr_dBs</span><span class="p">)):</span>
+            <span class="n">errorBits</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">IT</span><span class="p">):</span>
+                <span class="n">codei</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Nc</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">randomize</span><span class="p">()</span>
+                <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">getChannel</span><span class="p">()</span> <span class="c1"># N \times M</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="n">randn_c</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">sigmav2s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">matmul</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">codes</span><span class="p">[</span><span class="n">codei</span><span class="p">])</span> <span class="o">+</span> <span class="n">v</span>
+
+                <span class="n">norms</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">power</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">matmul</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">codes</span><span class="p">)),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">mini</span> <span class="o">=</span> <span class="n">argmin</span><span class="p">(</span><span class="n">norms</span><span class="p">)</span>
+                <span class="n">errorBits</span> <span class="o">+=</span> <span class="n">errorTable</span><span class="p">[</span><span class="n">codei</span><span class="p">][</span><span class="n">mini</span><span class="p">]</span>
+
+            <span class="n">bers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">errorBits</span> <span class="o">/</span> <span class="p">(</span><span class="n">IT</span> <span class="o">*</span> <span class="n">B</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;At SNR = </span><span class="si">%1.2f</span><span class="s2"> dB, BER = </span><span class="si">%d</span><span class="s2"> / </span><span class="si">%d</span><span class="s2"> = </span><span class="si">%1.20f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">snr_dBs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">errorBits</span><span class="p">,</span> <span class="n">IT</span> <span class="o">*</span> <span class="n">B</span><span class="p">,</span> <span class="n">bers</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;snr_dB&quot;</span><span class="p">:</span> <span class="n">snr_dBs</span><span class="p">,</span> <span class="s2">&quot;ber&quot;</span><span class="p">:</span> <span class="n">bers</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">saveCSV</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">arg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dicToDF</span><span class="p">(</span><span class="n">ret</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="CoherentMLDSimulator.simulateBERParallel"><a class="viewcode-back" href="../../imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateBERParallel">[docs]</a>    <span class="k">def</span> <span class="nf">simulateBERParallel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">output</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Simulates the BER values at multiple SNRs, where the massively parallel algorithm is used.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            params (imtoolkit.Parameter): simulation parameters.</span>
+<span class="sd">            output (bool): whether output the obtained results to the results/ directory.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ret (dict): a dict that has two keys: snr_dB and ber, and the corresponding results.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;simulateBERParallel&quot;</span><span class="p">)</span>
+
+        <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">ITo</span><span class="p">,</span> <span class="n">ITi</span><span class="p">,</span> <span class="n">Nc</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">codes</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">ITo</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">ITi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">codes</span>
+        <span class="n">snr_dBs</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">snrfrom</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">to</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">len</span><span class="p">)</span>
+        <span class="n">sigmav2s</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">inv_dB</span><span class="p">(</span><span class="n">snr_dBs</span><span class="p">)</span>
+        <span class="n">codei</span> <span class="o">=</span> <span class="n">tile</span><span class="p">(</span><span class="n">arange</span><span class="p">(</span><span class="n">Nc</span><span class="p">),</span> <span class="n">ITi</span><span class="p">)</span>
+        <span class="n">xor2ebits</span> <span class="o">=</span> <span class="n">getXORtoErrorBitsArray</span><span class="p">(</span><span class="n">Nc</span><span class="p">)</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tile</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="n">Nc</span><span class="p">)</span> <span class="c1"># Nc \times M \times T \cdot Nc</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">T</span> <span class="c1"># Nc \times M \times T \cdot Nc</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">diffxy</span> <span class="o">=</span> <span class="n">hstack</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">)</span> <span class="c1"># M \times Nc * Nc</span>
+
+        <span class="n">bers</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">snr_dBs</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">ito</span> <span class="ow">in</span> <span class="n">trange</span><span class="p">(</span><span class="n">ITo</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">randomize</span><span class="p">()</span>
+            <span class="n">bigh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">getChannel</span><span class="p">()</span> <span class="c1"># ITi * N \times M</span>
+            <span class="n">bigv</span> <span class="o">=</span> <span class="n">tile</span><span class="p">(</span><span class="n">randn_c</span><span class="p">(</span><span class="n">ITi</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">Nc</span> <span class="o">*</span> <span class="n">Nc</span><span class="p">)</span> <span class="c1"># ITi * N \times Nc * Nc</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">snr_dBs</span><span class="p">)):</span>
+                <span class="n">ydiff</span> <span class="o">=</span> <span class="n">matmul</span><span class="p">(</span><span class="n">bigh</span><span class="p">,</span> <span class="n">diffxy</span><span class="p">)</span> <span class="o">+</span> <span class="n">bigv</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">sigmav2s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+                <span class="n">ydifffro</span> <span class="o">=</span> <span class="n">power</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">ydiff</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ITi</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">Nc</span> <span class="o">*</span> <span class="n">Nc</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># ITi \times N \times Nc * Nc</span>
+                <span class="n">ydifffrosum</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">ydifffro</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># ITi \times Nc * Nc</span>
+                <span class="n">norms</span> <span class="o">=</span> <span class="n">ydifffrosum</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ITi</span><span class="p">,</span> <span class="n">Nc</span><span class="p">,</span> <span class="n">Nc</span><span class="p">)</span> <span class="c1"># ITi \times Nc \times Nc</span>
+                <span class="c1"># print(norms)</span>
+                <span class="n">mini</span> <span class="o">=</span> <span class="n">argmin</span><span class="p">(</span><span class="n">norms</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ITi</span> <span class="o">*</span> <span class="n">Nc</span><span class="p">)</span>
+                <span class="n">errorBits</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xor2ebits</span><span class="p">[</span><span class="n">bitwise_xor</span><span class="p">(</span><span class="n">codei</span><span class="p">,</span> <span class="n">mini</span><span class="p">)])</span>
+
+                <span class="n">bers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">errorBits</span><span class="c1"># / (ITi * B * Nc)</span>
+                <span class="n">nbits</span> <span class="o">=</span> <span class="p">(</span><span class="n">ito</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">ITi</span> <span class="o">*</span> <span class="n">B</span> <span class="o">*</span> <span class="n">Nc</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;At SNR = </span><span class="si">%1.2f</span><span class="s2"> dB, BER = </span><span class="si">%d</span><span class="s2"> / </span><span class="si">%d</span><span class="s2"> = </span><span class="si">%1.20f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">snr_dBs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">bers</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nbits</span><span class="p">,</span> <span class="n">bers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">nbits</span><span class="p">))</span>
+
+        <span class="n">bers</span> <span class="o">/=</span> <span class="n">ITo</span> <span class="o">*</span> <span class="n">ITi</span> <span class="o">*</span> <span class="n">B</span> <span class="o">*</span> <span class="n">Nc</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;snr_dB&quot;</span><span class="p">:</span> <span class="n">snr_dBs</span><span class="p">,</span> <span class="s2">&quot;ber&quot;</span><span class="p">:</span> <span class="n">bers</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">saveCSV</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">arg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dicToDF</span><span class="p">(</span><span class="n">ret</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="CoherentMLDSimulator.simulateAMIReference"><a class="viewcode-back" href="../../imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateAMIReference">[docs]</a>    <span class="k">def</span> <span class="nf">simulateAMIReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">output</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Simulates the AMI values at multiple SNRs, where the straightforward reference algorithm is used.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            params (imtoolkit.Parameter): simulation parameters.</span>
+<span class="sd">            output (bool): whether output the obtained results to the results/ directory.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ret (dict): a dict that has two keys: snr_dB and ami, and the corresponding results.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;simulateAMIReference&quot;</span><span class="p">)</span>
+
+        <span class="n">IT</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">Nc</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">codes</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">IT</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">codes</span>
+        <span class="n">snr_dBs</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">snrfrom</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">to</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">len</span><span class="p">)</span>
+        <span class="n">sigmav2s</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">inv_dB</span><span class="p">(</span><span class="n">snr_dBs</span><span class="p">)</span>
+
+        <span class="n">amis</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">snr_dBs</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">trange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">snr_dBs</span><span class="p">)):</span>
+            <span class="n">sum_outer</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">IT</span><span class="p">):</span>
+                <span class="n">V</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">sigmav2s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">randn_c</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="c1">#V = sqrt(sigmav2) * seedv.reshape(M, 1) # for debug</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">randomize</span><span class="p">()</span>
+                <span class="n">H</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">getChannel</span><span class="p">()</span> <span class="c1"># N \times M</span>
+                <span class="c1"># H = eye(M) # for debug</span>
+                <span class="k">for</span> <span class="n">outer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nc</span><span class="p">):</span>
+                    <span class="n">sum_inner</span> <span class="o">=</span> <span class="mf">0.0</span>
+                    <span class="k">for</span> <span class="n">inner</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nc</span><span class="p">):</span>
+                        <span class="n">hxy</span> <span class="o">=</span> <span class="n">matmul</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">codes</span><span class="p">[</span><span class="n">outer</span><span class="p">]</span> <span class="o">-</span> <span class="n">codes</span><span class="p">[</span><span class="n">inner</span><span class="p">])</span>
+                        <span class="n">head</span> <span class="o">=</span> <span class="n">hxy</span> <span class="o">+</span> <span class="n">V</span>
+                        <span class="n">tail</span> <span class="o">=</span> <span class="n">V</span>
+                        <span class="n">coeff</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">power</span><span class="p">(</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">head</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">power</span><span class="p">(</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">tail</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="n">sigmav2s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                        <span class="n">sum_inner</span> <span class="o">+=</span> <span class="n">exp</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span>
+                    <span class="n">sum_outer</span> <span class="o">+=</span> <span class="n">log2</span><span class="p">(</span><span class="n">sum_inner</span><span class="p">)</span>
+            <span class="c1">#print(&quot;bminus = &quot; + str(sum_outer / Nc / IT))</span>
+            <span class="n">amis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">B</span> <span class="o">-</span> <span class="n">sum_outer</span> <span class="o">/</span> <span class="n">Nc</span> <span class="o">/</span> <span class="n">IT</span>
+            <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;At SNR = </span><span class="si">%1.2f</span><span class="s2"> dB, AMI = </span><span class="si">%1.20f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">snr_dBs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">amis</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;snr_dB&quot;</span><span class="p">:</span> <span class="n">snr_dBs</span><span class="p">,</span> <span class="s2">&quot;ami&quot;</span><span class="p">:</span> <span class="n">amis</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">saveCSV</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">arg</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+        
+
+<div class="viewcode-block" id="CoherentMLDSimulator.simulateAMIParallel"><a class="viewcode-back" href="../../imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateAMIParallel">[docs]</a>    <span class="k">def</span> <span class="nf">simulateAMIParallel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">output</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Simulates the AMI values at multiple SNRs, where the massively parallel algorithm is used.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            params (imtoolkit.Parameter): simulation parameters.</span>
+<span class="sd">            output (bool): whether output the obtained results to the results/ directory.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ret (dict): a dict that has two keys: snr_dB and ami, and the corresponding results.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">ITo</span><span class="p">,</span> <span class="n">ITi</span><span class="p">,</span> <span class="n">Nc</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">codes</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">ITo</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">ITi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">codes</span>
+        <span class="n">snr_dBs</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">snrfrom</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">to</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">len</span><span class="p">)</span>
+        <span class="n">sigmav2s</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">inv_dB</span><span class="p">(</span><span class="n">snr_dBs</span><span class="p">)</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tile</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="n">Nc</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">diffxy</span> <span class="o">=</span> <span class="n">hstack</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">)</span> <span class="c1"># M \times Nc * Nc</span>
+
+        <span class="n">amis</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">snr_dBs</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">ito</span> <span class="ow">in</span> <span class="n">trange</span><span class="p">(</span><span class="n">ITo</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">randomize</span><span class="p">()</span>
+            <span class="n">bigh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">getChannel</span><span class="p">()</span> <span class="c1"># ITi * N \times M</span>
+            <span class="n">bigv</span> <span class="o">=</span> <span class="n">tile</span><span class="p">(</span><span class="n">randn_c</span><span class="p">(</span><span class="n">ITi</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">Nc</span> <span class="o">*</span> <span class="n">Nc</span><span class="p">)</span> <span class="c1"># ITi * N \times Nc * Nc</span>
+
+            <span class="n">bigvfro</span> <span class="o">=</span> <span class="n">power</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">bigv</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ITi</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">Nc</span> <span class="o">*</span> <span class="n">Nc</span><span class="p">)</span> <span class="c1"># ITi \times N \times Nc * Nc</span>
+            <span class="n">frov</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">bigvfro</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ITi</span><span class="p">,</span> <span class="n">Nc</span><span class="p">,</span> <span class="n">Nc</span><span class="p">)</span>  <span class="c1"># ITi \times Nc \times Nc</span>
+            
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">snr_dBs</span><span class="p">)):</span>
+                <span class="n">hsplusv</span> <span class="o">=</span> <span class="n">matmul</span><span class="p">(</span><span class="n">bigh</span><span class="p">,</span> <span class="n">diffxy</span><span class="p">)</span> <span class="o">+</span> <span class="n">bigv</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">sigmav2s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="c1"># ITi * N \times Nc * Nc</span>
+                <span class="n">hsvfro</span> <span class="o">=</span> <span class="n">power</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">hsplusv</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ITi</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">Nc</span> <span class="o">*</span> <span class="n">Nc</span><span class="p">)</span> <span class="c1"># ITi \times N \times Nc * Nc</span>
+                <span class="n">froy</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">hsvfro</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># ITi \times Nc * Nc</span>
+                <span class="n">reds</span> <span class="o">=</span> <span class="n">froy</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ITi</span><span class="p">,</span> <span class="n">Nc</span><span class="p">,</span> <span class="n">Nc</span><span class="p">)</span> <span class="c1"># ITi \times Nc \times Nc</span>
+
+                <span class="n">ecoffs</span> <span class="o">=</span> <span class="o">-</span><span class="n">reds</span> <span class="o">/</span> <span class="n">sigmav2s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">frov</span> <span class="c1"># diagonal elements must be zero</span>
+                <span class="n">bminus</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">log2</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">ecoffs</span><span class="p">),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)))</span>
+
+                <span class="n">amis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">B</span> <span class="o">-</span> <span class="n">bminus</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;At SNR = </span><span class="si">%1.2f</span><span class="s2"> dB, AMI = </span><span class="si">%1.20f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">snr_dBs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">amis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">ito</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))</span>
+            
+        <span class="c1">#</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dicToNumpy</span><span class="p">({</span><span class="s2">&quot;snr_dB&quot;</span><span class="p">:</span> <span class="n">snr_dBs</span><span class="p">,</span> <span class="s2">&quot;ami&quot;</span><span class="p">:</span> <span class="n">amis</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">saveCSV</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">arg</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ret</span></div></div>
+        
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Naoki Ishikawa
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ 
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-402853-8', 'ishikawa.cc');
+    ga('send', 'pageview');
+</script>
+
+
+</body>
+</html>

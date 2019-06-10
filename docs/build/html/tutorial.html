@@ -1,0 +1,409 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorial &mdash; imtoolkit 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Active Indices Database" href="db/index.html" />
+    <link rel="prev" title="Overview" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> imtoolkit
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage-examples">Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parameters">Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="db/index.html">Active Indices Database</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">imtoolkit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Tutorial</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<p>This webpage introduces a detailed tutorial for the <code class="docutils literal notranslate"><span class="pre">imtoolkit</span></code> command, which can be installed by <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">imtoolkit</span></code>.</p>
+<div class="section" id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<p>The command line option is specified by a sentence that concatenates parameters by underscores, such as</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; imtoolkit <span class="o">{</span>MODE<span class="o">}</span><span class="nv">_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">={</span>dic,wen,opt<span class="o">}</span>_ + other parameters
+</pre></div>
+</div>
+<p>Before executing the <code class="docutils literal notranslate"><span class="pre">imtoolkit</span></code> command, the CuPy-aided acceleration is enabled by setting an environment variable <code class="docutils literal notranslate"><span class="pre">USECUPY=1</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; <span class="nb">export</span> <span class="nv">USECUPY</span><span class="o">=</span><span class="m">1</span>
+</pre></div>
+</div>
+<p>In case you would like to use Numpy, please unset the environment variable.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; <span class="nb">unset</span> USECUPY
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage-examples">
+<h2>Usage Examples<a class="headerlink" href="#usage-examples" title="Permalink to this headline">¶</a></h2>
+<p>The followings are instant usage examples.
+All the variables are the same as those used in the IEEE Access paper.</p>
+<p>Check the transmission rate of the IM codebook having <span class="math notranslate nohighlight">\((M,K,Q)=(2,1,2)\)</span> and BPSK constellation.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; imtoolkit <span class="nv">RATE_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">=</span><span class="nv">dic_M</span><span class="o">=</span><span class="nv">2_K</span><span class="o">=</span><span class="nv">1_Q</span><span class="o">=</span><span class="nv">2_L</span><span class="o">=</span><span class="nv">2_mod</span><span class="o">=</span>PSK
+<span class="nv">B</span> <span class="o">=</span> B1 + <span class="nv">B2</span> <span class="o">=</span> <span class="m">1</span> + <span class="nv">1</span> <span class="o">=</span> <span class="m">2</span> <span class="o">[</span>bits/symbol<span class="o">]</span>
+</pre></div>
+</div>
+<p>Check the IM codebooks relying on the combinatorial (dic), equiprobable (wen), and integer linear programming (opt) methods.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; imtoolkit <span class="nv">VIEW_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">=</span><span class="nv">dic_M</span><span class="o">=</span><span class="nv">2_K</span><span class="o">=</span><span class="nv">1_Q</span><span class="o">=</span><span class="nv">2_L</span><span class="o">=</span><span class="nv">2_mod</span><span class="o">=</span>PSK
+&gt; imtoolkit <span class="nv">VIEW_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">=</span><span class="nv">wen_M</span><span class="o">=</span><span class="nv">16_K</span><span class="o">=</span><span class="nv">8_Q</span><span class="o">=</span><span class="nv">16_L</span><span class="o">=</span><span class="nv">1_mod</span><span class="o">=</span>PSK
+&gt; imtoolkit <span class="nv">VIEW_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">=</span><span class="nv">opt_M</span><span class="o">=</span><span class="nv">16_K</span><span class="o">=</span><span class="nv">8_Q</span><span class="o">=</span><span class="nv">16_L</span><span class="o">=</span><span class="nv">1_mod</span><span class="o">=</span>PSK
+</pre></div>
+</div>
+<p>Check the designed active indices having <span class="math notranslate nohighlight">\((M,K,Q)=(16,8,16)\)</span>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; imtoolkit <span class="nv">VIEWIM_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">=</span><span class="nv">opt_M</span><span class="o">=</span><span class="nv">16_K</span><span class="o">=</span><span class="nv">8_Q</span><span class="o">=</span><span class="m">16</span>
+<span class="o">[[</span><span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span><span class="o">]</span>
+ <span class="o">[</span><span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span><span class="o">]</span>
+ <span class="o">[</span><span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span><span class="o">]</span>
+ <span class="o">[</span><span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span><span class="o">]</span>
+ <span class="o">[</span><span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span><span class="o">]</span>
+ <span class="o">[</span><span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span><span class="o">]</span>
+ <span class="o">[</span><span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span><span class="o">]</span>
+ <span class="o">[</span><span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span><span class="o">]</span>
+ <span class="o">[</span><span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span><span class="o">]</span>
+ <span class="o">[</span><span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span><span class="o">]</span>
+ <span class="o">[</span><span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">1</span><span class="o">]</span>
+ <span class="o">[</span><span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span><span class="o">]</span>
+ <span class="o">[</span><span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span><span class="o">]</span>
+ <span class="o">[</span><span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span><span class="o">]</span>
+ <span class="o">[</span><span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span><span class="o">]</span>
+ <span class="o">[</span><span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span> <span class="m">1</span><span class="o">]]</span>
+Minimum Hamming <span class="nv">distance</span> <span class="o">=</span> <span class="m">8</span>
+Inequality <span class="nv">L1</span> <span class="o">=</span> <span class="m">0</span>
+</pre></div>
+</div>
+<p>Check the minimum Euclidean distance of the IM codebook having <span class="math notranslate nohighlight">\((M,K,Q)=(2,1,2)\)</span> and BPSK constellation.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; imtoolkit <span class="nv">MED_channel</span><span class="o">=</span><span class="nv">rayleigh_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">=</span><span class="nv">dic_M</span><span class="o">=</span><span class="nv">2_K</span><span class="o">=</span><span class="nv">1_Q</span><span class="o">=</span><span class="nv">2_L</span><span class="o">=</span><span class="nv">2_mod</span><span class="o">=</span>PSK
+<span class="nb">export</span> <span class="nv">USECUPY</span><span class="o">=</span><span class="m">1</span>
+<span class="nv">MED</span> <span class="o">=</span> <span class="m">2</span>.0000000000000004
+</pre></div>
+</div>
+<p>Check the BER of the BLAST scheme having BPSK constellation over the ideal Rayleigh fading channel.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; imtoolkit <span class="nv">BER_sim</span><span class="o">=</span><span class="nv">coh_channel</span><span class="o">=</span><span class="nv">rayleigh_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">=</span><span class="nv">dic_M</span><span class="o">=</span><span class="nv">2_K</span><span class="o">=</span><span class="nv">2_Q</span><span class="o">=</span><span class="nv">1_L</span><span class="o">=</span><span class="nv">2_mod</span><span class="o">=</span><span class="nv">PSK_N</span><span class="o">=</span><span class="nv">1_IT</span><span class="o">=</span><span class="nv">1e6_snrfrom</span><span class="o">=</span><span class="m">0</span>.00_to<span class="o">=</span><span class="m">50</span>.00_len<span class="o">=</span><span class="m">11</span>
+&gt; imtoolkit <span class="nv">BERP_sim</span><span class="o">=</span><span class="nv">coh_channel</span><span class="o">=</span><span class="nv">rayleigh_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">=</span><span class="nv">dic_M</span><span class="o">=</span><span class="nv">2_K</span><span class="o">=</span><span class="nv">2_Q</span><span class="o">=</span><span class="nv">1_L</span><span class="o">=</span><span class="nv">2_mod</span><span class="o">=</span><span class="nv">PSK_N</span><span class="o">=</span><span class="nv">1_ITo</span><span class="o">=</span><span class="nv">1e2_ITi</span><span class="o">=</span><span class="nv">1e4_snrfrom</span><span class="o">=</span><span class="m">0</span>.00_to<span class="o">=</span><span class="m">50</span>.00_len<span class="o">=</span><span class="m">11</span>
+At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">0</span>.00 dB, <span class="nv">BER</span> <span class="o">=</span> <span class="m">286270</span> / <span class="nv">1200000</span> <span class="o">=</span> <span class="m">0</span>.23855833333333334445
+At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">5</span>.00 dB, <span class="nv">BER</span> <span class="o">=</span> <span class="m">165053</span> / <span class="nv">1200000</span> <span class="o">=</span> <span class="m">0</span>.13754416666666666180
+At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">10</span>.00 dB, <span class="nv">BER</span> <span class="o">=</span> <span class="m">72774</span> / <span class="nv">1200000</span> <span class="o">=</span> <span class="m">0</span>.06064499999999999752
+At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">15</span>.00 dB, <span class="nv">BER</span> <span class="o">=</span> <span class="m">26499</span> / <span class="nv">1200000</span> <span class="o">=</span> <span class="m">0</span>.02208250000000000143
+At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">20</span>.00 dB, <span class="nv">BER</span> <span class="o">=</span> <span class="m">8899</span> / <span class="nv">1200000</span> <span class="o">=</span> <span class="m">0</span>.00741583333333333330
+At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">25</span>.00 dB, <span class="nv">BER</span> <span class="o">=</span> <span class="m">2810</span> / <span class="nv">1200000</span> <span class="o">=</span> <span class="m">0</span>.00234166666666666681
+At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">30</span>.00 dB, <span class="nv">BER</span> <span class="o">=</span> <span class="m">861</span> / <span class="nv">1200000</span> <span class="o">=</span> <span class="m">0</span>.00071750000000000004
+At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">35</span>.00 dB, <span class="nv">BER</span> <span class="o">=</span> <span class="m">274</span> / <span class="nv">1200000</span> <span class="o">=</span> <span class="m">0</span>.00022833333333333334
+At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">40</span>.00 dB, <span class="nv">BER</span> <span class="o">=</span> <span class="m">74</span> / <span class="nv">1200000</span> <span class="o">=</span> <span class="m">0</span>.00006166666666666667
+At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">45</span>.00 dB, <span class="nv">BER</span> <span class="o">=</span> <span class="m">28</span> / <span class="nv">1200000</span> <span class="o">=</span> <span class="m">0</span>.00002333333333333333
+At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">50</span>.00 dB, <span class="nv">BER</span> <span class="o">=</span> <span class="m">10</span> / <span class="nv">1200000</span> <span class="o">=</span> <span class="m">0</span>.00000833333333333333
+ <span class="m">15</span>%<span class="p">|</span>████████▎                                              <span class="p">|</span> <span class="m">15</span>/100 <span class="o">[</span><span class="m">00</span>:03&lt;<span class="m">00</span>:21,  <span class="m">3</span>.87it/s<span class="o">]</span>
+</pre></div>
+</div>
+<p>Check the BER of the spatial modulation scheme over the ideal Rayleigh fading channel.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; imtoolkit <span class="nv">BER_sim</span><span class="o">=</span><span class="nv">coh_channel</span><span class="o">=</span><span class="nv">rayleigh_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">=</span><span class="nv">dic_M</span><span class="o">=</span><span class="nv">2_K</span><span class="o">=</span><span class="nv">1_Q</span><span class="o">=</span><span class="nv">2_L</span><span class="o">=</span><span class="nv">2_mod</span><span class="o">=</span><span class="nv">PSK_N</span><span class="o">=</span><span class="nv">1_IT</span><span class="o">=</span><span class="nv">1e6_snrfrom</span><span class="o">=</span><span class="m">0</span>.00_to<span class="o">=</span><span class="m">50</span>.00_len<span class="o">=</span><span class="m">11</span>
+&gt; imtoolkit <span class="nv">BERP_sim</span><span class="o">=</span><span class="nv">coh_channel</span><span class="o">=</span><span class="nv">rayleigh_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">=</span><span class="nv">dic_M</span><span class="o">=</span><span class="nv">2_K</span><span class="o">=</span><span class="nv">1_Q</span><span class="o">=</span><span class="nv">2_L</span><span class="o">=</span><span class="nv">2_mod</span><span class="o">=</span><span class="nv">PSK_N</span><span class="o">=</span><span class="nv">1_ITo</span><span class="o">=</span><span class="nv">1e2_ITi</span><span class="o">=</span><span class="nv">1e4_snrfrom</span><span class="o">=</span><span class="m">0</span>.00_to<span class="o">=</span><span class="m">50</span>.00_len<span class="o">=</span><span class="m">11</span>
+</pre></div>
+</div>
+<p>Similarly, check the AMI of the above setup.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; imtoolkit <span class="nv">AMI_sim</span><span class="o">=</span><span class="nv">coh_channel</span><span class="o">=</span><span class="nv">rayleigh_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">=</span><span class="nv">dic_M</span><span class="o">=</span><span class="nv">2_K</span><span class="o">=</span><span class="nv">1_Q</span><span class="o">=</span><span class="nv">2_L</span><span class="o">=</span><span class="nv">2_mod</span><span class="o">=</span><span class="nv">PSK_N</span><span class="o">=</span><span class="nv">1_IT</span><span class="o">=</span><span class="nv">1e4_snrfrom</span><span class="o">=</span>-20.00_to<span class="o">=</span><span class="m">30</span>.00_len<span class="o">=</span><span class="m">11</span>
+&gt; imtoolkit <span class="nv">AMIP_sim</span><span class="o">=</span><span class="nv">coh_channel</span><span class="o">=</span><span class="nv">rayleigh_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">=</span><span class="nv">dic_M</span><span class="o">=</span><span class="nv">2_K</span><span class="o">=</span><span class="nv">1_Q</span><span class="o">=</span><span class="nv">2_L</span><span class="o">=</span><span class="nv">2_mod</span><span class="o">=</span><span class="nv">PSK_N</span><span class="o">=</span><span class="nv">1_ITo</span><span class="o">=</span><span class="nv">1e1_ITi</span><span class="o">=</span><span class="nv">1e3_snrfrom</span><span class="o">=</span>-20.00_to<span class="o">=</span><span class="m">30</span>.00_len<span class="o">=</span><span class="m">11</span>
+</pre></div>
+</div>
+<p>Check the BER and AMI of the subcarrier index modulation scheme over the ideal frequency-selective OFDM channel.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; imtoolkit <span class="nv">BER_sim</span><span class="o">=</span><span class="nv">coh_channel</span><span class="o">=</span><span class="nv">ofdm_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">=</span><span class="nv">dic_M</span><span class="o">=</span><span class="nv">2_K</span><span class="o">=</span><span class="nv">1_Q</span><span class="o">=</span><span class="nv">2_L</span><span class="o">=</span><span class="nv">2_mod</span><span class="o">=</span><span class="nv">PSK_IT</span><span class="o">=</span><span class="nv">1e6_snrfrom</span><span class="o">=</span><span class="m">0</span>.00_to<span class="o">=</span><span class="m">50</span>.00_len<span class="o">=</span><span class="m">11</span>
+&gt; imtoolkit <span class="nv">BERP_sim</span><span class="o">=</span><span class="nv">coh_channel</span><span class="o">=</span><span class="nv">ofdm_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">=</span><span class="nv">dic_M</span><span class="o">=</span><span class="nv">2_K</span><span class="o">=</span><span class="nv">1_Q</span><span class="o">=</span><span class="nv">2_L</span><span class="o">=</span><span class="nv">2_mod</span><span class="o">=</span><span class="nv">PSK_ITo</span><span class="o">=</span><span class="nv">1e2_ITi</span><span class="o">=</span><span class="nv">1e4_snrfrom</span><span class="o">=</span><span class="m">0</span>.00_to<span class="o">=</span><span class="m">50</span>.00_len<span class="o">=</span><span class="m">11</span>
+&gt; imtoolkit <span class="nv">AMI_sim</span><span class="o">=</span><span class="nv">coh_channel</span><span class="o">=</span><span class="nv">ofdm_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">=</span><span class="nv">dic_M</span><span class="o">=</span><span class="nv">2_K</span><span class="o">=</span><span class="nv">1_Q</span><span class="o">=</span><span class="nv">2_L</span><span class="o">=</span><span class="nv">2_mod</span><span class="o">=</span><span class="nv">PSK_IT</span><span class="o">=</span><span class="nv">1e5_snrfrom</span><span class="o">=</span>-20.00_to<span class="o">=</span><span class="m">30</span>.00_len<span class="o">=</span><span class="m">11</span>
+&gt; imtoolkit <span class="nv">AMIP_sim</span><span class="o">=</span><span class="nv">coh_channel</span><span class="o">=</span><span class="nv">ofdm_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">=</span><span class="nv">dic_M</span><span class="o">=</span><span class="nv">2_K</span><span class="o">=</span><span class="nv">1_Q</span><span class="o">=</span><span class="nv">2_L</span><span class="o">=</span><span class="nv">2_mod</span><span class="o">=</span><span class="nv">PSK_ITo</span><span class="o">=</span><span class="nv">1e1_ITi</span><span class="o">=</span><span class="nv">1e4_snrfrom</span><span class="o">=</span>-20.00_to<span class="o">=</span><span class="m">30</span>.00_len<span class="o">=</span><span class="m">11</span>
+At <span class="nv">SNR</span> <span class="o">=</span> -20.00 dB, <span class="nv">AMI</span> <span class="o">=</span> <span class="m">0</span>.02835752386965842420
+At <span class="nv">SNR</span> <span class="o">=</span> -15.00 dB, <span class="nv">AMI</span> <span class="o">=</span> <span class="m">0</span>.08621969236346302412
+At <span class="nv">SNR</span> <span class="o">=</span> -10.00 dB, <span class="nv">AMI</span> <span class="o">=</span> <span class="m">0</span>.24553548125900576116
+At <span class="nv">SNR</span> <span class="o">=</span> -5.00 dB, <span class="nv">AMI</span> <span class="o">=</span> <span class="m">0</span>.61030449159960853400
+At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">0</span>.00 dB, <span class="nv">AMI</span> <span class="o">=</span> <span class="m">1</span>.19762564984552777325
+At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">5</span>.00 dB, <span class="nv">AMI</span> <span class="o">=</span> <span class="m">1</span>.71401898627954807353
+At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">10</span>.00 dB, <span class="nv">AMI</span> <span class="o">=</span> <span class="m">1</span>.92946990000208695726
+At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">15</span>.00 dB, <span class="nv">AMI</span> <span class="o">=</span> <span class="m">1</span>.98357959973452779856
+At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">20</span>.00 dB, <span class="nv">AMI</span> <span class="o">=</span> <span class="m">1</span>.99521501735232775765
+At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">25</span>.00 dB, <span class="nv">AMI</span> <span class="o">=</span> <span class="m">1</span>.99846647081199679796
+At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">30</span>.00 dB, <span class="nv">AMI</span> <span class="o">=</span> <span class="m">1</span>.99952712587336933758
+ <span class="m">80</span>%<span class="p">|</span>████████████████████████████████████████████████████████████████████████████████                    <span class="p">|</span> <span class="m">8</span>/10 <span class="o">[</span><span class="m">00</span>:03&lt;<span class="m">00</span>:00,  <span class="m">2</span>.24it/s<span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<p>The execution mode can be switched by the first argument <code class="docutils literal notranslate"><span class="pre">MODE</span></code>.</p>
+<dl class="simple">
+<dt>MODE</dt><dd><dl class="simple">
+<dt>RATE</dt><dd><p>Check the transmission rate [bits/symbol]. Please remind that we need to divide it by <code class="docutils literal notranslate"><span class="pre">M</span></code> for the SIM case.</p>
+</dd>
+<dt>MED</dt><dd><p>Check the minimum Eunclidean distance of the specified codebook, which correlates with the achievable performance.</p>
+</dd>
+<dt>BER</dt><dd><p>Execute bit error rate (BER) simulatoins for multiple SNRs, where the straightforward reference algorithm is used.</p>
+</dd>
+<dt>BERP</dt><dd><p>Execute BER simulatoins for multiple SNRs, where the massively parallel algorithm is used.</p>
+</dd>
+<dt>AMI</dt><dd><p>Execute average mutual information (AMI) simulatoins for multiple SNRs, where the straightforward reference algorithm is used.</p>
+</dd>
+<dt>AMIP</dt><dd><p>Execute AMI simulatoins for multiple SNRs, where the massively parallel algorithm is used.</p>
+</dd>
+<dt>VIEW</dt><dd><p>Print the specified codebook.</p>
+</dd>
+<dt>VIEWIM</dt><dd><p>Print the specified active indices.</p>
+</dd>
+<dt>VIEWIMTEX</dt><dd><p>Print the specified active indices in a tex format.</p>
+</dd>
+</dl>
+</dd>
+<dt>sim</dt><dd><dl class="simple">
+<dt>coh</dt><dd><p>IMToolkit currently supports the coherent maximum likelihood detection only.</p>
+</dd>
+</dl>
+</dd>
+<dt>channel</dt><dd><dl class="simple">
+<dt>rayleigh</dt><dd><p>Use the ideal Rayleigh fading channel, which is generated by the complex Gaussian distribution.</p>
+</dd>
+<dt>ofdm</dt><dd><p>Use the ideal OFDM channel, which is generated by diagonal matrices.</p>
+</dd>
+</dl>
+</dd>
+<dt>code</dt><dd><dl class="simple">
+<dt>index</dt><dd><p>IMToolkit currently supports the IM codebook only. But, <code class="docutils literal notranslate"><span class="pre">M=K</span></code> setup is equivalent to the conventional BLAST or OFDM signaling.</p>
+</dd>
+</dl>
+</dd>
+<dt>dm</dt><dd><dl class="simple">
+<dt>dic</dt><dd><p>Use the combinatorial design for active indices.</p>
+</dd>
+<dt>wen</dt><dd><p>Use the equiprobable design for active indices.</p>
+</dd>
+<dt>opt</dt><dd><p>Use the theoretical optimal design for active indices.</p>
+</dd>
+</dl>
+</dd>
+<dt>M</dt><dd><p>Number of transmit antennas or subcarriers.</p>
+</dd>
+<dt>N</dt><dd><p>Number of receive antennas.</p>
+</dd>
+<dt>Q</dt><dd><p>Number of active indices.</p>
+</dd>
+<dt>K</dt><dd><p>Number of selected antennas or subcarriers.</p>
+</dd>
+<dt>mod</dt><dd><dl class="simple">
+<dt>PSK</dt><dd><p>Use the PSK constellation</p>
+</dd>
+<dt>QAM</dt><dd><p>Use the QAM constellation.</p>
+</dd>
+<dt>SQAM</dt><dd><p>Use the star QAM constellation.</p>
+</dd>
+</dl>
+</dd>
+<dt>L</dt><dd><p>Number of constellation.</p>
+</dd>
+<dt>IT</dt><dd><p>Number of iterations for the MODE = BER or AMI cases.</p>
+</dd>
+<dt>ITo</dt><dd><p>Number of outer iterations</p>
+</dd>
+<dt>ITi</dt><dd><p>Number of inner iterations</p>
+</dd>
+<dt>snrfrom</dt><dd><p>The beginning of SNR range.</p>
+</dd>
+<dt>to</dt><dd><p>The end of SNR range.</p>
+</dd>
+<dt>len</dt><dd><p>The length of SNR range.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="db/index.html" class="btn btn-neutral float-right" title="Active Indices Database" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Naoki Ishikawa
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ 
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-402853-8', 'ishikawa.cc');
+    ga('send', 'pageview');
+</script>
+
+
+</body>
+</html>

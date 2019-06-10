@@ -1,0 +1,257 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Overview &mdash; imtoolkit 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial" href="tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> imtoolkit
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="db/index.html">Active Indices Database</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">imtoolkit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Overview</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<p>This webpage introduces an open-source index modulation toolkit (IMToolkit).
+This toolkit attempts to facilitate reproducible research in the field of wireless communications and IM studies.
+The major advantages of this toolkit are highlited as follows:</p>
+<ul class="simple">
+<li><p>With the aid of state-of-the-art Nvidia GPUs, it accelerates bit error ratio and average mutual information simulations by invoking massively parallel algorithms.</p></li>
+<li><p>In addition to the IM family, it also supports the conventional multiplexing scheme for ideal MIMO and OFDM scenarios.</p></li>
+<li><p>It contains <a class="reference internal" href="db/index.html"><span class="doc">a comprehensive database</span></a> of designed active indices, that determine the achievable performance of the generalized spatial modulation or the subcarrier-index modulation.</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="installation-guide">
+<h2>Installation Guide<a class="headerlink" href="#installation-guide" title="Permalink to this headline">¶</a></h2>
+<p>IMToolkit is available from the Python official package repository <a class="reference external" href="https://pypi.org/project/imtoolkit/">PyPi</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; pip install imtoolkit
+</pre></div>
+</div>
+<p>This installation requires Numba, NumPy, Pandas, SciPy, SymPy, and tqdm, all of which are popular Python packages.
+Additionally, it is strongly recommended to install <a class="reference external" href="https://cupy.chainer.org/">CuPy</a> 5.40+.
+IMToolkit is heavily dependent on CuPy to achieve significantly fast Monte-Carlo simulations.
+<a class="reference external" href="https://docs-cupy.chainer.org/en/stable/install.html">The key components required by CuPy are listed here.</a>
+In case CuPy is not installed in your environment, IMToolkit uses NumPy only.
+Note that the CuPy-based simulation is 145 times faster than the NumPy-based calculation, as reported in [1].</p>
+<p>The latest development version is also available from <a class="reference external" href="https://github.com/imtoolkit/imtoolkit">GitHub</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; pip install git+https://github.com/imtoolkit/imtoolkit
+</pre></div>
+</div>
+<p>The IMToolkit development team is welcome to incorporate other researchers contributions and pull requests.</p>
+</div>
+<div class="section" id="how-to-use">
+<h2>How to Use<a class="headerlink" href="#how-to-use" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="tutorial.html"><span class="doc">A detailed tutorial for the installed imtoolkit command.</span></a></p></li>
+<li><p><a class="reference internal" href="db/index.html"><span class="doc">A comprehensive database of the designed active indices.</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="citations">
+<h2>Citations<a class="headerlink" href="#citations" title="Permalink to this headline">¶</a></h2>
+<p>It would be very appreciated if you cite the following references when using IMToolkit.</p>
+<blockquote>
+<div><p>[1] N. Ishikawa, “IMToolkit: An open-source index modulation toolkit for reproducible research based on massively parallel algorithms,” IEEE Access, submitted.</p>
+</div></blockquote>
+<p>Of course, if your project relies on CuPy, the following reference is highly recommended.</p>
+<blockquote>
+<div><p>[2] R. Okuta, Y. Unno, D. Nishino, S. Hido, and C. Loomis, “CuPy: A numPy-compatible library for NVIDIA GPU calculations,” in Conference on Neural Information Processing Systems Workshop, Long Beach, CA, USA, Dec. 4-9, 2017.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tutorial.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Naoki Ishikawa
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ 
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-402853-8', 'ishikawa.cc');
+    ga('send', 'pageview');
+</script>
+
+
+</body>
+</html>

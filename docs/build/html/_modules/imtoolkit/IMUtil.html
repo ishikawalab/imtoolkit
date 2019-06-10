@@ -1,0 +1,530 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>imtoolkit.IMUtil &mdash; imtoolkit 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> imtoolkit
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../db/index.html">Active Indices Database</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imtoolkit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>imtoolkit.IMUtil</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for imtoolkit.IMUtil</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) IMToolkit Development Team</span>
+<span class="c1"># This toolkit is released under the MIT License, see LICENSE.txt</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">special</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="k">import</span> <span class="n">jit</span>
+<span class="kn">from</span> <span class="nn">.Util</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="c1"># Optimized indexes set in terms of AMI</span>
+<span class="n">INDS</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">INDS</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">INDS</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span> <span class="c1"># </span>
+<span class="c1">#INDS[4, 2, 2] = [[0, 1], [2, 3]] # </span>
+<span class="n">INDS</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span> <span class="c1"># </span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Utility functions for an indexes set</span>
+<span class="c1">#</span>
+
+<span class="c1">#</span>
+<span class="c1"># inds = [[0, 1], [0, 2]]; M = 4</span>
+<span class="c1"># return: [array([[1], [1], [0], [0]]), array([[1], [0], [1], [0]])]</span>
+<span class="c1">#</span>
+<div class="viewcode-block" id="convertIndsToVector"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.convertIndsToVector">[docs]</a><span class="k">def</span> <span class="nf">convertIndsToVector</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">M</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">),</span> <span class="n">Q</span><span class="p">)</span> <span class="c1"># M \times Q matrix</span>
+    <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Q</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inds</span><span class="p">[</span><span class="n">q</span><span class="p">]:</span>
+            <span class="n">ret</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">q</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">hsplit</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span></div>
+
+<span class="c1">#</span>
+<span class="c1"># inds = [[0, 1], [0, 2]]; M = 4</span>
+<span class="c1"># return: [array([[1., 0.], [0., 1.], [0., 0.], [0., 0.]]), array([[1., 0.], [0., 0.], [0., 1.], [0., 0.]])]</span>
+<span class="c1"># </span>
+<div class="viewcode-block" id="convertIndsToMatrix"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.convertIndsToMatrix">[docs]</a><span class="k">def</span> <span class="nf">convertIndsToMatrix</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)),</span> <span class="n">Q</span><span class="p">)</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Q</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inds</span><span class="p">[</span><span class="n">q</span><span class="p">]:</span>
+            <span class="n">ret</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">t</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">hsplit</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="convertIndsToIndsDec"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.convertIndsToIndsDec">[docs]</a><span class="k">def</span> <span class="nf">convertIndsToIndsDec</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">inds</span><span class="p">:</span>
+        <span class="n">dec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dec</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+<span class="c1"># convertIndsDecToInds(indsdecs = [3,5,10,12], M = 4) # [[0, 1], [0, 2], [1, 3], [2, 3]]</span>
+<div class="viewcode-block" id="convertIndsDecToInds"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.convertIndsDecToInds">[docs]</a><span class="k">def</span> <span class="nf">convertIndsDecToInds</span><span class="p">(</span><span class="n">indsdecs</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">indsdecs</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">dec</span> <span class="ow">in</span> <span class="n">indsdecs</span><span class="p">:</span>
+        <span class="n">binstr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">binary_repr</span><span class="p">(</span><span class="n">dec</span><span class="p">)</span>
+        <span class="n">binstr</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span> <span class="o">*</span> <span class="p">(</span><span class="n">M</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">binstr</span><span class="p">))</span> <span class="o">+</span> <span class="n">binstr</span>
+        <span class="n">binstr</span> <span class="o">=</span> <span class="n">binstr</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">binstr</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">binstr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
+                <span class="n">ind</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="outputIndsToFile"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.outputIndsToFile">[docs]</a><span class="k">def</span> <span class="nf">outputIndsToFile</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">minh</span> <span class="o">=</span> <span class="n">getMinimumHammingDistance</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+    <span class="n">ineq</span> <span class="o">=</span> <span class="n">getInequalityL1</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+
+    <span class="n">basePath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+    <span class="n">fname</span> <span class="o">=</span> <span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/inds/M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">_Q=</span><span class="si">%d</span><span class="s2">_minh=</span><span class="si">%d</span><span class="s2">_ineq=</span><span class="si">%d</span><span class="s2">.txt&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">minh</span><span class="p">,</span> <span class="n">ineq</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">inds</span><span class="p">,</span> <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%.0d</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saved to &quot;</span> <span class="o">+</span> <span class="n">fname</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fname</span></div>
+
+
+<span class="c1"># Usage: convertIndsToMatrix(getDictionaryIndexesList(M, K, Q), M)</span>
+<div class="viewcode-block" id="getDictionaryIndexesList"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getDictionaryIndexesList">[docs]</a><span class="k">def</span> <span class="nf">getDictionaryIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">K</span><span class="p">)]</span>
+    <span class="n">maxQ</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)))))</span>
+
+    <span class="k">if</span> <span class="n">Q</span> <span class="o">&gt;</span> <span class="n">maxQ</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The given Q is larger than the maximum:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &gt; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">maxQ</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">maxQ</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">Q</span><span class="p">]</span></div>
+
+<span class="c1"># This method is based on the Matlab implementation for the GSM scheme,</span>
+<span class="c1"># which is given by the following book.</span>
+<span class="c1"># R. Mesleh and A. Alhassi, Space modulation techniques. Wiley, 2018.</span>
+<div class="viewcode-block" id="getMeslehIndexesList"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getMeslehIndexesList">[docs]</a><span class="k">def</span> <span class="nf">getMeslehIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">K</span><span class="p">)))]</span>
+    <span class="n">maxQ</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)))))</span>
+
+    <span class="k">if</span> <span class="n">Q</span> <span class="o">&gt;</span> <span class="n">maxQ</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The given Q is larger than the maximum:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &gt; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">maxQ</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">maxQ</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">Q</span><span class="p">]</span></div>
+
+<span class="c1"># M. Wen, Y. Zhang, J. Li, E. Basar, and F. Chen,</span>
+<span class="c1"># ``Equiprobable subcarrier activation method for OFDM with index modulation,&#39;&#39;</span>
+<span class="c1"># IEEE Commun. Lett., vol. 20, no. 12, pp. 2386--2389, 2016.</span>
+<div class="viewcode-block" id="wen2016EquiprobableSubcarrierActivation"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.wen2016EquiprobableSubcarrierActivation">[docs]</a><span class="k">def</span> <span class="nf">wen2016EquiprobableSubcarrierActivation</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+    <span class="c1"># initialize an indexes set ds</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)]</span>
+    <span class="n">ds</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">K</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">M</span> <span class="o">-</span> <span class="n">K</span> <span class="o">+</span> <span class="mi">1</span>
+    
+    <span class="k">if</span> <span class="n">K</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">K</span> <span class="o">-</span> <span class="mi">2</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="n">b</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+                <span class="n">d</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">d</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">K</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">d</span><span class="p">[</span><span class="n">K</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">d</span><span class="p">[</span><span class="n">K</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">M</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="n">K</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">break</span>
+            
+            <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">M</span> <span class="o">/</span> <span class="n">K</span><span class="p">:</span>
+                <span class="k">break</span>
+            
+            <span class="n">ds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="n">b</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># delete cyclic shifts in ds</span>
+    <span class="n">deletepos</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ds</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">deletepos</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ds</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">deletepos</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="n">y</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="n">i</span><span class="p">)):</span>
+                    <span class="n">deletepos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                    <span class="k">break</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">deletepos</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># print(deletepos)</span>
+    <span class="c1"># print(ds)</span>
+
+    <span class="c1"># build an indexes set from ds</span>
+    <span class="n">betas</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ds</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+            <span class="n">beta</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">K</span>
+            <span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+                <span class="n">beta</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">beta</span><span class="p">[</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">ds</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="n">M</span>
+            <span class="n">beta</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">beta</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">betas</span><span class="p">:</span>
+                <span class="n">betas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+    
+    <span class="c1">#print(len(betas))</span>
+    <span class="n">Qmax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">betas</span><span class="p">)</span> <span class="o">/</span> <span class="n">M</span><span class="p">))</span>
+    <span class="c1">#print(&quot;Q = &quot; + str(Q))</span>
+
+    <span class="k">return</span> <span class="n">betas</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">Qmax</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="getRandomIndexesList"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getRandomIndexesList">[docs]</a><span class="k">def</span> <span class="nf">getRandomIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">Q</span><span class="p">:</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">row</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ret</span><span class="p">:</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="getOptimizedIndexesList"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getOptimizedIndexesList">[docs]</a><span class="k">def</span> <span class="nf">getOptimizedIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">minh</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="n">basePath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">minh</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/inds/M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">_Q=</span><span class="si">%d</span><span class="s2">_*.txt&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/inds/M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">_Q=</span><span class="si">%d</span><span class="s2">_minh=</span><span class="si">%d</span><span class="s2">*.txt&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">minh</span><span class="p">))</span>
+
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No file found&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="n">files</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span> <span class="c1"># TODO: must consider minh, ineq</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Read &quot;</span> <span class="o">+</span> <span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
+    <span class="n">inds</span> <span class="o">=</span> <span class="n">inds</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">inds</span></div>
+
+<div class="viewcode-block" id="getIndexes"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getIndexes">[docs]</a><span class="k">def</span> <span class="nf">getIndexes</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s2">&quot;opt&quot;</span> <span class="ow">in</span> <span class="nb">type</span><span class="p">:</span>
+        <span class="n">minh</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">type</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;opt&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">))</span>
+        <span class="n">inds</span> <span class="o">=</span> <span class="n">getOptimizedIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">minh</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s2">&quot;dic&quot;</span><span class="p">:</span>
+        <span class="n">inds</span> <span class="o">=</span> <span class="n">getDictionaryIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s2">&quot;mes&quot;</span><span class="p">:</span>
+        <span class="n">inds</span> <span class="o">=</span> <span class="n">getMeslehIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s2">&quot;wen&quot;</span><span class="p">:</span>
+        <span class="n">inds</span> <span class="o">=</span> <span class="n">wen2016EquiprobableSubcarrierActivation</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">Q</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The specified Q = </span><span class="si">%d</span><span class="s2"> is not supported by wen2016 algorithm&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">Q</span><span class="p">))</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">inds</span> <span class="o">=</span> <span class="n">inds</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">Q</span><span class="p">]</span>
+        <span class="c1">#print(&quot;Q is automatically set to &quot; + str(len(inds)))</span>
+    <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s2">&quot;rand&quot;</span><span class="p">:</span>
+        <span class="n">inds</span> <span class="o">=</span> <span class="n">getRandomIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s2">&quot;ga&quot;</span><span class="p">:</span> <span class="c1"># Genetic algorithm aided design</span>
+        <span class="k">if</span> <span class="n">M</span> <span class="o">==</span> <span class="mi">16</span> <span class="ow">and</span> <span class="n">K</span> <span class="o">==</span> <span class="mi">8</span> <span class="ow">and</span> <span class="n">Q</span> <span class="o">==</span> <span class="mi">16</span><span class="p">:</span>
+            <span class="n">inds</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span>  <span class="mi">7</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span>  <span class="mi">6</span><span class="p">,</span>  <span class="mi">7</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span>  <span class="mi">6</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span>  <span class="mi">6</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span>  <span class="mi">7</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">]]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: The type of active indices is not specified.&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The specified indexes set is not available.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    
+    <span class="k">return</span> <span class="n">inds</span></div>
+
+<span class="c1">#</span>
+<span class="c1"># Evaluation functions</span>
+<span class="c1">#</span>
+<div class="viewcode-block" id="getProbabilityOfActivation"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getProbabilityOfActivation">[docs]</a><span class="k">def</span> <span class="nf">getProbabilityOfActivation</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)):</span>
+        <span class="n">prob</span><span class="p">[</span><span class="n">inds</span><span class="p">[</span><span class="n">q</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">prob</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span></div>
+
+<span class="c1">#</span>
+<span class="c1"># getHammingDistance([0,1], [1,0]) = 2</span>
+<span class="c1"># getHammingDistance([1,1,0,0], [0,0,1,1]) = 4</span>
+<div class="viewcode-block" id="getHammingDistance"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getHammingDistance">[docs]</a><span class="nd">@jit</span>
+<span class="k">def</span> <span class="nf">getHammingDistance</span><span class="p">(</span><span class="n">arr1</span><span class="p">,</span> <span class="n">arr2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_xor</span><span class="p">(</span><span class="n">arr1</span><span class="p">,</span> <span class="n">arr2</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="getMinimumHammingDistance"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getMinimumHammingDistance">[docs]</a><span class="k">def</span> <span class="nf">getMinimumHammingDistance</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
+    <span class="n">indsm</span> <span class="o">=</span> <span class="n">convertIndsToVector</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+    <span class="n">mind</span> <span class="o">=</span> <span class="n">M</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Q</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+            <span class="n">hammingdis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_xor</span><span class="p">(</span><span class="n">indsm</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">indsm</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">M</span><span class="p">)))</span>
+            <span class="k">if</span> <span class="n">hammingdis</span> <span class="o">&lt;</span> <span class="n">mind</span><span class="p">:</span>
+                <span class="n">mind</span> <span class="o">=</span> <span class="n">hammingdis</span>
+    <span class="k">return</span> <span class="n">mind</span></div>
+
+<div class="viewcode-block" id="getSumHamming"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getSumHamming">[docs]</a><span class="k">def</span> <span class="nf">getSumHamming</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
+    <span class="n">indsm</span> <span class="o">=</span> <span class="n">convertIndsToVector</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Q</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+            <span class="n">hammingdis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_xor</span><span class="p">(</span><span class="n">indsm</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">indsm</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">M</span><span class="p">)))</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="n">hammingdis</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="getSumDistanceBetweenActivatedElements"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getSumDistanceBetweenActivatedElements">[docs]</a><span class="k">def</span> <span class="nf">getSumDistanceBetweenActivatedElements</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Q</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">inds</span><span class="p">[</span><span class="n">q</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+<span class="c1"># getInequalityL1(inds = [[0,1],[2,3]], M = 4) # = 0.0</span>
+<div class="viewcode-block" id="getInequalityL1"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getInequalityL1">[docs]</a><span class="k">def</span> <span class="nf">getInequalityL1</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">hits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)):</span>
+        <span class="n">hits</span><span class="p">[</span><span class="n">inds</span><span class="p">[</span><span class="n">q</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">hits</span> <span class="o">-</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">K</span> <span class="o">/</span> <span class="n">M</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="checkConflict"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.checkConflict">[docs]</a><span class="k">def</span> <span class="nf">checkConflict</span><span class="p">(</span><span class="n">inds</span><span class="p">):</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Q</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">inds</span><span class="p">[</span><span class="n">y</span><span class="p">],</span> <span class="n">inds</span><span class="p">[</span><span class="n">x</span><span class="p">]):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Conflicted &quot;</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">20</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inds</span><span class="p">[</span><span class="n">y</span><span class="p">]))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inds</span><span class="p">[</span><span class="n">x</span><span class="p">]))</span>
+                <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+<span class="c1">#</span>
+<span class="c1"># Others</span>
+<span class="c1">#</span>
+
+<div class="viewcode-block" id="getIMParameters"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getIMParameters">[docs]</a><span class="k">def</span> <span class="nf">getIMParameters</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">Qmax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">special</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)))))</span>
+    <span class="k">if</span> <span class="n">Qmax</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="k">while</span> <span class="n">Q</span> <span class="o">&lt;=</span> <span class="n">Qmax</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">))</span>
+        <span class="n">Q</span> <span class="o">*=</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+<span class="c1"># getIMParameters(4, 2) # [(4, 2, 1), (4, 2, 2), (4, 2, 4)]</span>
+
+<div class="viewcode-block" id="binom"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.binom">[docs]</a><span class="k">def</span> <span class="nf">binom</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">K</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">special</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Naoki Ishikawa
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ 
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-402853-8', 'ishikawa.cc');
+    ga('send', 'pageview');
+</script>
+
+
+</body>
+</html>

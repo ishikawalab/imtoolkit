@@ -1,0 +1,767 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>imtoolkit.imsearch &mdash; imtoolkit 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> imtoolkit
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../db/index.html">Active Indices Database</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imtoolkit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>imtoolkit.imsearch</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for imtoolkit.imsearch</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) IMToolkit Development Team</span>
+<span class="c1"># This toolkit is released under the MIT License, see LICENSE.txt</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">special</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="k">import</span> <span class="n">jit</span>
+<span class="kn">from</span> <span class="nn">imtoolkit</span> <span class="k">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="getHammingDistanceTable"><a class="viewcode-back" href="../../imtoolkit.imsearch.html#imtoolkit.imsearch.getHammingDistanceTable">[docs]</a><span class="nd">@jit</span>
+<span class="k">def</span> <span class="nf">getHammingDistanceTable</span><span class="p">(</span><span class="n">MCK</span><span class="p">,</span> <span class="n">indsdec</span><span class="p">):</span>
+    <span class="c1"># This method is not dependent on Q</span>
+    <span class="n">hds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">MCK</span><span class="p">,</span> <span class="n">MCK</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span> 
+    <span class="n">imax</span> <span class="o">=</span> <span class="n">MCK</span> <span class="o">*</span> <span class="p">(</span><span class="n">MCK</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MCK</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">MCK</span><span class="p">):</span>
+            <span class="n">hammingdis</span> <span class="o">=</span> <span class="n">countErrorBits</span><span class="p">(</span><span class="n">indsdec</span><span class="p">[</span><span class="n">y</span><span class="p">],</span> <span class="n">indsdec</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>
+            <span class="n">hds</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">hds</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">hammingdis</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%.3f</span><span class="s2"> percent completed.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="n">imax</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">hds</span></div>
+
+<div class="viewcode-block" id="getGoodDecsTable"><a class="viewcode-back" href="../../imtoolkit.imsearch.html#imtoolkit.imsearch.getGoodDecsTable">[docs]</a><span class="nd">@jit</span>
+<span class="k">def</span> <span class="nf">getGoodDecsTable</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+    <span class="n">inds</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">K</span><span class="p">))</span>
+    <span class="n">indsv</span> <span class="o">=</span> <span class="n">convertIndsToVector</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+    <span class="n">indsdec</span> <span class="o">=</span> <span class="n">convertIndsToIndsDec</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+    <span class="n">MCK</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
+    <span class="n">hds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">MCK</span><span class="p">,</span> <span class="n">MCK</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span> <span class="c1"># This is not dependent on Q</span>
+
+    <span class="n">minHT</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">newdecs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">MCK</span><span class="p">):</span>
+        <span class="n">hds</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_xor</span><span class="p">(</span><span class="n">indsv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">indsv</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">M</span><span class="p">)))</span>
+    <span class="c1">#print(hds[0])</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">gooddecs</span> <span class="o">=</span> <span class="n">where</span><span class="p">(</span><span class="n">hds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">minHT</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">gooddecs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">break</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;minHT = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">minHT</span><span class="p">))</span>
+        <span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">gooddecs</span><span class="p">)</span>
+        <span class="c1">#print(&quot;extended&quot;)</span>
+        <span class="c1">#print(newdecs)</span>
+        
+        <span class="n">lennd</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">])</span>
+        <span class="n">deletepos</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">lennd</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">deletepos</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">yp</span> <span class="o">=</span> <span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">][</span><span class="n">y</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">lennd</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">deletepos</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">xp</span> <span class="o">=</span> <span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">][</span><span class="n">x</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">hds</span><span class="p">[</span><span class="n">yp</span><span class="p">][</span><span class="n">xp</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">hds</span><span class="p">[</span><span class="n">yp</span><span class="p">][</span><span class="n">xp</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_xor</span><span class="p">(</span><span class="n">indsv</span><span class="p">[</span><span class="n">yp</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">indsv</span><span class="p">[</span><span class="n">xp</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">M</span><span class="p">)))</span>
+                <span class="k">if</span> <span class="n">hds</span><span class="p">[</span><span class="n">yp</span><span class="p">][</span><span class="n">xp</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">minHT</span><span class="p">:</span>
+                    <span class="n">deletepos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%.2f</span><span class="s2"> percent&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="mf">100.0</span> <span class="o">*</span> <span class="n">y</span> <span class="o">/</span> <span class="n">lennd</span><span class="p">))</span>
+        <span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">],</span> <span class="n">deletepos</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">]</span>
+            <span class="k">break</span>
+        <span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">indsdec</span><span class="p">,</span> <span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">])</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="c1">#print(&quot;deleted&quot;)</span>
+        <span class="c1">#print(newdecs)</span>
+        <span class="c1">#print(getMinimumHamming(convertIndsDecToInds(newdecs[minHT], M), M))</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">minHT</span> <span class="o">+=</span> <span class="mi">2</span>
+        
+        <span class="c1">#print(&quot;%.3f percent completed.&quot; % (i / imax * 100.0))</span>
+    <span class="k">return</span> <span class="n">newdecs</span></div>
+
+<span class="c1">#@jit</span>
+<div class="viewcode-block" id="getGoodDecsTableSmallMemory"><a class="viewcode-back" href="../../imtoolkit.imsearch.html#imtoolkit.imsearch.getGoodDecsTableSmallMemory">[docs]</a><span class="k">def</span> <span class="nf">getGoodDecsTableSmallMemory</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+    <span class="n">minHT</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">indsiter</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">K</span><span class="p">)</span>
+    <span class="n">firstivec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+    <span class="n">firstind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">indsiter</span><span class="p">))</span>
+    <span class="n">firstivec</span><span class="p">[</span><span class="n">firstind</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="c1">#print(firstivec)</span>
+    <span class="n">firstdec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">firstind</span><span class="p">))</span>
+
+    <span class="c1"># Extracts the active indices having minHT &gt;= 4</span>
+    <span class="n">indsvec</span> <span class="o">=</span> <span class="p">[</span><span class="n">firstivec</span><span class="p">]</span>
+    <span class="n">indsdec</span> <span class="o">=</span> <span class="p">[</span><span class="n">firstdec</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">indsiter</span><span class="p">:</span>
+        <span class="n">ivec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+        <span class="n">npind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span>
+        <span class="n">ivec</span><span class="p">[</span><span class="n">npind</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">hd</span> <span class="o">=</span> <span class="n">getHammingDistance</span><span class="p">(</span><span class="n">firstivec</span><span class="p">,</span> <span class="n">ivec</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">hd</span> <span class="o">&lt;</span> <span class="n">minHT</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">indsvec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ivec</span><span class="p">)</span>
+        <span class="n">indsdec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">npind</span><span class="p">)))</span>
+    
+    <span class="n">indsvec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">indsvec</span><span class="p">)</span>
+    <span class="c1">#print(np.take(indsvec, np.array([0, 1]), axis=0))</span>
+    <span class="c1">#print(len(indsvec))</span>
+    <span class="c1">#print(len(indsdec))</span>
+
+    <span class="n">MCK</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">indsvec</span><span class="p">)</span>
+    <span class="n">newdecs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;minHT = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">minHT</span><span class="p">))</span>
+        <span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">]</span> <span class="o">=</span> <span class="n">indsdec</span>
+        <span class="c1">#print(newdecs)</span>
+        
+        <span class="n">lennd</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">])</span>
+        <span class="n">lstart</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">minHT</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">lstart</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">deletepos</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">lstart</span><span class="p">,</span> <span class="n">lennd</span><span class="p">)))</span>
+        <span class="c1">#print(ys)</span>
+        <span class="c1">#for y in range(lstart, lennd):</span>
+        <span class="n">yi</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">ys</span><span class="p">[</span><span class="n">yi</span><span class="p">]</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1">#if y in deletepos:</span>
+            <span class="c1">#    continue</span>
+
+            <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">lennd</span><span class="p">)))</span>
+            <span class="c1">#print(xs)</span>
+            <span class="c1">#print(deletepos)</span>
+            <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">setdiff1d</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">deletepos</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1">#print(indsvec[xs])</span>
+                <span class="n">vxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">indsvec</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="c1">#print(vxs.shape)</span>
+                <span class="c1">#print(vxs)</span>
+                <span class="n">vys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">indsvec</span><span class="p">[</span><span class="n">y</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+                <span class="c1">#print(vys)</span>
+                <span class="n">hds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_xor</span><span class="p">(</span><span class="n">vxs</span><span class="p">,</span> <span class="n">vys</span><span class="p">),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="c1">#hds = np.apply_along_axis(lambda x: getHammingDistance(indsvec[y], indsvec[x[0]]), 0, xs.reshape(1, len(xs)))</span>
+                <span class="c1">#print(hds)</span>
+                <span class="c1">#print(list(np.where(hds &lt; minHT)[0]))</span>
+                <span class="n">newdel</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">xs</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">hds</span> <span class="o">&lt;</span> <span class="n">minHT</span><span class="p">)[</span><span class="mi">0</span><span class="p">]])</span>
+                <span class="n">deletepos</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">newdel</span><span class="p">)</span>
+                <span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">setdiff1d</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">newdel</span><span class="p">)</span>
+            <span class="c1">#print(ys)</span>
+            <span class="c1">#for x in range(y + 1, lennd):</span>
+            <span class="c1">#    if x in deletepos:</span>
+            <span class="c1">#        continue</span>
+            <span class="c1">#    hd = np.sum(np.logical_xor(indsvec[y], indsvec[x]))</span>
+            <span class="c1">#    if hd &lt; minHT:</span>
+            <span class="c1">#        deletepos.append(x)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%.2f</span><span class="s2"> percent&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="mf">100.0</span> <span class="o">*</span> <span class="n">y</span> <span class="o">/</span> <span class="n">lennd</span><span class="p">))</span>
+            <span class="n">yi</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">yi</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ys</span><span class="p">):</span>
+                <span class="k">break</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">ys</span><span class="p">[</span><span class="n">yi</span><span class="p">]</span>
+        
+        <span class="c1">#print(deletepos)</span>
+        <span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">],</span> <span class="n">deletepos</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">]</span>
+            <span class="k">break</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">newdecs</span><span class="p">[</span><span class="n">minHT</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">minHT</span> <span class="o">+=</span> <span class="mi">2</span>
+
+    <span class="k">return</span> <span class="n">newdecs</span></div>
+
+<div class="viewcode-block" id="getAllIndsBasedOnDecFile"><a class="viewcode-back" href="../../imtoolkit.imsearch.html#imtoolkit.imsearch.getAllIndsBasedOnDecFile">[docs]</a><span class="k">def</span> <span class="nf">getAllIndsBasedOnDecFile</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+    <span class="n">basePath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+    <span class="n">decfilename</span> <span class="o">=</span> <span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/decs/M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">.txt&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">decfilename</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">decfilename</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">decs</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+            <span class="c1">#print(decs)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Read &quot;</span> <span class="o">+</span> <span class="n">decfilename</span><span class="p">)</span>
+
+            <span class="n">minh</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">decs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">Q</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">decs</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
+                    <span class="n">minh</span> <span class="o">=</span> <span class="n">key</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">minh</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">minh</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">convertIndsDecToInds</span><span class="p">(</span><span class="n">decs</span><span class="p">[</span><span class="n">minh</span><span class="p">],</span> <span class="n">M</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="outputCPLEXModelFile"><a class="viewcode-back" href="../../imtoolkit.imsearch.html#imtoolkit.imsearch.outputCPLEXModelFile">[docs]</a><span class="k">def</span> <span class="nf">outputCPLEXModelFile</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+    <span class="n">decallinds</span> <span class="o">=</span> <span class="n">getAllIndsBasedOnDecFile</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">K</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">K</span> <span class="o">&lt;</span> <span class="n">M</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">decallinds</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The dec file for (</span><span class="si">%d</span><span class="s2">,</span><span class="si">%d</span><span class="s2">) does not exist.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">K</span><span class="p">))</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">decallinds</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">decallinds</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">allinds</span> <span class="o">=</span> <span class="n">decallinds</span>
+        <span class="c1">#print(getMinimumHamming(allinds, M))</span>
+        <span class="n">allindsvec</span> <span class="o">=</span> <span class="n">convertIndsToVector</span><span class="p">(</span><span class="n">allinds</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+        <span class="n">allindsmat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">allindsvec</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="c1"># MCK \times M</span>
+        <span class="n">MCK</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">allindsmat</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">allinds</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">K</span><span class="p">))</span>
+        <span class="n">allindsvec</span> <span class="o">=</span> <span class="n">convertIndsToVector</span><span class="p">(</span><span class="n">allinds</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+        <span class="n">allindsmat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">allindsvec</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="c1"># MCK \times M</span>
+        <span class="n">MCK</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">allindsmat</span><span class="p">)</span>
+    
+    <span class="n">constraints</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;    a[1] == 1;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">]</span>
+    
+    <span class="c1">#</span>
+    <span class="c1">#indsv = convertIndsToVector(allinds, M)</span>
+    <span class="c1">#print(getGoodDecsTable(MCK, indsdec))</span>
+    <span class="c1">#print(&quot;hds generated.&quot;)</span>
+
+    <span class="n">basePath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+    <span class="n">fname</span> <span class="o">=</span> <span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/inds-raw/M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">_Q=</span><span class="si">%d</span><span class="s2">.mod&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;int M=</span><span class="si">%d</span><span class="s2">; int K=</span><span class="si">%d</span><span class="s2">; int Q=</span><span class="si">%d</span><span class="s2">; int MCK=</span><span class="si">%d</span><span class="s2">;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">MCK</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;int allinds[1..MCK][1..M] = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">allindsmat</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;dvar boolean a[1..MCK];</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1">#</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;execute PARAMS {</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    cplex.mipemphasis = 0;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    cplex.tilim = 60 * 60;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    cplex.mipdisplay = 3;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;}</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1">#</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;minimize sum(m in 1..M) (abs(sum(q in 1..MCK)(a[q] * allinds[q][m]) - (Q * K / M)));</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1">#</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;subject to{</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># add constraints</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">constraints</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    sum(q in 1..MCK)(a[q]) == Q;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;}</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1">#</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;execute{</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    var f = new IloOplOutputFile(</span><span class="se">\&quot;</span><span class="s2">M=</span><span class="se">\&quot;</span><span class="s2"> + M + </span><span class="se">\&quot;</span><span class="s2">_K=</span><span class="se">\&quot;</span><span class="s2">+ K + </span><span class="se">\&quot;</span><span class="s2">_Q=</span><span class="se">\&quot;</span><span class="s2"> + Q + </span><span class="se">\&quot;</span><span class="s2">_obj=</span><span class="se">\&quot;</span><span class="s2"> + cplex.getObjValue() + </span><span class="se">\&quot;</span><span class="s2">.txt</span><span class="se">\&quot;</span><span class="s2">);</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    f.write(a);</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    f.close();</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saved to &quot;</span> <span class="o">+</span> <span class="n">fname</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fname</span></div>
+
+
+<div class="viewcode-block" id="convertCPLEXOutputToInds"><a class="viewcode-back" href="../../imtoolkit.imsearch.html#imtoolkit.imsearch.convertCPLEXOutputToInds">[docs]</a><span class="k">def</span> <span class="nf">convertCPLEXOutputToInds</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+    <span class="n">allinds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">K</span><span class="p">)))</span>
+    <span class="n">decallinds</span> <span class="o">=</span> <span class="n">getAllIndsBasedOnDecFile</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">decallinds</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">decallinds</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">allinds</span> <span class="o">=</span> <span class="n">decallinds</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^\s+&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\n&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="c1">#print(content)</span>
+        <span class="n">inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="n">content</span><span class="p">))</span>
+        <span class="c1">#print(inds)</span>
+        <span class="c1">#print(np.nonzero(inds)[0].tolist())</span>
+        <span class="n">inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">allinds</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">inds</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">inds</span></div>
+
+<div class="viewcode-block" id="numpyToPythonStr"><a class="viewcode-back" href="../../imtoolkit.imsearch.html#imtoolkit.imsearch.numpyToPythonStr">[docs]</a><span class="k">def</span> <span class="nf">numpyToPythonStr</span><span class="p">(</span><span class="n">numpystr</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">numpystr</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;  &quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> &quot;</span><span class="p">,</span> <span class="s2">&quot;, &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; 0&quot;</span><span class="p">,</span> <span class="s2">&quot;, 0&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; 1&quot;</span><span class="p">,</span> <span class="s2">&quot;, 1&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="convertIndsToRST"><a class="viewcode-back" href="../../imtoolkit.imsearch.html#imtoolkit.imsearch.convertIndsToRST">[docs]</a><span class="k">def</span> <span class="nf">convertIndsToRST</span><span class="p">(</span><span class="n">basePath</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+    <span class="n">titlestr</span> <span class="o">=</span> <span class="s2">&quot;M = </span><span class="si">%d</span><span class="s2">, K = </span><span class="si">%d</span><span class="s2">, Q = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
+    <span class="n">filepat</span> <span class="o">=</span> <span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/inds/M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">_Q=</span><span class="si">%d</span><span class="s2">_*.txt&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">filepat</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">filepat</span> <span class="o">+</span> <span class="s2">&quot; does not exist.&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">fninds</span> <span class="o">=</span> <span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="n">mpath</span> <span class="o">=</span> <span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/../docs/source/db/M=</span><span class="si">%d</span><span class="s2">/&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">M</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">mpath</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">mpath</span><span class="p">)</span>
+
+    <span class="n">fname</span> <span class="o">=</span> <span class="n">mpath</span> <span class="o">+</span> <span class="s2">&quot;M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">_Q=</span><span class="si">%d</span><span class="s2">.rst&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span><span class="o">.</span><span class="n">st_mtime</span> <span class="o">&lt;</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">fninds</span><span class="p">)</span><span class="o">.</span><span class="n">st_mtime</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">titlestr</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">titlestr</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">titlestr</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">fninds</span><span class="p">)</span>
+            <span class="n">iurl</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/imtoolkit/imtoolkit/blob/master/imtoolkit/inds/&quot;</span> <span class="o">+</span> <span class="n">fn</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="s2">&quot;%3D&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;`&quot;</span> <span class="o">+</span> <span class="n">fn</span> <span class="o">+</span> <span class="s2">&quot; is available here. &lt;&quot;</span> <span class="o">+</span> <span class="n">iurl</span> <span class="o">+</span> <span class="s2">&quot;&gt;`_</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="n">fn</span> <span class="o">=</span> <span class="n">fn</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">Parameters</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">Q</span> <span class="o">&lt;=</span> <span class="mi">1024</span><span class="p">:</span>
+                <span class="n">inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">fninds</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+                <span class="n">inds</span> <span class="o">=</span> <span class="n">inds</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">Q</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">Q</span> <span class="o">&lt;=</span> <span class="mi">128</span><span class="p">:</span>
+                    <span class="n">at</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">convertIndsToMatrix</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">))</span>
+                    <span class="n">ats</span> <span class="o">=</span> <span class="n">numpyToPythonStr</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">at</span><span class="p">))</span>
+                    <span class="n">vrstr</span> <span class="o">=</span> <span class="n">numpyToPythonStr</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">convertIndsToVector</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">M</span><span class="p">)))</span>
+                    <span class="n">vrstr</span> <span class="o">=</span> <span class="n">vrstr</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;], &quot;</span><span class="p">,</span> <span class="s2">&quot;],</span><span class="se">\n</span><span class="s2">     &quot;</span><span class="p">)</span>
+            
+            <span class="c1">#ts = fn.replace(&quot;M=%d_&quot;%M, &quot;&quot;).replace(&quot;_minh=%d&quot;%p[&quot;minh&quot;], &quot;&quot;).replace(&quot;_ineq=%d&quot;%p[&quot;ineq&quot;], &quot;&quot;).replace(&quot;_&quot;, &quot;, &quot;).replace(&quot;=&quot;, &quot; = &quot;)</span>
+            <span class="c1">#print(ts)</span>
+            <span class="c1">#print(&quot;-&quot; * len(ts))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;.. code-block:: python</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    # minimum Hamming distance = </span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;minh&quot;</span><span class="p">])</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    # activation inequality = </span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;ineq&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">Q</span> <span class="o">&lt;=</span> <span class="mi">1024</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    # active indices</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    a = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">Q</span> <span class="o">&lt;=</span> <span class="mi">128</span><span class="p">:</span>  
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    # activation tensor</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    A = &quot;</span> <span class="o">+</span> <span class="n">ats</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    # vector representation</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    &quot;</span> <span class="o">+</span> <span class="n">vrstr</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    # activation tensor and its vector representation are omitted.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    # active indices, activation tensor and its vector representation are omitted.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The generated rst was saved to &quot;</span> <span class="o">+</span> <span class="n">fname</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../imtoolkit.imsearch.html#imtoolkit.imsearch.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="c1">#print(&quot;DEBUG MODE ENABLED&quot;)</span>
+    <span class="c1">#np.set_printoptions(threshold=np.inf)</span>
+    <span class="c1">#basePath = os.path.dirname(os.path.abspath(__file__))</span>
+    <span class="c1">#convertIndsToRST(basePath, 16, 5, 2)</span>
+    <span class="c1">#quit()</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DECPARAMS_M=32&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DECPARAMSDO_M=32&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SEARCHPARAMS_M=32_P=2&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SEARCHPARAMSDO_M=32&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SEARCH_M=2_K=1_Q=2&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SEARCH_M=4_K=1_Q=2&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;EVAL_dm=dic_M=2_K=1_Q=2&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;EVAL_dm=dic_M=16_K=8_Q=16&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;EVAL_dm=mes_M=16_K=8_Q=16&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;EVAL_dm=wen_M=16_K=8_Q=16&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DECSEARCH_M=4_K=2&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DECEVAL_M=4_K=2&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DECSEARCH_M=8_K=4&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DECEVAL_M=8_K=4&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DECSEARCH_M=16_K=8&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DECEVAL_M=16_K=8&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MINH&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DOCMUPDATE_M=32&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DOCMINDEX&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;COVERAGE&quot;</span><span class="p">)</span>
+        <span class="n">quit</span><span class="p">()</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;arg = &quot;</span> <span class="o">+</span> <span class="n">arg</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">Parameters</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+        <span class="n">basePath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;COVERAGE&quot;</span><span class="p">:</span>
+            <span class="n">allpossibleparams</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">hitcount</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">M</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">K</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+                    <span class="n">ps</span> <span class="o">=</span> <span class="n">getIMParameters</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ps</span><span class="p">:</span>
+                        <span class="n">allpossibleparams</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                        <span class="n">fpy</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/inds/M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">_Q=</span><span class="si">%d</span><span class="s2">_*.txt&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">))</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fpy</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="n">hitcount</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">M</span> <span class="o">+=</span> <span class="mi">2</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;M &lt;= </span><span class="si">%d</span><span class="s2">, </span><span class="si">%d</span><span class="s2"> / </span><span class="si">%d</span><span class="s2"> = </span><span class="si">%2.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">hitcount</span><span class="p">,</span> <span class="n">allpossibleparams</span><span class="p">,</span> <span class="mf">100.0</span> <span class="o">*</span> <span class="n">hitcount</span> <span class="o">/</span> <span class="n">allpossibleparams</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">M</span> <span class="o">==</span> <span class="mi">32</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+        <span class="k">elif</span> <span class="n">params</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;SEARCHPARAMS&quot;</span> <span class="ow">or</span> <span class="n">params</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;SEARCHPARAMSDO&quot;</span><span class="p">:</span>
+            <span class="n">imparams</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">allpossibleparams</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">M</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">K</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+                    <span class="n">ps</span> <span class="o">=</span> <span class="n">getIMParameters</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ps</span><span class="p">:</span>
+                        <span class="n">allpossibleparams</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                        <span class="n">fpy</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/inds/M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">_Q=</span><span class="si">%d</span><span class="s2">_*.txt&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">))</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fpy</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="n">imparams</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+                        <span class="c1">#else:</span>
+                        <span class="c1">#    if Q == 2 or Q * K &lt;= M:</span>
+                        <span class="c1">#        print(&quot;May be wrong: /inds/M=%d_K=%d_Q=%d*.txt&quot; % (M, K, Q))</span>
+                        <span class="c1">#        os.remove(fpy[0])</span>
+                        <span class="c1">#    fpy = glob.glob(basePath + &quot;/decs/M=%d_K=%d.txt&quot; % (M, K))</span>
+                        <span class="c1">#    if (len(fpy)) == 0:</span>
+                        <span class="c1">#        print(&quot;May be wrong: /inds/M=%d_K=%d_Q=%d*.txt&quot; % (M, K, Q))</span>
+                <span class="n">M</span> <span class="o">+=</span> <span class="mi">2</span>
+                <span class="k">if</span> <span class="n">M</span> <span class="o">&gt;</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">:</span>
+                    <span class="k">break</span>
+            
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Possible IM parameters = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">allpossibleparams</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Supported IM parameters = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">allpossibleparams</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">imparams</span><span class="p">)))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Search coverage = </span><span class="si">%.2f</span><span class="s2"> percent&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="mf">100.0</span> <span class="o">-</span> <span class="mf">100.0</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">imparams</span><span class="p">)</span> <span class="o">/</span> <span class="n">allpossibleparams</span><span class="p">))</span>
+            <span class="n">imparams</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">cmds</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">imparams</span><span class="p">:</span>
+                <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;imsearch SEARCH_M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">_Q=</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                <span class="n">cmds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;SEARCHPARAMS&quot;</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">P</span><span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set </span><span class="si">%d</span><span class="s2"> ====================================&quot;</span> <span class="o">%</span> <span class="n">p</span><span class="p">)</span>
+                    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="n">cmds</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">params</span><span class="o">.</span><span class="n">P</span> <span class="o">==</span> <span class="n">p</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+                        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">params</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;SEARCHPARAMSDO&quot;</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="n">cmds</span><span class="p">:</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">params</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;DECPARAMS&quot;</span> <span class="ow">or</span> <span class="n">params</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;DECPARAMSDO&quot;</span><span class="p">:</span>
+            <span class="n">decparams</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">allpossibleparams</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">M</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">K</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">M</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span> <span class="c1"># excludes K = 1 and K = M - 1</span>
+                    <span class="n">decfilename</span> <span class="o">=</span> <span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/decs/M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">.txt&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">decfilename</span><span class="p">):</span>
+                        <span class="n">decparams</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">])</span>
+                    <span class="n">allpossibleparams</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">M</span> <span class="o">+=</span> <span class="mi">2</span>
+                <span class="k">if</span> <span class="n">M</span> <span class="o">&gt;</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Search coverage = </span><span class="si">%.2f</span><span class="s2"> percent&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="mf">100.0</span> <span class="o">-</span> <span class="mf">100.0</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">decparams</span><span class="p">)</span> <span class="o">/</span> <span class="n">allpossibleparams</span><span class="p">))</span>
+            <span class="n">decparams</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">special</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;echo &quot;</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;DECSEARCH_M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">decparams</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; | xargs -n1 -P15 imsearch&quot;</span>
+            <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;DECPARAMSDO&quot;</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">params</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;DECSEARCH&quot;</span><span class="p">:</span>                        
+            <span class="c1">#dectable = getGoodDecsTable(params.M, params.K)</span>
+            <span class="n">dectable</span> <span class="o">=</span> <span class="n">getGoodDecsTableSmallMemory</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">K</span><span class="p">)</span>
+            <span class="n">decfilename</span> <span class="o">=</span> <span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/decs/M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">_option=low.txt&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">K</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">decfilename</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dectable</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saved to &quot;</span> <span class="o">+</span> <span class="n">decfilename</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">params</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;DECEVAL&quot;</span><span class="p">:</span>
+            <span class="n">decfilename</span> <span class="o">=</span> <span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/decs/M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">.txt&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">K</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">decfilename</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Read &quot;</span> <span class="o">+</span> <span class="n">decfilename</span><span class="p">)</span>
+                <span class="n">dectable</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">dectable</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">minh</span> <span class="ow">in</span> <span class="n">dectable</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;minh = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">minh</span><span class="p">))</span>
+                    <span class="n">allinds</span> <span class="o">=</span> <span class="n">convertIndsDecToInds</span><span class="p">(</span><span class="n">dectable</span><span class="p">[</span><span class="n">minh</span><span class="p">],</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">allinds</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;actual minh = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">getMinimumHammingDistance</span><span class="p">(</span><span class="n">allinds</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">)))</span>
+           
+        <span class="k">elif</span> <span class="n">params</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;SEARCH&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">Q</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">params</span><span class="o">.</span><span class="n">Q</span> <span class="o">*</span> <span class="n">params</span><span class="o">.</span><span class="n">K</span> <span class="o">&lt;=</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A self-evident solution is available for this setup.&quot;</span><span class="p">)</span>
+                <span class="c1">#params = Parameters(&quot;M=26_K=25_Q=16&quot;)</span>
+                <span class="n">qstarts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">Q</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">M</span> <span class="o">-</span> <span class="n">params</span><span class="o">.</span><span class="n">K</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">Q</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span>
+                <span class="n">inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">params</span><span class="o">.</span><span class="n">Q</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">K</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">Q</span><span class="p">):</span>
+                    <span class="n">inds</span><span class="p">[</span><span class="n">q</span><span class="p">]</span> <span class="o">=</span> <span class="n">qstarts</span><span class="p">[</span><span class="n">q</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">K</span><span class="p">)</span>
+
+                <span class="n">outputIndsToFile</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">fname</span> <span class="o">=</span> <span class="n">outputCPLEXModelFile</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">K</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">Q</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">fname</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;.mod&quot;</span> <span class="ow">in</span> <span class="n">fname</span><span class="p">:</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;oplrun &quot;</span> <span class="o">+</span> <span class="n">fname</span><span class="p">)</span>
+                    <span class="c1"># Convert the obtained solution to a numpy file</span>
+                    <span class="n">fcout</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/inds-raw/M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">_Q=</span><span class="si">%d</span><span class="s2">_*.txt&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">K</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">Q</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fcout</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">fcout</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+                        <span class="n">fname</span> <span class="o">=</span> <span class="n">fcout</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">obj</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="k">if</span> <span class="s2">&quot;obj=&quot;</span> <span class="ow">in</span> <span class="n">fname</span><span class="p">:</span>
+                            <span class="n">res</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;.*_obj=(\d+)&#39;</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">res</span><span class="p">:</span>
+                                <span class="n">obj</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+                        <span class="n">inds</span> <span class="o">=</span> <span class="n">convertCPLEXOutputToInds</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">K</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">Q</span><span class="p">)</span>
+                        <span class="n">outputIndsToFile</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">params</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;EVAL&quot;</span><span class="p">:</span>
+            <span class="n">inds</span> <span class="o">=</span> <span class="n">getIndexes</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">dm</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">K</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">Q</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">convertIndsToVector</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">Q</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Minimum Hamming distance = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">getMinimumHammingDistance</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Inequality L1 = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">getInequalityL1</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">params</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;DOCMUPDATE&quot;</span><span class="p">:</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+            <span class="n">M</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">K</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+                    <span class="n">ps</span> <span class="o">=</span> <span class="n">getIMParameters</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ps</span><span class="p">:</span>
+                        <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                        <span class="n">convertIndsToRST</span><span class="p">(</span><span class="n">basePath</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
+                <span class="n">M</span> <span class="o">+=</span> <span class="mi">2</span>
+                <span class="k">if</span> <span class="n">M</span> <span class="o">&gt;</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">:</span>
+                    <span class="k">break</span>
+        <span class="k">elif</span> <span class="n">params</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;DOCMINDEX&quot;</span><span class="p">:</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+            <span class="k">def</span> <span class="nf">lfs</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+                <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.rst&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">Parameters</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+                <span class="k">return</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">M</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">K</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10000000</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">Q</span>
+            
+            <span class="n">dirs</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/../docs/source/db/M=*&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">mdir</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">mdir</span><span class="p">)</span>
+                <span class="n">M</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">mdir</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;M=&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+                <span class="n">titlestr</span> <span class="o">=</span> <span class="s2">&quot;M = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">M</span>
+
+                <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">mdir</span> <span class="o">+</span> <span class="s2">&quot;/M=*.rst&quot;</span><span class="p">)</span>
+                <span class="n">files</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="n">lfs</span><span class="p">)</span>
+
+                <span class="n">fout</span> <span class="o">=</span> <span class="n">mdir</span> <span class="o">+</span> <span class="s2">&quot;/index.rst&quot;</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fout</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">titlestr</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">titlestr</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">titlestr</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;This webpage provides the designed active indices for the :math:`M = </span><span class="si">%d</span><span class="s2">` case.</span><span class="se">\n\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">M</span><span class="p">)</span>
+
+                    <span class="n">frsts</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">frst</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.rst&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">frst</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;.. toctree::</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;   :maxdepth: 2</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;   :hidden:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;   </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">frst</span> <span class="ow">in</span> <span class="n">frsts</span><span class="p">:</span>
+                        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;   &quot;</span> <span class="o">+</span> <span class="n">frst</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    
+                    <span class="k">for</span> <span class="n">frst</span> <span class="ow">in</span> <span class="n">frsts</span><span class="p">:</span>
+                        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;- :doc:`&quot;</span> <span class="o">+</span> <span class="n">frst</span> <span class="o">+</span> <span class="s2">&quot;`</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The index.rst file was saved to &quot;</span> <span class="o">+</span> <span class="n">fout</span><span class="p">)</span>
+
+        <span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Elapsed time = </span><span class="si">%.10f</span><span class="s2"> seconds&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">elapsed_time</span><span class="p">))</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Naoki Ishikawa
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ 
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-402853-8', 'ishikawa.cc');
+    ga('send', 'pageview');
+</script>
+
+
+</body>
+</html>

@@ -8,7 +8,10 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
+*.pickle
+*.doctree
+.buildinfo
+docs/build/html/_sources/
 develop-eggs/
 dist/
 downloads/
