@@ -149,3 +149,4 @@ Thumbs.db
 imtoolkit/inds-raw/
 updatedoc.bat
 uploaddoc.rb
+uploadpypi.bat

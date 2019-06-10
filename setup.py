@@ -11,10 +11,11 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name='imtoolkit',
-      version='0.1',
+      version='0.2',
       description='',
       long_description=long_description,
       url='https://ishikawa.cc/imtoolkit/',
+      download_url="https://pypi.org/project/imtoolkit/",
       author='Naoki Ishikawa',
       author_email='contact@ishikawa.cc',
       license='MIT',
@@ -33,5 +34,7 @@ setup(name='imtoolkit',
           'Programming Language :: Python :: 3.7'
       ],
       test_suite='imtoolkit.tests',
-      zip_safe=False)
+      zip_safe=False,
+      package_data={'imtoolkit': ['decs/*.txt']},
+)
 

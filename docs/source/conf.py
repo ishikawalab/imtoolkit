@@ -22,7 +22,7 @@ copyright = '2019, Naoki Ishikawa'
 author = 'Naoki Ishikawa'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1'
+release = '0.2'
 
 
 # -- General configuration ---------------------------------------------------
