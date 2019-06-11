@@ -4,6 +4,8 @@ Active Indices Database
 
 This webpage introduces a comprehensive database of the active indices designed for the generalized spatial modulation and the subcarrier index modulation schemes, which are representative members of index modulation family.
 The designed active indices are provided in three formats: pure indices, activation tensor, and its vector representation.
+In this webpage, :math:`M` denotes the number of transmit antennas or subcarriers, :math:`K` denotes the number of activated antennas or subcarriers, and :math:`Q` denotes the number of activation patterns, where we have the constraint of :math:`2 \leq Q \leq 2^{\left\lfloor \log_2{M \choose K} \right\rfloor}`.
+
 Note that the designed active indices in the :math:`Q > 1024` case are omitted in this webpage, although they are supported by this toolkit.
 Additionally, the activation tensor is omitted in the :math:`Q > 128` case due to its large file size.
 

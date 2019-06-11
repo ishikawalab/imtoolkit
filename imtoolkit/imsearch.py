@@ -555,7 +555,7 @@ def main():
                     f.write(titlestr + "\n")
                     f.write("=" * len(titlestr) + "\n")
                     f.write("\n\n")
-                    f.write("This webpage provides the designed active indices for the :math:`M = %d` case.\n\n" % M)
+                    f.write("This webpage provides the designed active indices in the :math:`M = %d` case.\n\n" % M)
 
                     frsts = [os.path.basename(frst).replace(".rst", "") for frst in files]
                     f.write(".. toctree::\n")

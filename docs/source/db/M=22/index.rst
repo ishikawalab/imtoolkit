@@ -4,7 +4,7 @@ M = 22
 ======
 
 
-This webpage provides the designed active indices for the :math:`M = 22` case.
+This webpage provides the designed active indices in the :math:`M = 22` case.
 
 .. toctree::
    :maxdepth: 2

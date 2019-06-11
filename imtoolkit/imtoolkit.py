@@ -11,14 +11,19 @@ from scipy import special
 from imtoolkit import *
 
 def main():
+    np.set_printoptions(threshold=np.inf)
+
     title = "    IMToolkit Version " + IMTOOLKIT_VERSION + "    "
     print("=" * len(title) + "\n" + title + "\n" + "=" * len(title))
     
     if os.getenv("USECUPY") == "1" and importlib.util.find_spec("cupy") != None:
         print("CuPy-aided GPGPU acceleration is activated in your environment.")
+        print("One can activate the NumPy counterpart by executing")
+        print("> unset USECUPY")
     else:
         print("NumPy is used for all the calculations.")
         print("The use of CUDA and CuPy is strongly recommended.")
+        print("One can activate it by executing")
         print("> export USECUPY=1")
     print("")
     
@@ -31,8 +36,9 @@ def main():
     
     args = sys.argv[1:]
     for arg in args:
-        print("-" * 50)
-        print("arg = " + arg)
+        lentitle = len(arg) + 6
+        print("-" * lentitle + "\narg = " + arg + "\n" + "-" * lentitle)
+
         params = Parameters(arg)
 
         # initialize a codebook, which also supports BLAST/OFDM by setting M = K
