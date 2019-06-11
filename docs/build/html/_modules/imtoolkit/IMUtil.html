@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imtoolkit.IMUtil &mdash; imtoolkit 0.1 documentation</title>
+  <title>imtoolkit.IMUtil &mdash; imtoolkit 0.2 documentation</title>
   
 
   
@@ -153,6 +153,7 @@
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">glob</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">special</span>
 <span class="kn">from</span> <span class="nn">numba</span> <span class="k">import</span> <span class="n">jit</span>
@@ -328,19 +329,52 @@
             <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ret</span></div>
 
+<div class="viewcode-block" id="downloadOptimizedIndexesList"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.downloadOptimizedIndexesList">[docs]</a><span class="k">def</span> <span class="nf">downloadOptimizedIndexesList</span><span class="p">(</span><span class="n">basePath</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Trying to obtain the active indices file from &quot;</span> <span class="o">+</span> <span class="n">source</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="n">txtfilename</span> <span class="o">=</span> <span class="s2">&quot;M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">_Q=</span><span class="si">%d</span><span class="s2">.txt&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
+    <span class="n">txtdstpath</span> <span class="o">=</span> <span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/inds/&quot;</span> <span class="o">+</span> <span class="n">txtfilename</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/inds/&quot;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/inds/&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">source</span> <span class="o">==</span> <span class="s2">&quot;GitHub&quot;</span><span class="p">:</span>
+        <span class="n">txturl</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/imtoolkit/imtoolkit/master/docs/build/html/db/M=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">M</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">txtfilename</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">txturl</span> <span class="o">=</span> <span class="s2">&quot;https://ishikawa.cc/imtoolkit/db/M=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">M</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">txtfilename</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">txturl</span><span class="p">,</span> <span class="n">txtdstpath</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Perhaps...&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;    &quot;</span> <span class="o">+</span> <span class="n">source</span> <span class="o">+</span> <span class="s2">&quot; is currently not available.&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;    You need the root permission.&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;    The specified IM parameters are invalid or not supported.&quot;</span><span class="p">)</span>
+        <span class="kn">import</span> <span class="nn">traceback</span>
+        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    
+    <span class="k">return</span> <span class="kc">True</span></div>
+
 <div class="viewcode-block" id="getOptimizedIndexesList"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getOptimizedIndexesList">[docs]</a><span class="k">def</span> <span class="nf">getOptimizedIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">minh</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
     <span class="n">basePath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+
     <span class="k">if</span> <span class="n">minh</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/inds/M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">_Q=</span><span class="si">%d</span><span class="s2">_*.txt&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">))</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/inds/M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">_Q=</span><span class="si">%d</span><span class="s2">.txt&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">))</span>
+        <span class="n">files</span> <span class="o">+=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/inds/M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">_Q=</span><span class="si">%d</span><span class="s2">_*.txt&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/inds/M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">_Q=</span><span class="si">%d</span><span class="s2">_minh=</span><span class="si">%d</span><span class="s2">*.txt&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">minh</span><span class="p">))</span>
 
-
+    <span class="c1"># download the active indices from some webpages</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No file found&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">downloadOptimizedIndexesList</span><span class="p">(</span><span class="n">basePath</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="s2">&quot;GitHub&quot;</span><span class="p">):</span>
+            <span class="n">downloadOptimizedIndexesList</span><span class="p">(</span><span class="n">basePath</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="s2">&quot;ishikawa.cc&quot;</span><span class="p">)</span>
+        
+        <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/inds/M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">_Q=</span><span class="si">%d</span><span class="s2">.txt&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No file found.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[]</span>
 
-    <span class="n">files</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span> <span class="c1"># TODO: must consider minh, ineq</span>
+    <span class="n">files</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Read &quot;</span> <span class="o">+</span> <span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>

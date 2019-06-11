@@ -1,15 +1,18 @@
 # IMToolkit
 
-IMToolkit, an open-source index modulation toolkit, attempts to facilitate reproducible research in the field of wireless communications and index modulation (IM) studies.
-It relies on the massively parallel algorithms proposed in [1], which are especially designed for high-performance Nvidia GPUs.
-In addition to the IM family, it also supports the conventional spatial multiplexing scheme for ideal MIMO and OFDM scenarios.
+IMToolkit, an open-source index modulation (IM) toolkit, attempts to facilitate reproducible research in the field of wireless communications and IM studies.
+The major advantages of this toolkit are highlighted as follows:
+
+- With the aid of state-of-the-art Nvidia GPUs, it accelerates bit error ratio and average mutual information simulations by invoking massively parallel algorithms.
+- In addition to the IM family, it also supports the conventional multiplexing scheme for ideal MIMO and OFDM scenarios.
+- It contains a comprehensive database of designed active indices, that determine the achievable performance of the generalized spatial modulation or the subcarrier-index modulation.
 
 For more information, please refer to the following webpages.
 - [IMToolkit official website](https://ishikawa.cc/imtoolkit/)
 - [A detailed tutorial for the imtoolkit command](https://ishikawa.cc/imtoolkit/tutorial.html)
 - [A comprehensive database of the designed active indices](https://ishikawa.cc/imtoolkit/db/index.html)
 
-## Quick Start Guide
+## Installation Guide
 
 IMToolkit is available from the Python official package repository [PyPi](https://pypi.org/project/imtoolkit/).
 
@@ -21,6 +24,18 @@ IMToolkit is heavily dependent on CuPy to achieve significantly fast Monte-Carlo
 [The key components required by CuPy are listed here.](https://docs-cupy.chainer.org/en/stable/install.html)
 In case CuPy is not installed in your environment, IMToolkit uses NumPy only.
 Note that the CuPy-based simulation is 145 times faster than the NumPy-based calculation, as reported in [1].
+
+The above package does not include the designed active indices due to their large file size, which exceeds 500MB.
+Hence, the required files are automatically obtained from the GitHub repository or a mirror website.
+If you need all the project files, to use `imtoolkit` offline, it is recommended to obtain the package obtained from GitHub as follows:
+
+    > pip install git+https://github.com/imtoolkit/imtoolkit
+
+The IMToolkit development team welcomes other researchers' contributions and pull requests.
+In that case, it would be better to install the latest package as follows:
+
+    > git clone https://github.com/imtoolkit/imtoolkit
+    > pip install -e ./imtoolkit # this activates the editable mode
 
 [A detailed tutorial for the installed imtoolkit command is available here.](https://ishikawa.cc/imtoolkit/tutorial.html)
 

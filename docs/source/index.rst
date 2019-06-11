@@ -9,7 +9,7 @@ Overview
 
 This webpage introduces an open-source index modulation toolkit (IMToolkit).
 This toolkit attempts to facilitate reproducible research in the field of wireless communications and IM studies.
-The major advantages of this toolkit are highlited as follows:
+The major advantages of this toolkit are highlighted as follows:
 
 - With the aid of state-of-the-art Nvidia GPUs, it accelerates bit error ratio and average mutual information simulations by invoking massively parallel algorithms.
 - In addition to the IM family, it also supports the conventional multiplexing scheme for ideal MIMO and OFDM scenarios.
@@ -40,13 +40,22 @@ IMToolkit is heavily dependent on CuPy to achieve significantly fast Monte-Carlo
 In case CuPy is not installed in your environment, IMToolkit uses NumPy only.
 Note that the CuPy-based simulation is 145 times faster than the NumPy-based calculation, as reported in [1].
 
-The latest development version is also available from `GitHub <https://github.com/imtoolkit/imtoolkit>`_.
+The above package does not include the designed active indices due to their large file size, which exceeds 500MB.
+Hence, the required files are automatically obtained from the GitHub repository or a mirror website.
+If you need all the project files, to use `imtoolkit` offline, it is recommended to obtain the package obtained from GitHub as follows:
 
 .. code-block:: bash
 
     > pip install git+https://github.com/imtoolkit/imtoolkit
 
-The IMToolkit development team is welcome to incorporate other researchers contributions and pull requests.
+The IMToolkit development team welcomes other researchers' contributions and pull requests.
+In that case, it would be better to install the latest package as follows:
+
+.. code-block:: bash
+
+    > git clone https://github.com/imtoolkit/imtoolkit
+    > pip install -e ./imtoolkit # this activates the editable mode
+
 
 How to Use
 ==========
