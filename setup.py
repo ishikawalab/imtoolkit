@@ -35,6 +35,6 @@ setup(name='imtoolkit',
       ],
       test_suite='imtoolkit.tests',
       zip_safe=False,
-      package_data={'imtoolkit': ['decs/*.txt']},
+      package_data={'imtoolkit': ['inds/M=2_K=1_Q=2_minh=2_ineq=0.txt', 'inds/M=4_K=1_Q=4_minh=2_ineq=0.txt', 'M=4_K=2_Q=4_minh=2_ineq=0.txt', 'M=4_K=3_Q=4_minh=2_ineq=0.txt']},
 )
 

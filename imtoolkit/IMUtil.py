@@ -225,7 +225,7 @@ def getOptimizedIndexesList(M, K, Q, minh = 0):
             print("No file found.")
             return []
 
-    files.sort() # TODO: must consider minh, ineq
+    files.sort()
     print("Read " + files[0])
     inds = np.loadtxt(files[0], dtype = np.int)
     print(inds)
