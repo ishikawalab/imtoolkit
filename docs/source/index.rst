@@ -42,7 +42,7 @@ Note that the CuPy-based simulation is 145 times faster than the NumPy-based cal
 
 The above package does not include the designed active indices due to their large file size, which exceeds 500MB.
 Hence, the required files are automatically obtained from the GitHub repository or a mirror website.
-If you need all the project files, to use `imtoolkit` offline, it is recommended to obtain the package obtained from GitHub as follows:
+If you need all the project files, to use `imtoolkit` offline, it is recommended to obtain the package from GitHub as follows:
 
 .. code-block:: bash
 

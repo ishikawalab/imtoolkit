@@ -20,14 +20,14 @@ IMToolkit is available from the Python official package repository [PyPi](https:
 
 This installation requires Numba, NumPy, Pandas, SciPy, SymPy, and tqdm, all of which are popular Python packages.
 Additionally, it is strongly recommended to install [CuPy](https://cupy.chainer.org/) 5.40+. 
-IMToolkit is heavily dependent on CuPy to achieve significantly fast Monte-Carlo simulations.
+IMToolkit is heavily dependent on CuPy to achieve significantly fast Monte Carlo simulations.
 [The key components required by CuPy are listed here.](https://docs-cupy.chainer.org/en/stable/install.html)
 In case CuPy is not installed in your environment, IMToolkit uses NumPy only.
 Note that the CuPy-based simulation is 145 times faster than the NumPy-based calculation, as reported in [1].
 
 The above package does not include the designed active indices due to their large file size, which exceeds 500MB.
 Hence, the required files are automatically obtained from the GitHub repository or a mirror website.
-If you need all the project files, to use `imtoolkit` offline, it is recommended to obtain the package obtained from GitHub as follows:
+If you need all the project files, to use `imtoolkit` offline, it is recommended to obtain the package from GitHub as follows:
 
     > pip install git+https://github.com/imtoolkit/imtoolkit
 
