@@ -12,8 +12,8 @@
 #
 import os
 import sys
+from imtoolkit import IMTOOLKIT_VERSION
 sys.path.insert(0, os.path.abspath('../../'))
-
 
 # -- Project information -----------------------------------------------------
 
@@ -22,8 +22,7 @@ copyright = '2019, Naoki Ishikawa'
 author = 'Naoki Ishikawa'
 
 # The full version, including alpha/beta/rc tags
-release = '0.2'
-
+release = IMTOOLKIT_VERSION
 
 # -- General configuration ---------------------------------------------------
 

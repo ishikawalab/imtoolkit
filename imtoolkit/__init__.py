@@ -1,3 +1,6 @@
+global IMTOOLKIT_VERSION
+IMTOOLKIT_VERSION = '0.3'
+
 from .Channel import *
 from .CoherentMLDSimulator import *
 from .IdealOFDMChannel import *
