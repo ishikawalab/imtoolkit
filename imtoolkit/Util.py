@@ -42,6 +42,15 @@ def getMinimumEuclideanDistance(symbols):
     #
     #return minmed
 
+# W.dot(W.conj().T).round() == eye(N)
+def getDFTMatrix(N):
+    W = zeros((N, N), dtype = complex)
+    omega = exp(2.0j * pi / N)
+    for j in range(N):
+        for k in range(N):
+            W[j, k] = pow(omega, j * k)
+    W /= sqrt(N)
+    return W
 
 #
 # IT++ like functions
