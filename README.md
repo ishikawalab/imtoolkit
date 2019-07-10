@@ -43,7 +43,7 @@ In that case, it would be better to install the latest package as follows:
 
 It would be highly appreciated if you cite the following reference when using IMToolkit.
 
-- [1] N. Ishikawa, "IMToolkit: An open-source index modulation toolkit for reproducible research based on massively parallel algorithms," IEEE Access, submitted.
+- [1] N. Ishikawa, "[IMToolkit: An open-source index modulation toolkit for reproducible research based on massively parallel algorithms](https://doi.org/10.1109%2Faccess.2019.2928033)," IEEE Access, in press.
 
 Of course, if your project relies on CuPy, the following reference is strongly recommended.
 

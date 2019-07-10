@@ -6,14 +6,10 @@ from codecs import open
 from os import path
 from imtoolkit.__init__ import IMTOOLKIT_VERSION
 
-here = path.abspath(path.dirname(__file__))
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
-
 setup(name='imtoolkit',
       version=IMTOOLKIT_VERSION,
       description='IMToolkit: An open-source index modulation toolkit for reproducible research based on massively parallel algorithms',
-      long_description=long_description,
+      long_description=open('README.md').read(),
       long_description_content_type='text/markdown',
       url='https://ishikawa.cc/imtoolkit/',
       download_url="https://pypi.org/project/imtoolkit/",
