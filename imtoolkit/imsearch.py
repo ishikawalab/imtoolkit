@@ -10,10 +10,8 @@ import shutil
 from scipy import special
 import numpy as np
 import itertools
-from numba import jit
 from imtoolkit import *
 
-@jit
 def getHammingDistanceTable(MCK, indsdec):
     # This method is not dependent on Q
     hds = np.zeros((MCK, MCK), dtype = np.int) 
@@ -27,7 +25,6 @@ def getHammingDistanceTable(MCK, indsdec):
         print("%.3f percent completed." % (i / imax * 100.0))
     return hds
 
-@jit
 def getGoodDecsTable(M, K):
     inds = list(itertools.combinations(range(M), K))
     indsv = convertIndsToVector(inds, M)
@@ -82,7 +79,6 @@ def getGoodDecsTable(M, K):
         #print("%.3f percent completed." % (i / imax * 100.0))
     return newdecs
 
-#@jit
 def getGoodDecsTableSmallMemory(M, K):
     minHT = 4
     indsiter = itertools.combinations(range(M), K)

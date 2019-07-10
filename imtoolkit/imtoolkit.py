@@ -16,7 +16,7 @@ def main():
     title = "    IMToolkit Version " + IMTOOLKIT_VERSION + "    "
     print("=" * len(title) + "\n" + title + "\n" + "=" * len(title))
     
-    if os.getenv("USECUPY") == "1" and importlib.util.find_spec("cupy") != None:
+    if os.getenv("USECUPY") == "1":
         print("CuPy-aided GPGPU acceleration is activated in your environment.")
         print("One can activate the NumPy counterpart by executing")
         print("> unset USECUPY")
@@ -100,3 +100,5 @@ def main():
         elapsed_time = time.time() - start_time
         print ("Elapsed time = %.10f seconds" % (elapsed_time))
 
+if __name__ == '__main__':
+    main()

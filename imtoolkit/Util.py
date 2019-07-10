@@ -7,9 +7,8 @@ Basic utility functions
 import os
 import itertools
 from sympy.combinatorics.graycode import GrayCode
-import importlib
 import numpy as np
-if os.getenv("USECUPY") == "1" and importlib.util.find_spec("cupy") != None:
+if os.getenv("USECUPY") == "1":
     from cupy import *
     # print("cupy is imported by Util.py")
 else:

@@ -2,9 +2,8 @@
 # This toolkit is released under the MIT License, see LICENSE.txt
 
 import os
-import importlib
 import pandas as pd
-if os.getenv("USECUPY") == "1" and importlib.util.find_spec("cupy") != None:
+if os.getenv("USECUPY") == "1":
     import cupy as xp
     # print("cupy is imported by Simulator.py")
 else:

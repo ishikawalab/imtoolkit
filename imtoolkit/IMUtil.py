@@ -7,7 +7,6 @@ import itertools
 import urllib.request
 import numpy as np
 from scipy import special
-from numba import jit
 from .Util import *
 
 # Optimized indexes set in terms of AMI
@@ -289,7 +288,6 @@ def getProbabilityOfActivation(inds, M):
 #
 # getHammingDistance([0,1], [1,0]) = 2
 # getHammingDistance([1,1,0,0], [0,0,1,1]) = 4
-@jit
 def getHammingDistance(arr1, arr2):
     return np.sum(np.logical_xor(arr1, arr2))
 

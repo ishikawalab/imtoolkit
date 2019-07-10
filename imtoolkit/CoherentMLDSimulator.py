@@ -5,8 +5,7 @@ import os
 import sys
 import itertools
 from tqdm import tqdm, trange
-import importlib
-if os.getenv("USECUPY") == "1" and importlib.util.find_spec("cupy") != None:
+if os.getenv("USECUPY") == "1":
     from cupy import *
     # print("cupy is imported by CoherentMLDSimulator.py")
 else:
@@ -28,7 +27,7 @@ class CoherentMLDSimulator(Simulator):
         super().__init__(codes, channel)
 
     def simulateBERReference(self, params, output = True):
-        """Simulates the BER values at multiple SNRs, where the straightforward reference algorithm is used.
+        """Simulates BER values at multiple SNRs, where the straightforward reference algorithm is used.
 
         Args:
             params (imtoolkit.Parameter): simulation parameters.
@@ -67,7 +66,7 @@ class CoherentMLDSimulator(Simulator):
         return ret
 
     def simulateBERParallel(self, params, output = True):
-        """Simulates the BER values at multiple SNRs, where the massively parallel algorithm is used.
+        """Simulates BER values at multiple SNRs, where the massively parallel algorithm is used.
 
         Args:
             params (imtoolkit.Parameter): simulation parameters.
@@ -118,7 +117,7 @@ class CoherentMLDSimulator(Simulator):
 
 
     def simulateAMIReference(self, params, output = True):
-        """Simulates the AMI values at multiple SNRs, where the straightforward reference algorithm is used.
+        """Simulates AMI values at multiple SNRs, where the straightforward reference algorithm is used.
 
         Args:
             params (imtoolkit.Parameter): simulation parameters.
@@ -164,7 +163,7 @@ class CoherentMLDSimulator(Simulator):
         
 
     def simulateAMIParallel(self, params, output = True):
-        """Simulates the AMI values at multiple SNRs, where the massively parallel algorithm is used.
+        """Simulates AMI values at multiple SNRs, where the massively parallel algorithm is used.
 
         Args:
             params (imtoolkit.Parameter): simulation parameters.
