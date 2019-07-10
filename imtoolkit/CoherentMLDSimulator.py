@@ -20,7 +20,7 @@ class CoherentMLDSimulator(Simulator):
 
     Args:
         codes (ndarray): an input codebook
-        channel (imtoolkit.Channel): a channel model used though simulation
+        channel (imtoolkit.Channel): a channel model used in simulation
     """
 
     def __init__(self, codes, channel):

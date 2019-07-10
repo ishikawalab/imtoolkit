@@ -74,6 +74,13 @@ class StarQAM:
         #print("StartQAM: the constellation size of " + str(self.L) + " is not supported yet")
 
 class Modulator:
+    """Generate a constellation such as PSK, QAM, and star-QAM (SQAM).
+
+    Args:
+        mode (string): the type of constellation, such as PSK, QAM, and SQAM.
+        L (int): the constellation size.
+    """
+
     def __init__(self, mode = "PSK", constellationSize = 2):
         self.constellationSize = constellationSize
         if mode == "PSK":

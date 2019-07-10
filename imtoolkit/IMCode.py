@@ -8,8 +8,8 @@ from .Util import *
 from .IMUtil import *
 
 class IMCode:
-    def __init__(self, dm, M, K, Q, mod, L, meanPower):
-        mod = Modulator(mod, L)
+    def __init__(self, dm, M, K, Q, modtype, L, meanPower):
+        mod = Modulator(modtype, L)
         kfoldsymbols = np.array(list(itertools.product(mod.symbols, repeat = K))).T
         self.inds = getIndexes(dm, M, K, Q)
         Q = len(self.inds)
@@ -23,6 +23,6 @@ class IMCode:
         self.B = self.B1 + self.B2
     
     def putRate(self):
-        print("B = B1 + B2 = %d + %d = %d [bits/symbol]"%(self.B1, self.B2, self.B))
+        print("B = B1 + B2 = %d + %d = %d [bit/symbol]"%(self.B1, self.B2, self.B))
     
 
