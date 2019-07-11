@@ -2,7 +2,6 @@
 # This toolkit is released under the MIT License, see LICENSE.txt
 
 import itertools
-from math import *
 import numpy as np
 from .Modulator import *
 from .Util import *
@@ -42,46 +41,46 @@ class OSTBCode:
         elif M == 16:
             nsymbols = M
 
-        self.B = nsymbols * log2(L)
+        self.B = nsymbols * np.log2(L)
         self.Nc = int(2 ** self.B)
         
         # initialize codes
         kfoldsymbols = np.array(list(itertools.product(mod.symbols, repeat = nsymbols))) # L^nsymbols \times nsymbols
 
         self.codes = np.zeros((self.Nc, M, M), dtype = complex)
-        for i in range(shape(kfoldsymbols)[0]):
+        for i in range(kfoldsymbols.shape[0]):
             s = kfoldsymbols[i, :]
             
             if M == 2:
-                self.codes[i] = [[s[0], s[1]], [-conj(s[1]), conj(s[0])]]
-                self.codes[i] /= sqrt(nsymbols)
+                self.codes[i] = [[s[0], s[1]], [-np.conj(s[1]), np.conj(s[0])]]
+                self.codes[i] /= np.sqrt(nsymbols)
             
             if M == 4:
                 if modtype == "PSK" or modtype == "SQAM":
                     if nsymbols == 2:
                         self.codes[i,0,0] = s[0]
                         self.codes[i,0,1] = s[1]
-                        self.codes[i,1,0] = -conj(s[1])
-                        self.codes[i,1,1] = conj(s[0])
+                        self.codes[i,1,0] = -np.conj(s[1])
+                        self.codes[i,1,1] = np.conj(s[0])
                         self.codes[i,2,2] = s[0]
                         self.codes[i,2,3] = s[1]
-                        self.codes[i,3,2] = -conj(s[1])
-                        self.codes[i,3,3] = conj(s[0])
-                        self.codes[i] /= sqrt(nsymbols)
+                        self.codes[i,3,2] = -np.conj(s[1])
+                        self.codes[i,3,3] = np.conj(s[0])
+                        self.codes[i] /= np.sqrt(nsymbols)
                     elif nsymbols == 3:
                         self.codes[i,0,0] = s[0]
                         self.codes[i,0,1] = s[1]
                         self.codes[i,0,2] = s[2]
-                        self.codes[i,1,0] = -conj(s[1])
-                        self.codes[i,1,1] = conj(s[0])
+                        self.codes[i,1,0] = -np.conj(s[1])
+                        self.codes[i,1,1] = np.conj(s[0])
                         self.codes[i,1,3] = s[2]
-                        self.codes[i,2,0] = conj(s[2])
-                        self.codes[i,2,2] = -conj(s[0])
+                        self.codes[i,2,0] = np.conj(s[2])
+                        self.codes[i,2,2] = -np.conj(s[0])
                         self.codes[i,2,3] = s[1]
-                        self.codes[i,3,1] = conj(s[2])
-                        self.codes[i,3,2] = -conj(s[1])
+                        self.codes[i,3,1] = np.conj(s[2])
+                        self.codes[i,3,2] = -np.conj(s[1])
                         self.codes[i,3,3] = -s[0]
-                        self.codes[i] /= sqrt(nsymbols)
+                        self.codes[i] /= np.sqrt(nsymbols)
                 elif modtype == "PAM":
                     self.codes[i,0,0] = s[0]
                     self.codes[i,0,1] = s[1]
@@ -99,7 +98,7 @@ class OSTBCode:
                     self.codes[i,3,1] = -s[2]
                     self.codes[i,3,2] = s[1]
                     self.codes[i,3,3] = s[0]
-                    self.codes[i] /= sqrt(nsymbols)
+                    self.codes[i] /= np.sqrt(nsymbols)
 
             elif M == 8:
                 if modtype == "PAM":
@@ -111,15 +110,15 @@ class OSTBCode:
                     self.codes[i,5] = [-s[5], +s[4], -s[7], +s[6], -s[1], +s[0], -s[3], +s[2]]
                     self.codes[i,6] = [-s[6], +s[7], +s[4], -s[5], -s[2], +s[3], +s[0], -s[1]]
                     self.codes[i,7] = [-s[7], -s[6], +s[5], +s[4], -s[3], -s[2], +s[1], +s[0]]
-                    self.codes[i] /= sqrt(nsymbols)
+                    self.codes[i] /= np.sqrt(nsymbols)
             
             elif M == 16:
                 for k in range(8):
                     self.codes[i, 0 + k * 2, 0 + k * 2] = s[0 + k * 2]
                     self.codes[i, 0 + k * 2, 1 + k * 2] = s[1 + k * 2]
-                    self.codes[i, 1 + k * 2, 0 + k * 2] = -conj(s[1 + k * 2])
-                    self.codes[i, 1 + k * 2, 1 + k * 2] = conj(s[0 + k * 2])
-                self.codes[i] /= sqrt(2)
+                    self.codes[i, 1 + k * 2, 0 + k * 2] = -np.conj(s[1 + k * 2])
+                    self.codes[i, 1 + k * 2, 1 + k * 2] = np.conj(s[0 + k * 2])
+                self.codes[i] /= np.sqrt(2)
 
     def putRate(self):
         print("B = %d [bit/symbol]" % self.B)

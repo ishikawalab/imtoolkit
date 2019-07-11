@@ -46,7 +46,14 @@ def main():
         if params.channel == "ofdm":
             # For the OFDM scenario, the mean power of symbol vectors is normalized to M
             meanPower = params.M
-        code = IMCode(params.dm, params.M, params.K, params.Q, params.mod, params.L, meanPower)
+        
+        if params.code == "index":
+            code = IMCode(params.dm, params.M, params.K, params.Q, params.mod, params.L, meanPower)
+        elif params.code == "OSTBC":
+            if params.isSpeficied("O"):
+                code = OSTBCode(params.M, params.mod, params.L, params.O)
+            else:
+                code = OSTBCode(params.M, params.mod, params.L)
         
         # initialize a channel generator
         if params.channel == "rayleigh": # quasi-static Rayleigh fading

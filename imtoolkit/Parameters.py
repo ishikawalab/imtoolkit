@@ -79,7 +79,13 @@ class Parameters(object):
             return self.table[key]
         else:
             return False
-        
+    
+    def isSpeficied(self, key):
+        if key in self.table:
+            return True
+        else:
+            return False
+    
     def parseValue(self, value):
         if re.match(r'-*\d+', value):
             if value.find("e") > 0:

@@ -5,6 +5,7 @@ from .Channel import *
 from .CoherentMLDSimulator import *
 from .IdealOFDMChannel import *
 from .IdealRayleighChannel import *
+from .OSTBCode import *
 from .IMCode import *
 from .IMUtil import *
 from .Modulator import *
