@@ -16,25 +16,25 @@ from .Simulator import *
 from .Util import *
 
 class CoherentMLDSimulator(Simulator):
-    """A simulatror that relies on the coherent maximum likelihood detection.
+    """A simulatror that relies on the coherent maximum likelihood detector, that assumes perfect channel state information at the receiver. The environment variable USECUPY determines whether to use cupy or not.
 
     Args:
-        codes (ndarray): an input codebook
-        channel (imtoolkit.Channel): a channel model used in simulation
+        codes (ndarray): an input codebook, which is generated on the CPU memory and is transferred into the GPU memory.
+        channel (imtoolkit.Channel): a channel model used in simulation.
     """
 
     def __init__(self, codes, channel):
         super().__init__(codes, channel)
 
     def simulateBERReference(self, params, output = True):
-        """Simulates BER values at multiple SNRs, where the straightforward reference algorithm is used.
+        """Simulates BER values at multiple SNRs, where the straightforward reference algorithm is used. Note that this time complexity is unrealistically high. 
 
         Args:
             params (imtoolkit.Parameter): simulation parameters.
-            output (bool): whether output the obtained results to the results/ directory.
+            output (bool): a flag that determines whether to output the obtained results to the results/ directory.
 
         Returns:
-            ret (dict): a dict that has two keys: snr_dB and ber, and the corresponding results.
+            ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results.
         """
 
         IT, M, N, T, Nc, B, codes = params.IT, params.M, params.N, params.T, self.Nc, self.B, self.codes
@@ -67,14 +67,14 @@ class CoherentMLDSimulator(Simulator):
         return ret
 
     def simulateBERParallel(self, params, output = True):
-        """Simulates BER values at multiple SNRs, where the massively parallel algorithm is used.
+        """Simulates BER values at multiple SNRs, where the massively parallel algorithm is used. This implementation is especially designed for cupy.
 
         Args:
             params (imtoolkit.Parameter): simulation parameters.
-            output (bool): whether output the obtained results to the results/ directory.
+            output (bool): a flag that determines whether to output the obtained results to the results/ directory.
 
         Returns:
-            ret (dict): a dict that has two keys: snr_dB and ber, and the corresponding results.
+            ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results.
         """
 
         M, N, T, ITo, ITi, Nc, B, codes = params.M, params.N, params.T, params.ITo, params.ITi, self.Nc, self.B, self.codes
@@ -129,16 +129,15 @@ class CoherentMLDSimulator(Simulator):
 
 
     def simulateAMIReference(self, params, output = True):
-        """Simulates AMI values at multiple SNRs, where the straightforward reference algorithm is used.
+        """Simulates AMI values at multiple SNRs, where the straightforward reference algorithm is used. Note that this time complexity is unrealistically high. 
 
         Args:
             params (imtoolkit.Parameter): simulation parameters.
-            output (bool): whether output the obtained results to the results/ directory.
+            output (bool): a flag that determines whether to output the obtained results to the results/ directory.
 
         Returns:
-            ret (dict): a dict that has two keys: snr_dB and ami, and the corresponding results.
+            ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results.
         """
-        print("simulateAMIReference")
 
         IT, M, N, T, Nc, B, codes = params.IT, params.M, params.N, params.T, self.Nc, self.B, self.codes
         snr_dBs = linspace(params.snrfrom, params.to, params.len)
@@ -174,15 +173,16 @@ class CoherentMLDSimulator(Simulator):
         
 
     def simulateAMIParallel(self, params, output = True):
-        """Simulates AMI values at multiple SNRs, where the massively parallel algorithm is used.
+        """Simulates AMI values at multiple SNRs, where the massively parallel algorithm is used. This implementation is especially designed for cupy.
 
         Args:
             params (imtoolkit.Parameter): simulation parameters.
-            output (bool): whether output the obtained results to the results/ directory.
+            output (bool): a flag that determines whether to output the obtained results to the results/ directory.
 
         Returns:
-            ret (dict): a dict that has two keys: snr_dB and ami, and the corresponding results.
+            ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results.
         """
+        
         M, N, T, ITo, ITi, Nc, B, codes = params.M, params.N, params.T, params.ITo, params.ITi, self.Nc, self.B, self.codes
         snr_dBs = linspace(params.snrfrom, params.to, params.len)
         sigmav2s = 1.0 / inv_dB(snr_dBs)

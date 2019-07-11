@@ -11,7 +11,7 @@ Additionally, the activation tensor is omitted in the :math:`Q > 128` case due t
 
 :doc:`M=2/index` / :doc:`M=4/index` / :doc:`M=6/index` / :doc:`M=8/index` / :doc:`M=10/index` / :doc:`M=12/index` / :doc:`M=14/index` / :doc:`M=16/index` / :doc:`M=18/index` / :doc:`M=20/index` / :doc:`M=22/index` / :doc:`M=24/index` / :doc:`M=26/index` / :doc:`M=28/index` / :doc:`M=30/index` / :doc:`M=32/index`
 
-This database currently supports 100.00% of the IM parameters for :math:`M \leq 20` and 75.53% of them for :math:`M \leq 32`.
+This database currently supports 100.00% of the possible IM parameters for :math:`M \leq 20` and 75.53% of parameters for :math:`M \leq 32`.
 
 .. toctree::
    :maxdepth: 2
