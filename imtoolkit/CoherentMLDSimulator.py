@@ -34,7 +34,7 @@ class CoherentMLDSimulator(Simulator):
             output (bool): a flag that determines whether to output the obtained results to the results/ directory.
 
         Returns:
-            ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results.
+            ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.
         """
 
         IT, M, N, T, Nc, B, codes = params.IT, params.M, params.N, params.T, self.Nc, self.B, self.codes
@@ -74,7 +74,7 @@ class CoherentMLDSimulator(Simulator):
             output (bool): a flag that determines whether to output the obtained results to the results/ directory.
 
         Returns:
-            ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results.
+            ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.
         """
 
         M, N, T, ITo, ITi, Nc, B, codes = params.M, params.N, params.T, params.ITo, params.ITi, self.Nc, self.B, self.codes
@@ -83,7 +83,6 @@ class CoherentMLDSimulator(Simulator):
         codei = tile(arange(Nc), ITi)
         xor2ebits = getXORtoErrorBitsArray(Nc)
 
-        np.set_printoptions(threshold=np.inf, linewidth=np.inf)
         # The followings are old implementation proposed in [ishikawa2019im], which only support the T=1 case
         # x = tile(codes, Nc) # Nc \times M \times T * Nc
         # y = x.T # Nc \times M \times T * Nc
@@ -116,7 +115,7 @@ class CoherentMLDSimulator(Simulator):
                 mini = argmin(norms, axis = 2).reshape(ITi * Nc)
                 errorBits = sum(xor2ebits[bitwise_xor(codei, mini)])
 
-                bers[i] += errorBits# / (ITi * B * Nc)
+                bers[i] += errorBits
                 nbits = (ito + 1) * ITi * B * Nc
                 print("At SNR = %1.2f dB, BER = %d / %d = %1.20f" % (snr_dBs[i], bers[i], nbits, bers[i] / nbits))
 
@@ -136,7 +135,7 @@ class CoherentMLDSimulator(Simulator):
             output (bool): a flag that determines whether to output the obtained results to the results/ directory.
 
         Returns:
-            ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results.
+            ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.
         """
 
         IT, M, N, T, Nc, B, codes = params.IT, params.M, params.N, params.T, self.Nc, self.B, self.codes
@@ -180,7 +179,7 @@ class CoherentMLDSimulator(Simulator):
             output (bool): a flag that determines whether to output the obtained results to the results/ directory.
 
         Returns:
-            ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results.
+            ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.
         """
         
         M, N, T, ITo, ITi, Nc, B, codes = params.M, params.N, params.T, params.ITo, params.ITi, self.Nc, self.B, self.codes
