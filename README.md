@@ -18,7 +18,7 @@ IMToolkit is available from the Python official package repository [PyPi](https:
 
     > pip install imtoolkit
 
-This installation requires Numba, NumPy, Pandas, SciPy, SymPy, and tqdm, all of which are popular Python packages.
+This installation requires NumPy, Pandas, SciPy, SymPy, and tqdm, all of which are popular Python packages.
 Additionally, it is strongly recommended to install [CuPy](https://cupy.chainer.org/) 5.40+. 
 IMToolkit is heavily dependent on CuPy to achieve significantly fast Monte Carlo simulations.
 [The key components required by CuPy are listed here.](https://docs-cupy.chainer.org/en/stable/install.html)
