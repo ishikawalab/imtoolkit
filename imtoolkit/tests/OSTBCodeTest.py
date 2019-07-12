@@ -3,11 +3,8 @@
 
 import unittest
 import numpy as np
+from imtoolkit.Util import testUnitary
 from imtoolkit.OSTBCode import *
-
-def testUnitary(M, code):
-    codes = code.codes.reshape(-1, M)
-    np.testing.assert_almost_equal(np.conj(codes.T).dot(codes) / code.Nc, eye(M))
 
 class OSTBCodeTest(unittest.TestCase):
 
