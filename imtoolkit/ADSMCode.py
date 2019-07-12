@@ -27,11 +27,9 @@ class ADSMCode:
         u_phase = 2.0 * np.pi / L
 
         A = np.zeros((M, M), dtype=np.complex)
-        for m in range(M):
-            if m == M-1:
-                A[(m+1)%M, m] = np.exp(1j * u_phase)
-            else:
-                A[(m+1)%M, m] = 1
+        A[0, M-1] = np.exp(1j * u_phase)
+        for m in range(M-1):
+            A[(m+1)%M, m] = 1
         
         As = np.zeros((M, M, M), dtype=np.complex) # M \times M \times M
         for m in range(M):
