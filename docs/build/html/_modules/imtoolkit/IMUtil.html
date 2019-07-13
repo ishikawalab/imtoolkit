@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imtoolkit.IMUtil &mdash; imtoolkit 0.3 documentation</title>
+  <title>imtoolkit.IMUtil &mdash; imtoolkit 0.6 documentation</title>
   
 
   
@@ -156,7 +156,6 @@
 <span class="kn">import</span> <span class="nn">urllib.request</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">special</span>
-<span class="kn">from</span> <span class="nn">numba</span> <span class="k">import</span> <span class="n">jit</span>
 <span class="kn">from</span> <span class="nn">.Util</span> <span class="k">import</span> <span class="o">*</span>
 
 <span class="c1"># Optimized indexes set in terms of AMI</span>
@@ -438,8 +437,7 @@
 <span class="c1">#</span>
 <span class="c1"># getHammingDistance([0,1], [1,0]) = 2</span>
 <span class="c1"># getHammingDistance([1,1,0,0], [0,0,1,1]) = 4</span>
-<div class="viewcode-block" id="getHammingDistance"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getHammingDistance">[docs]</a><span class="nd">@jit</span>
-<span class="k">def</span> <span class="nf">getHammingDistance</span><span class="p">(</span><span class="n">arr1</span><span class="p">,</span> <span class="n">arr2</span><span class="p">):</span>
+<div class="viewcode-block" id="getHammingDistance"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getHammingDistance">[docs]</a><span class="k">def</span> <span class="nf">getHammingDistance</span><span class="p">(</span><span class="n">arr1</span><span class="p">,</span> <span class="n">arr2</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_xor</span><span class="p">(</span><span class="n">arr1</span><span class="p">,</span> <span class="n">arr2</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="getMinimumHammingDistance"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getMinimumHammingDistance">[docs]</a><span class="k">def</span> <span class="nf">getMinimumHammingDistance</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>

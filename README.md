@@ -49,3 +49,8 @@ Of course, if your project relies on CuPy, the following reference is strongly r
 
 - [2] R. Okuta, Y. Unno, D. Nishino, S. Hido, and C. Loomis, "[CuPy: A numPy-compatible library for NVIDIA GPU calculations](http://learningsys.org/nips17/assets/papers/paper_16.pdf)," in Conference on Neural Information Processing Systems Workshop, Long Beach, CA, USA, Dec. 4-9, 2017.
 
+## Contributor(s)
+
+- Dr. Naoki Ishikawa ([Web](https://ishikawa.cc) / [Google Scholar](https://scholar.google.co.jp/citations?user=JHnisGYAAAAJ) / [ResearchGate](https://www.researchgate.net/profile/Naoki_Ishikawa) / [Publons](https://publons.com/researcher/3012020/naoki-ishikawa/))
+- YOU would become a valuable contributor of this project :) Any contributions and issues are appreciated.
+

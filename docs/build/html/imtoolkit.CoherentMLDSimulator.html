@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imtoolkit.CoherentMLDSimulator module &mdash; imtoolkit 0.3 documentation</title>
+  <title>imtoolkit.CoherentMLDSimulator module &mdash; imtoolkit 0.6 documentation</title>
   
 
   
@@ -152,28 +152,28 @@
 <dt id="imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator">
 <em class="property">class </em><code class="descclassname">imtoolkit.CoherentMLDSimulator.</code><code class="descname">CoherentMLDSimulator</code><span class="sig-paren">(</span><em>codes</em>, <em>channel</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imtoolkit/CoherentMLDSimulator.html#CoherentMLDSimulator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="imtoolkit.Simulator.html#imtoolkit.Simulator.Simulator" title="imtoolkit.Simulator.Simulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">imtoolkit.Simulator.Simulator</span></code></a></p>
-<p>A simulatror that relies on the coherent maximum likelihood detection.</p>
+<p>A simulatror that relies on the coherent maximum likelihood detector, that assumes perfect channel state information at the receiver. The environment variable USECUPY determines whether to use cupy or not.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>codes</strong> (<em>ndarray</em>) – an input codebook</p></li>
-<li><p><strong>channel</strong> (<em>imtoolkit.Channel</em>) – a channel model used though simulation</p></li>
+<li><p><strong>codes</strong> (<em>ndarray</em>) – an input codebook, which is generated on the CPU memory and is transferred into the GPU memory.</p></li>
+<li><p><strong>channel</strong> (<em>imtoolkit.Channel</em>) – a channel model used in simulation.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="method">
 <dt id="imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateAMIParallel">
 <code class="descname">simulateAMIParallel</code><span class="sig-paren">(</span><em>params</em>, <em>output=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imtoolkit/CoherentMLDSimulator.html#CoherentMLDSimulator.simulateAMIParallel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateAMIParallel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Simulates the AMI values at multiple SNRs, where the massively parallel algorithm is used.</p>
+<dd><p>Simulates AMI values at multiple SNRs, where the massively parallel algorithm is used. This implementation is especially designed for cupy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>params</strong> (<em>imtoolkit.Parameter</em>) – simulation parameters.</p></li>
-<li><p><strong>output</strong> (<em>bool</em>) – whether output the obtained results to the results/ directory.</p></li>
+<li><p><strong>output</strong> (<em>bool</em>) – a flag that determines whether to output the obtained results to the results/ directory.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a dict that has two keys: snr_dB and ami, and the corresponding results.</p>
+<dd class="field-even"><p>a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>ret (dict)</p>
@@ -184,16 +184,16 @@
 <dl class="method">
 <dt id="imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateAMIReference">
 <code class="descname">simulateAMIReference</code><span class="sig-paren">(</span><em>params</em>, <em>output=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imtoolkit/CoherentMLDSimulator.html#CoherentMLDSimulator.simulateAMIReference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateAMIReference" title="Permalink to this definition">¶</a></dt>
-<dd><p>Simulates the AMI values at multiple SNRs, where the straightforward reference algorithm is used.</p>
+<dd><p>Simulates AMI values at multiple SNRs, where the straightforward reference algorithm is used. Note that this time complexity is unrealistically high.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>params</strong> (<em>imtoolkit.Parameter</em>) – simulation parameters.</p></li>
-<li><p><strong>output</strong> (<em>bool</em>) – whether output the obtained results to the results/ directory.</p></li>
+<li><p><strong>output</strong> (<em>bool</em>) – a flag that determines whether to output the obtained results to the results/ directory.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a dict that has two keys: snr_dB and ami, and the corresponding results.</p>
+<dd class="field-even"><p>a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>ret (dict)</p>
@@ -204,16 +204,16 @@
 <dl class="method">
 <dt id="imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateBERParallel">
 <code class="descname">simulateBERParallel</code><span class="sig-paren">(</span><em>params</em>, <em>output=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imtoolkit/CoherentMLDSimulator.html#CoherentMLDSimulator.simulateBERParallel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateBERParallel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Simulates the BER values at multiple SNRs, where the massively parallel algorithm is used.</p>
+<dd><p>Simulates BER values at multiple SNRs, where the massively parallel algorithm is used. This implementation is especially designed for cupy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>params</strong> (<em>imtoolkit.Parameter</em>) – simulation parameters.</p></li>
-<li><p><strong>output</strong> (<em>bool</em>) – whether output the obtained results to the results/ directory.</p></li>
+<li><p><strong>output</strong> (<em>bool</em>) – a flag that determines whether to output the obtained results to the results/ directory.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a dict that has two keys: snr_dB and ber, and the corresponding results.</p>
+<dd class="field-even"><p>a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>ret (dict)</p>
@@ -224,16 +224,16 @@
 <dl class="method">
 <dt id="imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateBERReference">
 <code class="descname">simulateBERReference</code><span class="sig-paren">(</span><em>params</em>, <em>output=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imtoolkit/CoherentMLDSimulator.html#CoherentMLDSimulator.simulateBERReference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateBERReference" title="Permalink to this definition">¶</a></dt>
-<dd><p>Simulates the BER values at multiple SNRs, where the straightforward reference algorithm is used.</p>
+<dd><p>Simulates BER values at multiple SNRs, where the straightforward reference algorithm is used. Note that this time complexity is unrealistically high.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>params</strong> (<em>imtoolkit.Parameter</em>) – simulation parameters.</p></li>
-<li><p><strong>output</strong> (<em>bool</em>) – whether output the obtained results to the results/ directory.</p></li>
+<li><p><strong>output</strong> (<em>bool</em>) – a flag that determines whether to output the obtained results to the results/ directory.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a dict that has two keys: snr_dB and ber, and the corresponding results.</p>
+<dd class="field-even"><p>a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>ret (dict)</p>

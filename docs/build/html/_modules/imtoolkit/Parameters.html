@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imtoolkit.Parameters &mdash; imtoolkit 0.3 documentation</title>
+  <title>imtoolkit.Parameters &mdash; imtoolkit 0.6 documentation</title>
   
 
   
@@ -228,7 +228,13 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
-        
+    
+<div class="viewcode-block" id="Parameters.isSpeficied"><a class="viewcode-back" href="../../imtoolkit.Parameters.html#imtoolkit.Parameters.Parameters.isSpeficied">[docs]</a>    <span class="k">def</span> <span class="nf">isSpeficied</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+    
 <div class="viewcode-block" id="Parameters.parseValue"><a class="viewcode-back" href="../../imtoolkit.Parameters.html#imtoolkit.Parameters.Parameters.parseValue">[docs]</a>    <span class="k">def</span> <span class="nf">parseValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;-*\d+&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;e&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>

@@ -1,5 +1,5 @@
 global IMTOOLKIT_VERSION
-IMTOOLKIT_VERSION = '0.5'
+IMTOOLKIT_VERSION = '0.6'
 
 from .Channel import *
 from .CoherentMLDSimulator import *

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tutorial &mdash; imtoolkit 0.3 documentation</title>
+  <title>Tutorial &mdash; imtoolkit 0.6 documentation</title>
   
 
   
@@ -158,7 +158,8 @@
 <p>This webpage introduces a detailed tutorial for the <code class="docutils literal notranslate"><span class="pre">imtoolkit</span></code> command, which can be installed by <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">imtoolkit</span></code>.</p>
 <div class="section" id="basic-usage">
 <h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
-<p>The command line option is specified by a sentence that concatenates parameters by underscores, such as</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">imtoolkit</span></code> options are specified by a sentence that concatenates parameters by underscores.
+For example, the options are given by</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; imtoolkit <span class="o">{</span>MODE<span class="o">}</span><span class="nv">_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">={</span>dic,wen,opt<span class="o">}</span>_ + other parameters
 </pre></div>
 </div>
@@ -174,7 +175,7 @@
 <div class="section" id="usage-examples">
 <h2>Usage Examples<a class="headerlink" href="#usage-examples" title="Permalink to this headline">¶</a></h2>
 <p>The followings are instant usage examples.
-All the variables are the same as those used in the IEEE Access paper.</p>
+All the variables are the same as those used in <a class="reference external" href="https://doi.org/10.1109%2Faccess.2019.2928033">the IEEE Access paper</a>.</p>
 <p>Check the transmission rate of the IM codebook having <span class="math notranslate nohighlight">\((M,K,Q)=(2,1,2)\)</span> and BPSK constellation.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; imtoolkit <span class="nv">RATE_code</span><span class="o">=</span><span class="nv">index_dm</span><span class="o">=</span><span class="nv">dic_M</span><span class="o">=</span><span class="nv">2_K</span><span class="o">=</span><span class="nv">1_Q</span><span class="o">=</span><span class="nv">2_L</span><span class="o">=</span><span class="nv">2_mod</span><span class="o">=</span>PSK
 <span class="nv">B</span> <span class="o">=</span> B1 + <span class="nv">B2</span> <span class="o">=</span> <span class="m">1</span> + <span class="nv">1</span> <span class="o">=</span> <span class="m">2</span> <span class="o">[</span>bits/symbol<span class="o">]</span>
@@ -263,7 +264,8 @@ At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">30</span
 </div>
 <div class="section" id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
-<p>The execution mode can be switched by the first argument <code class="docutils literal notranslate"><span class="pre">MODE</span></code>.</p>
+<p>The execution mode can be switched by the first argument <code class="docutils literal notranslate"><span class="pre">MODE</span></code>.
+The suffix <code class="docutils literal notranslate"><span class="pre">*P</span></code> means that the corresponding simulation is accelarated by GPGPU-aided calculations.</p>
 <dl class="simple">
 <dt>MODE</dt><dd><dl class="simple">
 <dt>RATE</dt><dd><p>Check the transmission rate [bits/symbol]. Please remind that we need to divide it by <code class="docutils literal notranslate"><span class="pre">M</span></code> for the SIM case.</p>
@@ -287,7 +289,9 @@ At <span class="nv">SNR</span> <span class="o">=</span> <span class="m">30</span
 </dl>
 </dd>
 <dt>sim</dt><dd><dl class="simple">
-<dt>coh</dt><dd><p>IMToolkit currently supports the coherent maximum likelihood detection only.</p>
+<dt>coh</dt><dd><p>The BER or AMI values are calculated assuming the coherent maximum likelihood detector.</p>
+</dd>
+<dt>diff</dt><dd><p>The BER or AMI values are calculated assuming the non-coherent maximum likelihood detector.</p>
 </dd>
 </dl>
 </dd>

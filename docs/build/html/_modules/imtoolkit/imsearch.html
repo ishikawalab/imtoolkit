@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imtoolkit.imsearch &mdash; imtoolkit 0.3 documentation</title>
+  <title>imtoolkit.imsearch &mdash; imtoolkit 0.6 documentation</title>
   
 
   
@@ -159,11 +159,9 @@
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">special</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">from</span> <span class="nn">numba</span> <span class="k">import</span> <span class="n">jit</span>
 <span class="kn">from</span> <span class="nn">imtoolkit</span> <span class="k">import</span> <span class="o">*</span>
 
-<div class="viewcode-block" id="getHammingDistanceTable"><a class="viewcode-back" href="../../imtoolkit.imsearch.html#imtoolkit.imsearch.getHammingDistanceTable">[docs]</a><span class="nd">@jit</span>
-<span class="k">def</span> <span class="nf">getHammingDistanceTable</span><span class="p">(</span><span class="n">MCK</span><span class="p">,</span> <span class="n">indsdec</span><span class="p">):</span>
+<div class="viewcode-block" id="getHammingDistanceTable"><a class="viewcode-back" href="../../imtoolkit.imsearch.html#imtoolkit.imsearch.getHammingDistanceTable">[docs]</a><span class="k">def</span> <span class="nf">getHammingDistanceTable</span><span class="p">(</span><span class="n">MCK</span><span class="p">,</span> <span class="n">indsdec</span><span class="p">):</span>
     <span class="c1"># This method is not dependent on Q</span>
     <span class="n">hds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">MCK</span><span class="p">,</span> <span class="n">MCK</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span> 
     <span class="n">imax</span> <span class="o">=</span> <span class="n">MCK</span> <span class="o">*</span> <span class="p">(</span><span class="n">MCK</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
@@ -176,8 +174,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%.3f</span><span class="s2"> percent completed.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="n">imax</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">hds</span></div>
 
-<div class="viewcode-block" id="getGoodDecsTable"><a class="viewcode-back" href="../../imtoolkit.imsearch.html#imtoolkit.imsearch.getGoodDecsTable">[docs]</a><span class="nd">@jit</span>
-<span class="k">def</span> <span class="nf">getGoodDecsTable</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+<div class="viewcode-block" id="getGoodDecsTable"><a class="viewcode-back" href="../../imtoolkit.imsearch.html#imtoolkit.imsearch.getGoodDecsTable">[docs]</a><span class="k">def</span> <span class="nf">getGoodDecsTable</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
     <span class="n">inds</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">K</span><span class="p">))</span>
     <span class="n">indsv</span> <span class="o">=</span> <span class="n">convertIndsToVector</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
     <span class="n">indsdec</span> <span class="o">=</span> <span class="n">convertIndsToIndsDec</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
@@ -231,7 +228,6 @@
         <span class="c1">#print(&quot;%.3f percent completed.&quot; % (i / imax * 100.0))</span>
     <span class="k">return</span> <span class="n">newdecs</span></div>
 
-<span class="c1">#@jit</span>
 <div class="viewcode-block" id="getGoodDecsTableSmallMemory"><a class="viewcode-back" href="../../imtoolkit.imsearch.html#imtoolkit.imsearch.getGoodDecsTableSmallMemory">[docs]</a><span class="k">def</span> <span class="nf">getGoodDecsTableSmallMemory</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
     <span class="n">minHT</span> <span class="o">=</span> <span class="mi">4</span>
     <span class="n">indsiter</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">K</span><span class="p">)</span>

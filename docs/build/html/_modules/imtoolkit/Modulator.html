@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imtoolkit.Modulator &mdash; imtoolkit 0.3 documentation</title>
+  <title>imtoolkit.Modulator &mdash; imtoolkit 0.6 documentation</title>
   
 
   
@@ -223,6 +223,13 @@
         <span class="c1">#print(&quot;StartQAM: the constellation size of &quot; + str(self.L) + &quot; is not supported yet&quot;)</span>
 
 <div class="viewcode-block" id="Modulator"><a class="viewcode-back" href="../../imtoolkit.Modulator.html#imtoolkit.Modulator.Modulator">[docs]</a><span class="k">class</span> <span class="nc">Modulator</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Generate a constellation such as PSK, QAM, and star-QAM (SQAM).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        mode (string): the type of constellation, such as PSK, QAM, and SQAM.</span>
+<span class="sd">        L (int): the constellation size.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;PSK&quot;</span><span class="p">,</span> <span class="n">constellationSize</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">constellationSize</span> <span class="o">=</span> <span class="n">constellationSize</span>
         <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;PSK&quot;</span><span class="p">:</span>

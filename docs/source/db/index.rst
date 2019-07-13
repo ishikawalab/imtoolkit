@@ -6,7 +6,7 @@ This webpage introduces a comprehensive database of the active indices designed 
 The designed active indices are provided in three formats: pure indices, activation tensor, and its vector representation.
 In this webpage, :math:`M` denotes the number of transmit antennas or subcarriers, :math:`K` denotes the number of activated antennas or subcarriers, and :math:`Q` denotes the number of activation patterns, where we have the constraint of :math:`2 \leq Q \leq 2^{\left\lfloor \log_2{M \choose K} \right\rfloor}`.
 
-Note that the designed active indices in the :math:`Q > 1024` case are omitted in this webpage, although they are supported by this toolkit.
+Note that the designed active indices in the :math:`Q > 1024` case are omitted in this database, although they are supported by this toolkit.
 Additionally, the activation tensor is omitted in the :math:`Q > 128` case due to its large file size.
 
 :doc:`M=2/index` / :doc:`M=4/index` / :doc:`M=6/index` / :doc:`M=8/index` / :doc:`M=10/index` / :doc:`M=12/index` / :doc:`M=14/index` / :doc:`M=16/index` / :doc:`M=18/index` / :doc:`M=20/index` / :doc:`M=22/index` / :doc:`M=24/index` / :doc:`M=26/index` / :doc:`M=28/index` / :doc:`M=30/index` / :doc:`M=32/index`

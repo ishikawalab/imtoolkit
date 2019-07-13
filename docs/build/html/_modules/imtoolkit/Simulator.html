@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imtoolkit.Simulator &mdash; imtoolkit 0.3 documentation</title>
+  <title>imtoolkit.Simulator &mdash; imtoolkit 0.6 documentation</title>
   
 
   
@@ -151,9 +151,8 @@
 <span class="c1"># This toolkit is released under the MIT License, see LICENSE.txt</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">importlib</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;USECUPY&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="ow">and</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;cupy&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;USECUPY&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">cupy</span> <span class="k">as</span> <span class="nn">xp</span>
     <span class="c1"># print(&quot;cupy is imported by Simulator.py&quot;)</span>
 <span class="k">else</span><span class="p">:</span>

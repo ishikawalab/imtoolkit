@@ -66,11 +66,17 @@ Citations
 =========
 It would be very appreciated if you cite the following references when using IMToolkit.
 
- [1] N. Ishikawa, "`IMToolkit: An open-source index modulation toolkit for reproducible research based on massively parallel algorithms <https://doi.org/10.1109%2Faccess.2019.2928033>`_," IEEE Access, in press.
+- [1] N. Ishikawa, "`IMToolkit: An open-source index modulation toolkit for reproducible research based on massively parallel algorithms <https://doi.org/10.1109%2Faccess.2019.2928033>`_," IEEE Access, in press.
 
 Of course, if your project relies on CuPy, the following reference is highly recommended.
 
- [2] R. Okuta, Y. Unno, D. Nishino, S. Hido, and C. Loomis, "`CuPy: A numPy-compatible library for NVIDIA GPU calculations <http://learningsys.org/nips17/assets/papers/paper_16.pdf>`_," in Conference on Neural Information Processing Systems Workshop, Long Beach, CA, USA, Dec. 4-9, 2017.
+- [2] R. Okuta, Y. Unno, D. Nishino, S. Hido, and C. Loomis, "`CuPy: A numPy-compatible library for NVIDIA GPU calculations <http://learningsys.org/nips17/assets/papers/paper_16.pdf>`_," in Conference on Neural Information Processing Systems Workshop, Long Beach, CA, USA, Dec. 4-9, 2017.
+
+Contributor(s)
+==============
+
+- Dr. Naoki Ishikawa (`Web <https://ishikawa.cc>`_ / `Google Scholar <https://scholar.google.co.jp/citations?user=JHnisGYAAAAJ>`_ / `ResearchGate <https://www.researchgate.net/profile/Naoki_Ishikawa>`_ / `Publons <https://publons.com/researcher/3012020/naoki-ishikawa/>`_)
+- YOU would become a valuable contributor of this project :) Any contributions and issues are appreciated.
 
 
 .. Indices and tables
