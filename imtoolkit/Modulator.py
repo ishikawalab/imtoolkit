@@ -62,14 +62,16 @@ class StarQAM:
         self.subConstellationSize = int(4 * 2 ** np.floor(p))
         self.Nlevels = int(2 ** np.ceil(p))
 
-        print("self.subConstellationSize * self.Nlevels = " + str(self.subConstellationSize) + " * " + str(self.Nlevels) + " = " + str(self.subConstellationSize * self.Nlevels))
+        # print("self.subConstellationSize * self.Nlevels = " + str(self.subConstellationSize) + " * " + str(self.Nlevels) + " = " + str(self.subConstellationSize * self.Nlevels))
 
         sigma = np.sqrt(6.0 / (self.Nlevels + 1.0) / (2.0 * self.Nlevels + 1.0))
-        self.symbols = []
+        self.symbols = np.zeros(self.L, dtype = np.complex)
         for level_id in range(self.Nlevels):
             mod = PSK(self.subConstellationSize)
-            self.symbols.append((1.0 + level_id) * sigma * mod.symbols)
-            
+            #self.symbols.append((1.0 + level_id) * sigma * mod.symbols)
+            print((1.0 + level_id) * sigma * mod.symbols)
+            self.symbols[(level_id * self.subConstellationSize):((level_id + 1) * self.subConstellationSize)] = (1.0 + level_id) * sigma * mod.symbols
+            print(self.symbols)
 
         #print("StartQAM: the constellation size of " + str(self.L) + " is not supported yet")
 
