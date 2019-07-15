@@ -100,14 +100,14 @@ class DifferentialMLDSimulator(Simulator):
         indspermute = random.permutation(arange(ITi))
         codei = tile(arange(Nc), int(ceil(ITi / Nc)))[0:ITi]
         x1 = take(codes, codei, axis=0) # ITi \times M \times M very slow
-        
+        v0 = randn_c(ITi, N, M) # ITi \times N \times M
+        s0 = eyes
+
         bers = zeros(len(snr_dBs))
         for ito in trange(ITo):
             self.channel.randomize()
             h = self.channel.getChannel().reshape(ITi, N, M) # ITi \times N \times M
-            v0 = randn_c(ITi, N, M) # ITi \times N \times M
             v1 = randn_c(ITi, N, M) # ITi \times N \times M
-            s0 = eyes
             s1 = matmul(s0, x1)
 
             for i in range(len(snr_dBs)):
