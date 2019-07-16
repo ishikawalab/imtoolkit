@@ -1,7 +1,6 @@
 # Copyright (c) IMToolkit Development Team
 # This toolkit is released under the MIT License, see LICENSE.txt
 
-import itertools
 import numpy as np
 from .Modulator import *
 from .Util import *
