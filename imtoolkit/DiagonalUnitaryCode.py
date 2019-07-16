@@ -17,7 +17,8 @@ class DiagonalUnitaryCode:
     """
 
     def __init__(self, M, L):
-        self.Nc = L
+        self.M = M
+		self.Nc = L
         self.B = np.log2(L)
         self.codes = np.zeros((L, M, M), dtype=np.complex)
         u = self.getDiversityMaximizingFactors(M, L)
@@ -25,7 +26,7 @@ class DiagonalUnitaryCode:
             self.codes[l] = np.diag(np.exp(1j * 2.0 * np.pi / L * u * l))
 
     def putRate(self):
-        print("B = %d [bit/symbol]" % self.B)
+        print("B / M = %d / %d = %d [bit/symbol]" % (self.B, self.M, self.B / self.M))
     
     def getDiversityMaximizingFactors(self, M, L):
         if M == 1 and L == 4:

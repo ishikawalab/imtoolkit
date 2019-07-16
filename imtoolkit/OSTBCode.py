@@ -19,6 +19,7 @@ class OSTBCode:
     """
 
     def __init__(self, M, modtype, L, nsymbols = 1):
+        self.M = M
         mod = Modulator(modtype, L)
 
         if M == 2:
@@ -121,6 +122,6 @@ class OSTBCode:
                 self.codes[i] /= np.sqrt(2)
 
     def putRate(self):
-        print("B = %d [bit/symbol]" % self.B)
+        print("B / M = %d / %d = %d [bit/symbol]" % (self.B, self.M, self.B / self.M))
     
 

@@ -20,6 +20,7 @@ class ADSMCode:
     """
 
     def __init__(self, M, modtype, L):
+        self.M = M
         self.Nc = M * L
         self.B = np.log2(self.Nc)
         
@@ -40,4 +41,5 @@ class ADSMCode:
         self.codes = array(hsplit(hstack(codestensor), self.Nc)) # Nc \times M \times M
 
     def putRate(self):
-        print("B = %d [bit/symbol]" % self.B)
+        print("B / M = %d / %d = %d [bit/symbol]" % (self.B, self.M, self.B / self.M))
+

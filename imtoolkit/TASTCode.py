@@ -2,7 +2,6 @@
 # This toolkit is released under the MIT License, see LICENSE.txt
 
 import itertools
-from math import *
 import numpy as np
 from .Modulator import StarQAM
 from .Util import *
@@ -23,6 +22,7 @@ class TASTCode:
     """
 
     def __init__(self, M, Q, L):
+        self.M = M
         self.Nc = M * L * Q
         self.B = np.log2(self.Nc)
 
@@ -36,18 +36,18 @@ class TASTCode:
         for m in range(M-1):
             G[m + 1, m] = 1
         
-        msymbols = np.exp(1j * 2.0 * np.pi * np.arange(M) / (Lp * max(M, Q)))
+        msymbols = np.exp(1j * 2.0 * np.pi * np.arange(M) / (Lp * np.max([M, Q])))
         u = self.getDiversityMaximizingFactors(M, Q, La, Lp)
         
-        self.codes = zeros((M * L * Q, M, M), dtype = np.complex)
+        self.codes = np.zeros((M * L * Q, M, M), dtype = np.complex)
         for l in range(L):
             for m in range(M):
                 for q in range(Q):
-                    qsymbols = np.exp(1j * 2.0 * np.pi * u * np.arange(M) / (L * Q))
-                    self.codes[Q * M * l + m * Q + q] = matmul(apsksymbols[l] * msymbols[m] * linalg.matrix_power(G, m), diag(qsymbols))
+                    qsymbols = np.exp(1j * 2.0 * np.pi * q * u * np.arange(M) / (L * Q))
+                    self.codes[Q * M * l + m * Q + q] = np.matmul(apsksymbols[l] * msymbols[m] * np.linalg.matrix_power(G, m), np.diag(qsymbols))
 
     def putRate(self):
-        print("B = %d [bit/symbol]" % self.B)
+        print("B / M = %d / %d = %d [bit/symbol]" % (self.B, self.M, self.B / self.M))
 
     def getDiversityMaximizingFactors(self, M, Q, La, Lp):
         if M == 2 and Q == 1 and La == 1 and Lp == 2:
