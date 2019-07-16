@@ -110,7 +110,7 @@ class SemiUnitaryDifferentialMLDSimulator(Simulator):
         s0 = eyes[0] # ITi \times M \times M
         rs0 = eyes # the estimated codeword at the receiver
         rs1 = zeros((lsnr, ITi, M, M), dtype = complex) # lsnr \times ITi \times M \times M
-        currentBetas = np.repeat(np.sqrt(M), lsnr * ITi).reshape(lsnr, ITi, 1, 1) # the estimated normalizing factor at the receiver, which corresponds to each SNR
+        currentBetas = repeat(sqrt(M), lsnr * ITi).reshape(lsnr, ITi, 1, 1) # the estimated normalizing factor at the receiver, which corresponds to each SNR
         
         bers = zeros(lsnr)
         for ito in trange(ITo):
@@ -123,7 +123,6 @@ class SemiUnitaryDifferentialMLDSimulator(Simulator):
             for i in range(lsnr):
                 y0 = matmul(h, s0) + v0 * sqrt(sigmav2s[i])  # ITi \times N \times M
                 y1 = matmul(h, s1) + v1 * sqrt(sigmav2s[i])  # ITi \times N \times M
-                
                 y0x = matmul(y0, codesmat) / currentBetas[i] # ITi \times N \times M * Nc
 
                 ydiff = tile(y1, Nc) - y0x # ITi \times N \times M * Nc
