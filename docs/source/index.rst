@@ -7,6 +7,12 @@
 Overview
 =========
 
+.. image:: _static/imtoolkit-logo.png
+   :height: 150px
+   :width: 150px
+   :alt: IMToolkit logo.
+   :align: right
+
 This webpage introduces an open-source index modulation toolkit (IMToolkit).
 This toolkit attempts to facilitate reproducible research in the field of wireless communications and IM studies.
 The major advantages of this toolkit are highlighted as follows:
@@ -70,7 +76,7 @@ It would be very appreciated if you cite the following references when using IMT
 
 Of course, if your project relies on CuPy, the following reference is highly recommended.
 
-- [2] R. Okuta, Y. Unno, D. Nishino, S. Hido, and C. Loomis, "`CuPy: A numPy-compatible library for NVIDIA GPU calculations <http://learningsys.org/nips17/assets/papers/paper_16.pdf>`_," in Conference on Neural Information Processing Systems Workshop, Long Beach, CA, USA, Dec. 4-9, 2017.
+- [2] R. Okuta, Y. Unno, D. Nishino, S. Hido, and C. Loomis, "`CuPy: A NumPy-compatible library for NVIDIA GPU calculations <http://learningsys.org/nips17/assets/papers/paper_16.pdf>`_," in Conference on Neural Information Processing Systems Workshop, Long Beach, CA, USA, Dec. 4-9, 2017.
 
 Contributor(s)
 ==============
