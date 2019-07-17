@@ -7,7 +7,7 @@
 Overview
 =========
 
-.. image:: _static/imtoolkit-logo.png
+.. image:: https://github.com/imtoolkit/imtoolkit/blob/master/docs/source/_static/imtoolkit-logo.png?raw=true
    :height: 150px
    :width: 150px
    :alt: IMToolkit logo.
