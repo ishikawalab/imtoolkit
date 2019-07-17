@@ -1,6 +1,6 @@
 # IMToolkit
 
-<img align="right" width="150px" height="150px" src="https://github.com/imtoolkit/imtoolkit/blob/master/docs/source/_static/imtoolkit-logo.png?raw=true">
+<a href="https://github.com/imtoolkit/imtoolkit"><img align="right" width="150px" height="150px" src="https://github.com/imtoolkit/imtoolkit/blob/master/docs/source/_static/imtoolkit-logo.png?raw=true"></a>
 IMToolkit, an open-source index modulation (IM) toolkit, attempts to facilitate reproducible research in the field of wireless communications and IM studies.
 The major advantages of this toolkit are highlighted as follows:
 

@@ -11,6 +11,7 @@ Overview
    :height: 150px
    :width: 150px
    :alt: IMToolkit logo.
+   :target: https://ishikawa.cc/imtoolkit/
    :align: right
 
 This webpage introduces an open-source index modulation toolkit (IMToolkit).
