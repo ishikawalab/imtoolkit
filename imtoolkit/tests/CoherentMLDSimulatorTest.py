@@ -17,7 +17,7 @@ class CoherentMLDSimulatorTest(unittest.TestCase):
         code = IMCode(params.dm, params.M, params.K, params.Q, params.mod, params.L, meanPower = 1)
         channel = IdealRayleighChannel(1, params.M, params.N)
         sim = CoherentMLDSimulator(code.codes, channel)
-        ret = sim.simulateBERReference(params, output = False)
+        ret = sim.simulateBERReference(params, outputFile = False)
         retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
         self.assertLessEqual(retnorm, 1e-2)
     
@@ -27,7 +27,7 @@ class CoherentMLDSimulatorTest(unittest.TestCase):
         code = IMCode(params.dm, params.M, params.K, params.Q, params.mod, params.L, meanPower = 1)
         channel = IdealRayleighChannel(params.ITi, params.M, params.N)
         sim = CoherentMLDSimulator(code.codes, channel)
-        ret = sim.simulateBERParallel(params, output = False)
+        ret = sim.simulateBERParallel(params, outputFile = False)
         retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
         self.assertLessEqual(retnorm, 1e-2)
 
@@ -37,7 +37,7 @@ class CoherentMLDSimulatorTest(unittest.TestCase):
         code = IMCode(params.dm, params.M, params.K, params.Q, params.mod, params.L, meanPower = 1)
         channel = IdealRayleighChannel(1, params.M, params.N)
         sim = CoherentMLDSimulator(code.codes, channel)
-        ret = sim.simulateAMIReference(params, output = False)
+        ret = sim.simulateAMIReference(params, outputFile = False)
         retnorm = np.mean(np.power(np.abs(ret["ami"] - truth), 2))
         self.assertLessEqual(retnorm, 1e-2)
     
@@ -47,7 +47,7 @@ class CoherentMLDSimulatorTest(unittest.TestCase):
         code = IMCode(params.dm, params.M, params.K, params.Q, params.mod, params.L, meanPower = 1)
         channel = IdealRayleighChannel(params.ITi, params.M, params.N)
         sim = CoherentMLDSimulator(code.codes, channel)
-        ret = sim.simulateAMIParallel(params, output = False)
+        ret = sim.simulateAMIParallel(params, outputFile = False)
         retnorm = np.mean(np.power(np.abs(ret["ami"] - truth), 2))
         self.assertLessEqual(retnorm, 1e-2)
 
@@ -57,7 +57,7 @@ class CoherentMLDSimulatorTest(unittest.TestCase):
         code = OSTBCode(params.M, "PSK", params.L)
         channel = IdealRayleighChannel(1, params.M, params.N)
         sim = CoherentMLDSimulator(code.codes, channel)
-        ret = sim.simulateBERReference(params, output = False)
+        ret = sim.simulateBERReference(params, outputFile = False)
         retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
         self.assertLessEqual(retnorm, 1e-2)
 
@@ -67,7 +67,7 @@ class CoherentMLDSimulatorTest(unittest.TestCase):
         code = OSTBCode(params.M, "PSK", params.L)
         channel = IdealRayleighChannel(params.ITi, params.M, params.N)
         sim = CoherentMLDSimulator(code.codes, channel)
-        ret = sim.simulateBERParallel(params, output = False)
+        ret = sim.simulateBERParallel(params, outputFile = False)
         retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
         self.assertLessEqual(retnorm, 1e-2)
 
@@ -77,7 +77,7 @@ class CoherentMLDSimulatorTest(unittest.TestCase):
         code = OSTBCode(params.M, "PSK", params.L)
         channel = IdealRayleighChannel(1, params.M, params.N)
         sim = CoherentMLDSimulator(code.codes, channel)
-        ret = sim.simulateAMIReference(params, output = False)
+        ret = sim.simulateAMIReference(params, outputFile = False)
         retnorm = np.mean(np.power(np.abs(ret["ami"] - truth), 2))
         self.assertLessEqual(retnorm, 1e-2)
 
@@ -87,7 +87,7 @@ class CoherentMLDSimulatorTest(unittest.TestCase):
         code = OSTBCode(params.M, "PSK", params.L)
         channel = IdealRayleighChannel(params.ITi, params.M, params.N)
         sim = CoherentMLDSimulator(code.codes, channel)
-        ret = sim.simulateAMIParallel(params, output = False)
+        ret = sim.simulateAMIParallel(params, outputFile = False)
         retnorm = np.mean(np.power(np.abs(ret["ami"] - truth), 2))
         self.assertLessEqual(retnorm, 1e-2)
         

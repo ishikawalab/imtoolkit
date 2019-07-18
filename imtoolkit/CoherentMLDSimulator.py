@@ -26,12 +26,13 @@ class CoherentMLDSimulator(Simulator):
     def __init__(self, codes, channel):
         super().__init__(codes, channel)
 
-    def simulateBERReference(self, params, output = True):
+    def simulateBERReference(self, params, outputFile = True, printValue = True):
         """Simulates BER values at multiple SNRs, where the straightforward reference algorithm is used. Note that this time complexity is unrealistically high. 
 
         Args:
             params (imtoolkit.Parameter): simulation parameters.
-            output (bool): a flag that determines whether to output the obtained results to the results/ directory.
+            outputFile (bool): a flag that determines whether to output the obtained results to the results/ directory.
+            printValue (bool): a flag that determines whether to print the simulated values.
 
         Returns:
             ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.
@@ -58,20 +59,22 @@ class CoherentMLDSimulator(Simulator):
                 errorBits += errorTable[codei][mini]
 
             bers[i] = errorBits / (IT * B)
-            print("At SNR = %1.2f dB, BER = %d / %d = %1.20f" % (snr_dBs[i], errorBits, IT * B, bers[i]))
+            if printValue:
+                print("At SNR = %1.2f dB, BER = %d / %d = %1.20f" % (snr_dBs[i], errorBits, IT * B, bers[i]))
 
         ret = self.dicToNumpy({"snr_dB": snr_dBs, "ber": bers})
-        if output:
+        if outputFile:
             self.saveCSV(params.arg, ret)
             print(ret)
         return ret
 
-    def simulateBERParallel(self, params, output = True):
+    def simulateBERParallel(self, params, outputFile = True, printValue = True):
         """Simulates BER values at multiple SNRs, where the massively parallel algorithm is used. This implementation is especially designed for cupy.
 
         Args:
             params (imtoolkit.Parameter): simulation parameters.
-            output (bool): a flag that determines whether to output the obtained results to the results/ directory.
+            outputFile (bool): a flag that determines whether to output the obtained results to the results/ directory.
+            printValue (bool): a flag that determines whether to print the simulated values.
 
         Returns:
             ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.
@@ -117,22 +120,24 @@ class CoherentMLDSimulator(Simulator):
 
                 bers[i] += errorBits
                 nbits = (ito + 1) * ITi * B * Nc
-                print("At SNR = %1.2f dB, BER = %d / %d = %1.20f" % (snr_dBs[i], bers[i], nbits, bers[i] / nbits))
+                if printValue:
+                    print("At SNR = %1.2f dB, BER = %d / %d = %1.20f" % (snr_dBs[i], bers[i], nbits, bers[i] / nbits))
 
         bers /= ITo * ITi * B * Nc
         ret = self.dicToNumpy({"snr_dB": snr_dBs, "ber": bers})
-        if output:
+        if outputFile:
             self.saveCSV(params.arg, ret)
             print(ret)
         return ret
 
 
-    def simulateAMIReference(self, params, output = True):
+    def simulateAMIReference(self, params, outputFile = True, printValue = True):
         """Simulates AMI values at multiple SNRs, where the straightforward reference algorithm is used. Note that this time complexity is unrealistically high. 
 
         Args:
             params (imtoolkit.Parameter): simulation parameters.
-            output (bool): a flag that determines whether to output the obtained results to the results/ directory.
+            outputFile (bool): a flag that determines whether to output the obtained results to the results/ directory.
+            printValue (bool): a flag that determines whether to print the simulated values.
 
         Returns:
             ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.
@@ -162,21 +167,23 @@ class CoherentMLDSimulator(Simulator):
                     sum_outer += log2(sum_inner)
             #print("bminus = " + str(sum_outer / Nc / IT))
             amis[i] = (B - sum_outer / Nc / IT) / T
-            print("At SNR = %1.2f dB, AMI = %1.20f" % (snr_dBs[i], amis[i]))
+            if printValue:
+                print("At SNR = %1.2f dB, AMI = %1.20f" % (snr_dBs[i], amis[i]))
 
         ret = self.dicToNumpy({"snr_dB": snr_dBs, "ami": amis})
-        if output:
+        if outputFile:
             print(ret)
             self.saveCSV(params.arg, ret)
         return ret
         
 
-    def simulateAMIParallel(self, params, output = True):
+    def simulateAMIParallel(self, params, outputFile = True, printValue = True):
         """Simulates AMI values at multiple SNRs, where the massively parallel algorithm is used. This implementation is especially designed for cupy.
 
         Args:
             params (imtoolkit.Parameter): simulation parameters.
-            output (bool): a flag that determines whether to output the obtained results to the results/ directory.
+            outputFile (bool): a flag that determines whether to output the obtained results to the results/ directory.
+            printValue (bool): a flag that determines whether to print the simulated values.
 
         Returns:
             ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.
@@ -210,12 +217,13 @@ class CoherentMLDSimulator(Simulator):
                 bminus = mean(log2(sum(exp(ecoffs), axis = 2)))
 
                 amis[i] += (B - bminus) / T
-                print("At SNR = %1.2f dB, AMI = %1.20f" % (snr_dBs[i], amis[i] / (ito + 1)))
+                if printValue:
+                    print("At SNR = %1.2f dB, AMI = %1.20f" % (snr_dBs[i], amis[i] / (ito + 1)))
             
         #
         amis /= ITo
         ret = self.dicToNumpy({"snr_dB": snr_dBs, "ami": amis})
-        if output:
+        if outputFile:
             print(ret)
             self.saveCSV(params.arg, ret)
 

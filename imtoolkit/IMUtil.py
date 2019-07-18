@@ -227,7 +227,7 @@ def getOptimizedIndexesList(M, K, Q, minh = 0):
     files.sort()
     print("Read " + files[0])
     inds = np.loadtxt(files[0], dtype = np.int)
-    print(inds)
+    #print(inds)
     inds = inds.reshape(Q, K).tolist()
     return inds
 

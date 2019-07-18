@@ -24,12 +24,13 @@ class DifferentialMLDSimulator(Simulator):
     def __init__(self, codes, channel):
         super().__init__(codes, channel)
 
-    def simulateBERReference(self, params, output = True):
+    def simulateBERReference(self, params, outputFile = True, printValue = True):
         """Simulates BER values at multiple SNRs, where the straightforward reference algorithm is used. Note that this time complexity is unrealistically high. 
 
         Args:
             params (imtoolkit.Parameter): simulation parameters.
-            output (bool): a flag that determines whether to output the obtained results to the results/ directory.
+            outputFile (bool): a flag that determines whether to output the obtained results to the results/ directory.
+            printValue (bool): a flag that determines whether to print the simulated values.
 
         Returns:
             ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.
@@ -66,21 +67,23 @@ class DifferentialMLDSimulator(Simulator):
                 s0 = s1
 
             bers[i] = errorBits / (IT * B)
-            print("At SNR = %1.2f dB, BER = %d / %d = %1.20f" % (snr_dBs[i], errorBits, IT * B, bers[i]))
+            if printValue:
+                print("At SNR = %1.2f dB, BER = %d / %d = %1.20f" % (snr_dBs[i], errorBits, IT * B, bers[i]))
 
         ret = self.dicToNumpy({"snr_dB": snr_dBs, "ber": bers})
-        if output:
+        if outputFile:
             self.saveCSV(params.arg, ret)
             print(ret)
         return ret
 
 
-    def simulateBERParallel(self, params, output = True):
+    def simulateBERParallel(self, params, outputFile = True, printValue = True):
         """Simulates BER values at multiple SNRs, where the massively parallel algorithm is used. This implementation is especially designed for cupy.
 
         Args:
             params (imtoolkit.Parameter): simulation parameters.
-            output (bool): a flag that determines whether to output the obtained results to the results/ directory.
+            outputFile (bool): a flag that determines whether to output the obtained results to the results/ directory.
+            printValue (bool): a flag that determines whether to print the simulated values.
 
         Returns:
             ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.
@@ -123,7 +126,8 @@ class DifferentialMLDSimulator(Simulator):
                 errorBits = sum(xor2ebits[bitwise_xor(codei, mini)])
                 bers[i] += errorBits
                 nbits = (ito + 1) * ITi * B
-                print("At SNR = %1.2f dB, BER = %d / %d = %1.20f" % (snr_dBs[i], bers[i], nbits, bers[i] / nbits))
+                if printValue:
+                    print("At SNR = %1.2f dB, BER = %d / %d = %1.20f" % (snr_dBs[i], bers[i], nbits, bers[i] / nbits))
             
             v0 = v1
             s0 = s1
@@ -132,7 +136,7 @@ class DifferentialMLDSimulator(Simulator):
             
         bers /= ITo * ITi * B
         ret = self.dicToNumpy({"snr_dB": snr_dBs, "ber": bers})
-        if output:
+        if outputFile:
             self.saveCSV(params.arg, ret)
             print(ret)
         return ret

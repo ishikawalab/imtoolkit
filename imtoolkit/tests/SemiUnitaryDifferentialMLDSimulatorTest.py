@@ -18,7 +18,7 @@ class SemiUnitaryDifferentialMLDSimulatorTest(unittest.TestCase):
         codes = Modulator(params.mod, params.L).symbols.reshape(params.L, 1, 1)
         channel = IdealRayleighChannel(1, params.M, params.N)
         sim = SemiUnitaryDifferentialMLDSimulator(codes, channel)
-        ret = sim.simulateBERReference(params, output = False)
+        ret = sim.simulateBERReference(params, outputFile = False)
         retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
         self.assertLessEqual(retnorm, 1e-2)
 
@@ -28,7 +28,7 @@ class SemiUnitaryDifferentialMLDSimulatorTest(unittest.TestCase):
         codes = Modulator(params.mod, params.L).symbols.reshape(params.L, 1, 1)
         channel = IdealRayleighChannel(params.ITi, params.M, params.N)
         sim = SemiUnitaryDifferentialMLDSimulator(codes, channel)
-        ret = sim.simulateBERParallel(params, output = False)
+        ret = sim.simulateBERParallel(params, outputFile = False)
         retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
         self.assertLessEqual(retnorm, 1e-2)
 
@@ -38,7 +38,7 @@ class SemiUnitaryDifferentialMLDSimulatorTest(unittest.TestCase):
         codes = TASTCode(params.M, params.Q, params.L).codes
         channel = IdealRayleighChannel(1, params.M, params.N)
         sim = SemiUnitaryDifferentialMLDSimulator(codes, channel)
-        ret = sim.simulateBERReference(params, output = False)
+        ret = sim.simulateBERReference(params, outputFile = False)
         retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
         self.assertLessEqual(retnorm, 1e-2)
 
