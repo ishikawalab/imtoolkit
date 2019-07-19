@@ -31,6 +31,17 @@ class CoherentMLDSimulatorTest(unittest.TestCase):
         retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
         self.assertLessEqual(retnorm, 1e-2)
 
+    # Heavy test
+    # def test_BERParallel_SM_M4(self):
+    #     truth = np.log10(np.array([1.50814659999999989282e-01,2.28938300000000004297e-02,8.41559999999999986016e-04,1.20200000000000001125e-05,1.40000000000000009547e-07]))
+    #     params = Parameters("BERP_sim=coh_channel=rayleigh_code=index_dm=opt_M=4_N=4_T=1_Q=4_L=4_ITo=1e4_ITi=1e4_snrfrom=0.00_to=20.00_len=5")
+    #     code = IMCode(params.dm, params.M, params.K, params.Q, params.mod, params.L, meanPower = 1)
+    #     channel = IdealRayleighChannel(params.ITi, params.M, params.N)
+    #     sim = CoherentMLDSimulator(code.codes, channel)
+    #     ret = sim.simulateBERParallel(params, outputFile = False, printValue = False)
+    #     retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
+    #     self.assertLessEqual(retnorm, 1e-2)
+
     def test_AMIReference_SM(self):
         truth = np.array([1.42818014515766478212e-02,4.46896133972787268362e-02,1.35020118355007934241e-01,3.74152908820060137174e-01,8.88430916560169148255e-01,1.63202684937455133607e+00,2.32075268455922545385e+00,2.73556303528255551072e+00,2.90887984047466385817e+00])
         params = Parameters("AMI_sim=coh_code=index_dm=dic_M=2_K=1_Q=2_L=4_mod=PSK_N=1_IT=1e3_snrfrom=-20.00_to=20.00_len=9")
