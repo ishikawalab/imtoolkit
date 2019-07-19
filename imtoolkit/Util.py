@@ -7,6 +7,7 @@ Basic utility functions
 import os
 import itertools
 from sympy.combinatorics.graycode import GrayCode
+from scipy.interpolate import interp1d
 import numpy as np
 if os.getenv("USECUPY") == "1":
     from cupy import *
@@ -27,21 +28,9 @@ def getEuclideanDistances(symbols):
     combsfro = itertools.starmap(frodiff, itertools.combinations(symbols, 2))
     return array(list(combsfro))
 
-
 def getMinimumEuclideanDistance(symbols):
-    # symbols = np.array([+1, -1, +1j, -1j])
     return min(getEuclideanDistances(symbols))
 
-    ## old inefficient code
-    #minmed = 1e3
-    #for i in range(1, len(symbols)):
-    #    diffs = symbols[0:-i] - symbols[-i]
-    #    med = np.min(np.power(np.abs(diffs), 2))
-    #    minmed = min(minmed, med)
-    #
-    #return minmed
-
-# W.dot(W.conj().T).round() == eye(N)
 def getDFTMatrix(N):
     W = zeros((N, N), dtype = complex)
     omega = exp(2.0j * pi / N)
@@ -56,7 +45,9 @@ def getDFTMatrix(N):
 #
 def inv_dB(dB):
     return 10.0 ** (dB / 10.0)
-# inv_dB.inspect_types()
+
+def randn(*size):
+    return random.normal(0, 1, size = size)
 
 def randn_c(*size):
     """
@@ -64,8 +55,6 @@ def randn_c(*size):
     """
     return random.normal(0, 1 / sqrt(2.0), size = size) + random.normal(0, 1 / sqrt(2.0), size = size) * 1j
 #xp.random.randn_c = randn_c
-
-
 
 
 def countErrorBits(x, y):
@@ -85,17 +74,11 @@ def getErrorBitsTable(Nc):
     
     return errorTable
 
-from scipy.interpolate import interp1d
 def getXCorrespondingToY(xarr, yarr, y):
     if y < np.min(yarr) or y > np.max(yarr):
         return NaN
-    #print(where(y <= yarr))
-    #print(where(y > yarr))
     spfunc = interp1d(yarr, xarr)
     return spfunc(y)
-
-# getXCorrespondingToY(array([0,1]), array([0,1]), 0.5) # array(0.5)
-# getXCorrespondingToY(array([0,1]), array([0,1]), [0.1,0.5]) # array([0.1, 0.5])
 
 
 # c(APATH = "C:/Dropbox/Project/201903_imtoolkit_paper/paper/main.aux", label = "Conv. equiprobable act. \cite{wen2016equiprobable}")
@@ -123,4 +106,15 @@ def c(APATH, label):
 def testUnitary(M, code):
     codes = code.codes.reshape(-1, M)
     np.testing.assert_almost_equal(np.conj(codes.T).dot(codes) / code.Nc, eye(M))
-    
+
+def getRandomHermitianMatrix(M):
+    ret = diag(0j + randn(M))
+    for y in range(0, M - 1):
+        for x in range(y + 1, M):
+            ret[y, x] = randn_c()
+            ret[x, y] = conj(ret[y, x])
+    return ret
+
+def CayleyTransform(H):
+    M = H.shape[0]
+    return (eye(M, dtype=complex) - 1j * H).dot(linalg.inv(eye(M, dtype=complex) + 1j * H))

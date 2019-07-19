@@ -1,7 +1,6 @@
 # Copyright (c) IMToolkit Development Team
 # This toolkit is released under the MIT License, see LICENSE.txt
 
-import importlib
 import numpy as np
 from .Util import *
 
@@ -74,7 +73,7 @@ class StarQAM:
         #print("StartQAM: the constellation size of " + str(self.L) + " is not supported yet")
 
 class Modulator:
-    """Generate a constellation such as PSK, QAM, and star-QAM (SQAM).
+    """This class generates a constellation such as PSK, QAM, and star-QAM (SQAM).
 
     Args:
         mode (string): the type of constellation, such as PSK, QAM, and SQAM.
