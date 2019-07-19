@@ -39,7 +39,7 @@ class SemiUnitaryDifferentialMLDSimulator(Simulator):
         IT, M, N, Nc, B, codes = params.IT, params.M, params.N, self.Nc, self.B, self.codes
         snr_dBs = linspace(params.snrfrom, params.to, params.len)
         sigmav2s = 1.0 / inv_dB(snr_dBs)
-        errorTable = getErrorBitsTable(Nc)
+        xor2ebits = getXORtoErrorBitsArray(Nc)
 
         bers = zeros(len(snr_dBs))
         for i in trange(len(snr_dBs)):
@@ -63,7 +63,7 @@ class SemiUnitaryDifferentialMLDSimulator(Simulator):
                 p = power(abs(y1 - matmul(y0, codes) / currentBeta), 2) # Nc \times N \times M
                 norms = sum(p, axis = (1,2)) # summation over the (N,M) axes
                 mini = argmin(norms)
-                errorBits += errorTable[codei][mini]
+                errorBits += sum(xor2ebits[codei ^ mini])
 
                 rs1 = matmul(rs0, codes[mini]) / currentBeta
                 currentBeta = linalg.norm(rs1)
@@ -136,7 +136,7 @@ class SemiUnitaryDifferentialMLDSimulator(Simulator):
                 rs1[i] = matmul(rs0[i], codes[mini]) / currentBetas[i]
                 currentBetas[i] = linalg.norm(rs1[i], axis = (1,2)).reshape(ITi, 1, 1)
 
-                errorBits = sum(xor2ebits[bitwise_xor(codei, mini)])
+                errorBits = sum(xor2ebits[codei ^ mini])
                 bers[i] += errorBits
                 nbits = (ito + 1) * ITi * B
                 if printValue:

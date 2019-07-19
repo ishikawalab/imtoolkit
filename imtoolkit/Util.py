@@ -67,31 +67,23 @@ def randn_c(*size):
 
 
 
-# countErrorBits(1, 2) #=> 2
-# countErrorBits(1, 5) #=> 1
+
 def countErrorBits(x, y):
-    return binary_repr(int(bitwise_xor(x, y))).count('1')
+    return bin(x^y).count('1')
+
+def getXORtoErrorBitsArray(Nc):
+    return array(list(map(lambda x: bin(x).count('1'), range(Nc + 1))))
 
 def getErrorBitsTable(Nc):
     B = log2(Nc)
-    errorTable = zeros((Nc, Nc), dtype = int32)
+    errorArray = getXORtoErrorBitsArray(Nc)
 
+    errorTable = zeros((Nc, Nc), dtype = int8)
     for y in range(Nc):
         for x in range(y, Nc):
-            errorTable[y][x] = errorTable[x][y] = countErrorBits(y, x)
+            errorTable[y][x] = errorTable[x][y] = errorArray[x^y]
     
     return errorTable
-
-# NumPy domain
-def getXORtoErrorBitsArray(Nc):
-    ret = zeros(Nc, int32)
-    for i in range(Nc):
-        ret[i] = binary_repr(i).count('1')
-    return ret
-
-# getXORtoErrorBitsArray(4) # array([0, 1, 1, 2])
-# getXORtoErrorBitsArray(16) # array([0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4])
-
 
 from scipy.interpolate import interp1d
 def getXCorrespondingToY(xarr, yarr, y):

@@ -22,7 +22,7 @@ class DiagonalUnitaryCode:
 		self.codes = np.zeros((L, M, M), dtype=np.complex)
 		u = self.getDiversityMaximizingFactors(M, L)
 		for l in range(L):
-			self.codes[l] = np.diag(np.exp(1j * 2.0 * np.pi / L * u * l))
+			self.codes[l] = np.diag(np.exp(1.0j * 2.0 * np.pi * u * l / L))
 
 	def putRate(self):
 		print("B / M = %d / %d = %d [bit/symbol]" % (self.B, self.M, self.B / self.M))

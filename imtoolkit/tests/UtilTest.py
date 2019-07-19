@@ -30,5 +30,21 @@ class UtilTest(unittest.TestCase):
         meanPower = np.mean(np.power(np.abs(ret), 2))
         self.assertAlmostEqual(meanPower, 1.0, places = 2, msg = "The mean power of randn_c differs from 1.0")
 
+    def test_countErrorBits(self):
+        self.assertEqual(countErrorBits(1, 2), 2)
+        self.assertEqual(countErrorBits(1, 5), 1)
+
+    def test_getErrorBitsTable(self):
+        t = getErrorBitsTable(4)
+        np.testing.assert_almost_equal(t, np.array([[0,1,1,2],[1,0,2,1],[1,2,0,1],[2,1,1,0]]))
+        t = getErrorBitsTable(8)
+        np.testing.assert_almost_equal(t, np.array([[0,1,1,2,1,2,2,3],[1,0,2,1,2,1,3,2],[1,2,0,1,2,3,1,2],[2,1,1,0,3,2,2,1],[1,2,2,3,0,1,1,2],[2,1,3,2,1,0,2,1],[2,3,1,2,1,2,0,1],[3,2,2,1,2,1,1,0]]))
+
+    def test_getXORtoErrorBitsArray(self):
+        a = getXORtoErrorBitsArray(4)
+        np.testing.assert_almost_equal(a, np.array([0, 1, 1, 2, 1]))
+        a = getXORtoErrorBitsArray(16)
+        np.testing.assert_almost_equal(a, np.array([0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4, 1]))
+
 if __name__ == '__main__':
     unittest.main()
