@@ -15,11 +15,11 @@ Overview
    :align: right
 
 This webpage introduces an open-source index modulation toolkit (IMToolkit).
-This toolkit attempts to facilitate reproducible research in the field of wireless communications and IM studies.
+This toolkit attempts to facilitate reproducible research in wireless communications.
 The major advantages of this toolkit are highlighted as follows:
 
-- With the aid of state-of-the-art Nvidia GPUs, it accelerates bit error ratio and average mutual information simulations by invoking massively parallel algorithms.
-- In addition to the IM family, it also supports the conventional multiplexing scheme for ideal MIMO and OFDM scenarios.
+- It accelerates bit error ratio and average mutual information simulations by relying on a state-of-the-art Nvidia GPU and the massively parallel algorithms proposed in [1].
+- It also supports the representative multiplexing schemes for ideal MIMO and OFDM scenarios, in addition to the IM family.
 - It contains :doc:`a comprehensive database<db/index>` of designed active indices, that determine the achievable performance of the generalized spatial modulation or the subcarrier-index modulation.
 
 .. toctree::
@@ -47,8 +47,8 @@ IMToolkit is heavily dependent on CuPy to achieve significantly fast Monte-Carlo
 In case CuPy is not installed in your environment, IMToolkit uses NumPy only.
 Note that the CuPy-based simulation is 145 times faster than the NumPy-based calculation, as reported in [1].
 
-The above package does not include the designed active indices due to their large file size, which exceeds 500MB.
-Hence, the required files are automatically obtained from `the GitHub repository <https://github.com/imtoolkit/imtoolkit>`_ or a mirror website.
+`The above PyPi package <https://pypi.org/project/imtoolkit/>`_ excluded the designed active indices due to their large file size, which exceeds 500MB.
+Hence, this reduced-size PyPi package will automatically download a required file from `the GitHub repository <https://github.com/imtoolkit/imtoolkit>`_ or a mirror website.
 If you need all the project files, to use `imtoolkit` offline, it is recommended to obtain the package from GitHub as follows:
 
 .. code-block:: bash
@@ -56,7 +56,7 @@ If you need all the project files, to use `imtoolkit` offline, it is recommended
     > pip install git+https://github.com/imtoolkit/imtoolkit
 
 The IMToolkit development team welcomes other researchers' contributions and pull requests.
-In that case, it would be better to install the latest package as follows:
+In that case, it would be better to install the latest package and activate the editable mode as follows:
 
 .. code-block:: bash
 
@@ -83,7 +83,7 @@ Contributor(s)
 ==============
 
 - Dr. Naoki Ishikawa (`Web <https://ishikawa.cc>`_ / `Google Scholar <https://scholar.google.co.jp/citations?user=JHnisGYAAAAJ>`_ / `ResearchGate <https://www.researchgate.net/profile/Naoki_Ishikawa>`_ / `Publons <https://publons.com/researcher/3012020/naoki-ishikawa/>`_)
-- YOU would become a valuable contributor of this project :) Any contributions and issues are appreciated.
+- You might become a valuable contributor of this project. Any contributions and issues are appreciated.
 
 
 .. Indices and tables
