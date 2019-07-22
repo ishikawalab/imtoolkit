@@ -151,8 +151,6 @@
 <span class="c1"># This toolkit is released under the MIT License, see LICENSE.txt</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm</span><span class="p">,</span> <span class="n">trange</span>
 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;USECUPY&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">cupy</span> <span class="k">import</span> <span class="o">*</span>
@@ -175,12 +173,13 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codes</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
 
-<div class="viewcode-block" id="CoherentMLDSimulator.simulateBERReference"><a class="viewcode-back" href="../../imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateBERReference">[docs]</a>    <span class="k">def</span> <span class="nf">simulateBERReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">output</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="CoherentMLDSimulator.simulateBERReference"><a class="viewcode-back" href="../../imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateBERReference">[docs]</a>    <span class="k">def</span> <span class="nf">simulateBERReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">printValue</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Simulates BER values at multiple SNRs, where the straightforward reference algorithm is used. Note that this time complexity is unrealistically high. </span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            params (imtoolkit.Parameter): simulation parameters.</span>
-<span class="sd">            output (bool): a flag that determines whether to output the obtained results to the results/ directory.</span>
+<span class="sd">            outputFile (bool): a flag that determines whether to output the obtained results to the results/ directory.</span>
+<span class="sd">            printValue (bool): a flag that determines whether to print the simulated values.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.</span>
@@ -189,7 +188,7 @@
         <span class="n">IT</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">Nc</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">codes</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">IT</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">codes</span>
         <span class="n">snr_dBs</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">snrfrom</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">to</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">len</span><span class="p">)</span>
         <span class="n">sigmav2s</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">inv_dB</span><span class="p">(</span><span class="n">snr_dBs</span><span class="p">)</span>
-        <span class="n">errorTable</span> <span class="o">=</span> <span class="n">getErrorBitsTable</span><span class="p">(</span><span class="n">Nc</span><span class="p">)</span>
+        <span class="n">xor2ebits</span> <span class="o">=</span> <span class="n">getXORtoErrorBitsArray</span><span class="p">(</span><span class="n">Nc</span><span class="p">)</span>
 
         <span class="n">bers</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">snr_dBs</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">trange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">snr_dBs</span><span class="p">)):</span>
@@ -204,23 +203,25 @@
                 <span class="n">p</span> <span class="o">=</span> <span class="n">power</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">matmul</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">codes</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># Nc \times N \times T</span>
                 <span class="n">norms</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span> <span class="c1"># summation over the (N,T) axes</span>
                 <span class="n">mini</span> <span class="o">=</span> <span class="n">argmin</span><span class="p">(</span><span class="n">norms</span><span class="p">)</span>
-                <span class="n">errorBits</span> <span class="o">+=</span> <span class="n">errorTable</span><span class="p">[</span><span class="n">codei</span><span class="p">][</span><span class="n">mini</span><span class="p">]</span>
+                <span class="n">errorBits</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xor2ebits</span><span class="p">[</span><span class="n">codei</span> <span class="o">^</span> <span class="n">mini</span><span class="p">])</span>
 
             <span class="n">bers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">errorBits</span> <span class="o">/</span> <span class="p">(</span><span class="n">IT</span> <span class="o">*</span> <span class="n">B</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;At SNR = </span><span class="si">%1.2f</span><span class="s2"> dB, BER = </span><span class="si">%d</span><span class="s2"> / </span><span class="si">%d</span><span class="s2"> = </span><span class="si">%1.20f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">snr_dBs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">errorBits</span><span class="p">,</span> <span class="n">IT</span> <span class="o">*</span> <span class="n">B</span><span class="p">,</span> <span class="n">bers</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+            <span class="k">if</span> <span class="n">printValue</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;At SNR = </span><span class="si">%1.2f</span><span class="s2"> dB, BER = </span><span class="si">%d</span><span class="s2"> / </span><span class="si">%d</span><span class="s2"> = </span><span class="si">%1.20f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">snr_dBs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">errorBits</span><span class="p">,</span> <span class="n">IT</span> <span class="o">*</span> <span class="n">B</span><span class="p">,</span> <span class="n">bers</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
 
         <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dicToNumpy</span><span class="p">({</span><span class="s2">&quot;snr_dB&quot;</span><span class="p">:</span> <span class="n">snr_dBs</span><span class="p">,</span> <span class="s2">&quot;ber&quot;</span><span class="p">:</span> <span class="n">bers</span><span class="p">})</span>
-        <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">outputFile</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">saveCSV</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">arg</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span></div>
 
-<div class="viewcode-block" id="CoherentMLDSimulator.simulateBERParallel"><a class="viewcode-back" href="../../imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateBERParallel">[docs]</a>    <span class="k">def</span> <span class="nf">simulateBERParallel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">output</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="CoherentMLDSimulator.simulateBERParallel"><a class="viewcode-back" href="../../imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateBERParallel">[docs]</a>    <span class="k">def</span> <span class="nf">simulateBERParallel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">printValue</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Simulates BER values at multiple SNRs, where the massively parallel algorithm is used. This implementation is especially designed for cupy.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            params (imtoolkit.Parameter): simulation parameters.</span>
-<span class="sd">            output (bool): a flag that determines whether to output the obtained results to the results/ directory.</span>
+<span class="sd">            outputFile (bool): a flag that determines whether to output the obtained results to the results/ directory.</span>
+<span class="sd">            printValue (bool): a flag that determines whether to print the simulated values.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.</span>
@@ -262,26 +263,28 @@
                 <span class="n">norms</span> <span class="o">=</span> <span class="n">ydifffrosum</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ITi</span><span class="p">,</span> <span class="n">Nc</span><span class="p">,</span> <span class="n">Nc</span><span class="p">)</span> <span class="c1"># ITi \times Nc \times Nc</span>
                 <span class="c1"># print(norms)</span>
                 <span class="n">mini</span> <span class="o">=</span> <span class="n">argmin</span><span class="p">(</span><span class="n">norms</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ITi</span> <span class="o">*</span> <span class="n">Nc</span><span class="p">)</span>
-                <span class="n">errorBits</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xor2ebits</span><span class="p">[</span><span class="n">bitwise_xor</span><span class="p">(</span><span class="n">codei</span><span class="p">,</span> <span class="n">mini</span><span class="p">)])</span>
+                <span class="n">errorBits</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">xor2ebits</span><span class="p">[</span><span class="n">codei</span> <span class="o">^</span> <span class="n">mini</span><span class="p">])</span>
 
                 <span class="n">bers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">errorBits</span>
                 <span class="n">nbits</span> <span class="o">=</span> <span class="p">(</span><span class="n">ito</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">ITi</span> <span class="o">*</span> <span class="n">B</span> <span class="o">*</span> <span class="n">Nc</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;At SNR = </span><span class="si">%1.2f</span><span class="s2"> dB, BER = </span><span class="si">%d</span><span class="s2"> / </span><span class="si">%d</span><span class="s2"> = </span><span class="si">%1.20f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">snr_dBs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">bers</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nbits</span><span class="p">,</span> <span class="n">bers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">nbits</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">printValue</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;At SNR = </span><span class="si">%1.2f</span><span class="s2"> dB, BER = </span><span class="si">%d</span><span class="s2"> / </span><span class="si">%d</span><span class="s2"> = </span><span class="si">%1.20f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">snr_dBs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">bers</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nbits</span><span class="p">,</span> <span class="n">bers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">nbits</span><span class="p">))</span>
 
         <span class="n">bers</span> <span class="o">/=</span> <span class="n">ITo</span> <span class="o">*</span> <span class="n">ITi</span> <span class="o">*</span> <span class="n">B</span> <span class="o">*</span> <span class="n">Nc</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dicToNumpy</span><span class="p">({</span><span class="s2">&quot;snr_dB&quot;</span><span class="p">:</span> <span class="n">snr_dBs</span><span class="p">,</span> <span class="s2">&quot;ber&quot;</span><span class="p">:</span> <span class="n">bers</span><span class="p">})</span>
-        <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">outputFile</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">saveCSV</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">arg</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span></div>
 
 
-<div class="viewcode-block" id="CoherentMLDSimulator.simulateAMIReference"><a class="viewcode-back" href="../../imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateAMIReference">[docs]</a>    <span class="k">def</span> <span class="nf">simulateAMIReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">output</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="CoherentMLDSimulator.simulateAMIReference"><a class="viewcode-back" href="../../imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateAMIReference">[docs]</a>    <span class="k">def</span> <span class="nf">simulateAMIReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">printValue</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Simulates AMI values at multiple SNRs, where the straightforward reference algorithm is used. Note that this time complexity is unrealistically high. </span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            params (imtoolkit.Parameter): simulation parameters.</span>
-<span class="sd">            output (bool): a flag that determines whether to output the obtained results to the results/ directory.</span>
+<span class="sd">            outputFile (bool): a flag that determines whether to output the obtained results to the results/ directory.</span>
+<span class="sd">            printValue (bool): a flag that determines whether to print the simulated values.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.</span>
@@ -311,21 +314,23 @@
                     <span class="n">sum_outer</span> <span class="o">+=</span> <span class="n">log2</span><span class="p">(</span><span class="n">sum_inner</span><span class="p">)</span>
             <span class="c1">#print(&quot;bminus = &quot; + str(sum_outer / Nc / IT))</span>
             <span class="n">amis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">B</span> <span class="o">-</span> <span class="n">sum_outer</span> <span class="o">/</span> <span class="n">Nc</span> <span class="o">/</span> <span class="n">IT</span><span class="p">)</span> <span class="o">/</span> <span class="n">T</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;At SNR = </span><span class="si">%1.2f</span><span class="s2"> dB, AMI = </span><span class="si">%1.20f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">snr_dBs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">amis</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+            <span class="k">if</span> <span class="n">printValue</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;At SNR = </span><span class="si">%1.2f</span><span class="s2"> dB, AMI = </span><span class="si">%1.20f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">snr_dBs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">amis</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
 
         <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dicToNumpy</span><span class="p">({</span><span class="s2">&quot;snr_dB&quot;</span><span class="p">:</span> <span class="n">snr_dBs</span><span class="p">,</span> <span class="s2">&quot;ami&quot;</span><span class="p">:</span> <span class="n">amis</span><span class="p">})</span>
-        <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">outputFile</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">saveCSV</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">arg</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span></div>
         
 
-<div class="viewcode-block" id="CoherentMLDSimulator.simulateAMIParallel"><a class="viewcode-back" href="../../imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateAMIParallel">[docs]</a>    <span class="k">def</span> <span class="nf">simulateAMIParallel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">output</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="CoherentMLDSimulator.simulateAMIParallel"><a class="viewcode-back" href="../../imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateAMIParallel">[docs]</a>    <span class="k">def</span> <span class="nf">simulateAMIParallel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">printValue</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Simulates AMI values at multiple SNRs, where the massively parallel algorithm is used. This implementation is especially designed for cupy.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            params (imtoolkit.Parameter): simulation parameters.</span>
-<span class="sd">            output (bool): a flag that determines whether to output the obtained results to the results/ directory.</span>
+<span class="sd">            outputFile (bool): a flag that determines whether to output the obtained results to the results/ directory.</span>
+<span class="sd">            printValue (bool): a flag that determines whether to print the simulated values.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.</span>
@@ -359,12 +364,13 @@
                 <span class="n">bminus</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">log2</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">ecoffs</span><span class="p">),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)))</span>
 
                 <span class="n">amis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">B</span> <span class="o">-</span> <span class="n">bminus</span><span class="p">)</span> <span class="o">/</span> <span class="n">T</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;At SNR = </span><span class="si">%1.2f</span><span class="s2"> dB, AMI = </span><span class="si">%1.20f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">snr_dBs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">amis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">ito</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))</span>
+                <span class="k">if</span> <span class="n">printValue</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;At SNR = </span><span class="si">%1.2f</span><span class="s2"> dB, AMI = </span><span class="si">%1.20f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">snr_dBs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">amis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">ito</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))</span>
             
         <span class="c1">#</span>
         <span class="n">amis</span> <span class="o">/=</span> <span class="n">ITo</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dicToNumpy</span><span class="p">({</span><span class="s2">&quot;snr_dB&quot;</span><span class="p">:</span> <span class="n">snr_dBs</span><span class="p">,</span> <span class="s2">&quot;ami&quot;</span><span class="p">:</span> <span class="n">amis</span><span class="p">})</span>
-        <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">outputFile</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">saveCSV</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">arg</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span>
 

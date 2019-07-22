@@ -156,6 +156,7 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">from</span> <span class="nn">sympy.combinatorics.graycode</span> <span class="k">import</span> <span class="n">GrayCode</span>
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="k">import</span> <span class="n">interp1d</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;USECUPY&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">cupy</span> <span class="k">import</span> <span class="o">*</span>
@@ -176,21 +177,9 @@
     <span class="n">combsfro</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">starmap</span><span class="p">(</span><span class="n">frodiff</span><span class="p">,</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">combsfro</span><span class="p">))</span></div>
 
-
 <div class="viewcode-block" id="getMinimumEuclideanDistance"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.getMinimumEuclideanDistance">[docs]</a><span class="k">def</span> <span class="nf">getMinimumEuclideanDistance</span><span class="p">(</span><span class="n">symbols</span><span class="p">):</span>
-    <span class="c1"># symbols = np.array([+1, -1, +1j, -1j])</span>
     <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">getEuclideanDistances</span><span class="p">(</span><span class="n">symbols</span><span class="p">))</span></div>
 
-    <span class="c1">## old inefficient code</span>
-    <span class="c1">#minmed = 1e3</span>
-    <span class="c1">#for i in range(1, len(symbols)):</span>
-    <span class="c1">#    diffs = symbols[0:-i] - symbols[-i]</span>
-    <span class="c1">#    med = np.min(np.power(np.abs(diffs), 2))</span>
-    <span class="c1">#    minmed = min(minmed, med)</span>
-    <span class="c1">#</span>
-    <span class="c1">#return minmed</span>
-
-<span class="c1"># W.dot(W.conj().T).round() == eye(N)</span>
 <div class="viewcode-block" id="getDFTMatrix"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.getDFTMatrix">[docs]</a><span class="k">def</span> <span class="nf">getDFTMatrix</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
     <span class="n">W</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">)</span>
     <span class="n">omega</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="mf">2.0</span><span class="n">j</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span>
@@ -205,7 +194,9 @@
 <span class="c1">#</span>
 <div class="viewcode-block" id="inv_dB"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.inv_dB">[docs]</a><span class="k">def</span> <span class="nf">inv_dB</span><span class="p">(</span><span class="n">dB</span><span class="p">):</span>
     <span class="k">return</span> <span class="mf">10.0</span> <span class="o">**</span> <span class="p">(</span><span class="n">dB</span> <span class="o">/</span> <span class="mf">10.0</span><span class="p">)</span></div>
-<span class="c1"># inv_dB.inspect_types()</span>
+
+<div class="viewcode-block" id="randn"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.randn">[docs]</a><span class="k">def</span> <span class="nf">randn</span><span class="p">(</span><span class="o">*</span><span class="n">size</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">size</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="randn_c"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.randn_c">[docs]</a><span class="k">def</span> <span class="nf">randn_c</span><span class="p">(</span><span class="o">*</span><span class="n">size</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -215,44 +206,28 @@
 <span class="c1">#xp.random.randn_c = randn_c</span>
 
 
-
-<span class="c1"># countErrorBits(1, 2) #=&gt; 2</span>
-<span class="c1"># countErrorBits(1, 5) #=&gt; 1</span>
 <div class="viewcode-block" id="countErrorBits"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.countErrorBits">[docs]</a><span class="k">def</span> <span class="nf">countErrorBits</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">binary_repr</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">bitwise_xor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)))</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="nb">bin</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="getXORtoErrorBitsArray"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.getXORtoErrorBitsArray">[docs]</a><span class="k">def</span> <span class="nf">getXORtoErrorBitsArray</span><span class="p">(</span><span class="n">Nc</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">bin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nc</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))))</span></div>
 
 <div class="viewcode-block" id="getErrorBitsTable"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.getErrorBitsTable">[docs]</a><span class="k">def</span> <span class="nf">getErrorBitsTable</span><span class="p">(</span><span class="n">Nc</span><span class="p">):</span>
     <span class="n">B</span> <span class="o">=</span> <span class="n">log2</span><span class="p">(</span><span class="n">Nc</span><span class="p">)</span>
-    <span class="n">errorTable</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">((</span><span class="n">Nc</span><span class="p">,</span> <span class="n">Nc</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">int32</span><span class="p">)</span>
+    <span class="n">errorArray</span> <span class="o">=</span> <span class="n">getXORtoErrorBitsArray</span><span class="p">(</span><span class="n">Nc</span><span class="p">)</span>
 
+    <span class="n">errorTable</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">((</span><span class="n">Nc</span><span class="p">,</span> <span class="n">Nc</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">int8</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nc</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">Nc</span><span class="p">):</span>
-            <span class="n">errorTable</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">errorTable</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">countErrorBits</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+            <span class="n">errorTable</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">errorTable</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">errorArray</span><span class="p">[</span><span class="n">x</span><span class="o">^</span><span class="n">y</span><span class="p">]</span>
     
     <span class="k">return</span> <span class="n">errorTable</span></div>
 
-<span class="c1"># NumPy domain</span>
-<div class="viewcode-block" id="getXORtoErrorBitsArray"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.getXORtoErrorBitsArray">[docs]</a><span class="k">def</span> <span class="nf">getXORtoErrorBitsArray</span><span class="p">(</span><span class="n">Nc</span><span class="p">):</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="n">Nc</span><span class="p">,</span> <span class="n">int32</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nc</span><span class="p">):</span>
-        <span class="n">ret</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">binary_repr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">ret</span></div>
-
-<span class="c1"># getXORtoErrorBitsArray(4) # array([0, 1, 1, 2])</span>
-<span class="c1"># getXORtoErrorBitsArray(16) # array([0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4])</span>
-
-
-<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="k">import</span> <span class="n">interp1d</span>
 <div class="viewcode-block" id="getXCorrespondingToY"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.getXCorrespondingToY">[docs]</a><span class="k">def</span> <span class="nf">getXCorrespondingToY</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span> <span class="n">yarr</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">yarr</span><span class="p">)</span> <span class="ow">or</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">yarr</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">NaN</span>
-    <span class="c1">#print(where(y &lt;= yarr))</span>
-    <span class="c1">#print(where(y &gt; yarr))</span>
     <span class="n">spfunc</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">yarr</span><span class="p">,</span> <span class="n">xarr</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">spfunc</span><span class="p">(</span><span class="n">y</span><span class="p">)</span></div>
-
-<span class="c1"># getXCorrespondingToY(array([0,1]), array([0,1]), 0.5) # array(0.5)</span>
-<span class="c1"># getXCorrespondingToY(array([0,1]), array([0,1]), [0.1,0.5]) # array([0.1, 0.5])</span>
 
 
 <span class="c1"># c(APATH = &quot;C:/Dropbox/Project/201903_imtoolkit_paper/paper/main.aux&quot;, label = &quot;Conv. equiprobable act. \cite{wen2016equiprobable}&quot;)</span>
@@ -280,7 +255,18 @@
 <div class="viewcode-block" id="testUnitary"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.testUnitary">[docs]</a><span class="k">def</span> <span class="nf">testUnitary</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
     <span class="n">codes</span> <span class="o">=</span> <span class="n">code</span><span class="o">.</span><span class="n">codes</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
     <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">codes</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">codes</span><span class="p">)</span> <span class="o">/</span> <span class="n">code</span><span class="o">.</span><span class="n">Nc</span><span class="p">,</span> <span class="n">eye</span><span class="p">(</span><span class="n">M</span><span class="p">))</span></div>
-    
+
+<div class="viewcode-block" id="getRandomHermitianMatrix"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.getRandomHermitianMatrix">[docs]</a><span class="k">def</span> <span class="nf">getRandomHermitianMatrix</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">diag</span><span class="p">(</span><span class="mi">0</span><span class="n">j</span> <span class="o">+</span> <span class="n">randn</span><span class="p">(</span><span class="n">M</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">M</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+            <span class="n">ret</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">randn_c</span><span class="p">()</span>
+            <span class="n">ret</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">conj</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="CayleyTransform"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.CayleyTransform">[docs]</a><span class="k">def</span> <span class="nf">CayleyTransform</span><span class="p">(</span><span class="n">H</span><span class="p">):</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">eye</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">H</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">eye</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">H</span><span class="p">))</span></div>
 </pre></div>
 
            </div>

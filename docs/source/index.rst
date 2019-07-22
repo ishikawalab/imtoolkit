@@ -82,7 +82,7 @@ Of course, if your project relies on CuPy, the following reference is highly rec
 Contributor(s)
 ==============
 
-- Dr. Naoki Ishikawa (`Web <https://ishikawa.cc>`_ / `Google Scholar <https://scholar.google.co.jp/citations?user=JHnisGYAAAAJ>`_ / `ResearchGate <https://www.researchgate.net/profile/Naoki_Ishikawa>`_ / `Publons <https://publons.com/researcher/3012020/naoki-ishikawa/>`_)
+- Naoki Ishikawa (`Web <https://ishikawa.cc>`_ / `Google Scholar <https://scholar.google.co.jp/citations?user=JHnisGYAAAAJ>`_ / `ResearchGate <https://www.researchgate.net/profile/Naoki_Ishikawa>`_ / `Publons <https://publons.com/researcher/3012020/naoki-ishikawa/>`_)
 - You might become a valuable contributor of this project. Any contributions and issues are appreciated.
 
 

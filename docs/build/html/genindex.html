@@ -208,6 +208,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="imtoolkit.Util.html#imtoolkit.Util.c">c() (in module imtoolkit.Util)</a>
 </li>
+      <li><a href="imtoolkit.Util.html#imtoolkit.Util.CayleyTransform">CayleyTransform() (in module imtoolkit.Util)</a>
+</li>
       <li><a href="imtoolkit.Parameters.html#imtoolkit.Parameters.Parameters.cfo">cfo (imtoolkit.Parameters.Parameters attribute)</a>
 </li>
       <li><a href="imtoolkit.Channel.html#imtoolkit.Channel.Channel">Channel (class in imtoolkit.Channel)</a>
@@ -324,10 +326,10 @@
 </li>
       <li><a href="imtoolkit.Util.html#imtoolkit.Util.getGrayIndixes">getGrayIndixes() (in module imtoolkit.Util)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="imtoolkit.IMUtil.html#imtoolkit.IMUtil.getHammingDistance">getHammingDistance() (in module imtoolkit.IMUtil)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="imtoolkit.imsearch.html#imtoolkit.imsearch.getHammingDistanceTable">getHammingDistanceTable() (in module imtoolkit.imsearch)</a>
 </li>
       <li><a href="imtoolkit.IMUtil.html#imtoolkit.IMUtil.getIMParameters">getIMParameters() (in module imtoolkit.IMUtil)</a>
@@ -345,6 +347,8 @@
       <li><a href="imtoolkit.IMUtil.html#imtoolkit.IMUtil.getOptimizedIndexesList">getOptimizedIndexesList() (in module imtoolkit.IMUtil)</a>
 </li>
       <li><a href="imtoolkit.IMUtil.html#imtoolkit.IMUtil.getProbabilityOfActivation">getProbabilityOfActivation() (in module imtoolkit.IMUtil)</a>
+</li>
+      <li><a href="imtoolkit.Util.html#imtoolkit.Util.getRandomHermitianMatrix">getRandomHermitianMatrix() (in module imtoolkit.Util)</a>
 </li>
       <li><a href="imtoolkit.IMUtil.html#imtoolkit.IMUtil.getRandomIndexesList">getRandomIndexesList() (in module imtoolkit.IMUtil)</a>
 </li>
@@ -588,6 +592,8 @@
 </li>
       <li><a href="imtoolkit.Parameters.html#imtoolkit.Parameters.Parameters.r">r (imtoolkit.Parameters.Parameters attribute)</a>
 </li>
+      <li><a href="imtoolkit.Util.html#imtoolkit.Util.randn">randn() (in module imtoolkit.Util)</a>
+</li>
       <li><a href="imtoolkit.Util.html#imtoolkit.Util.randn_c">randn_c() (in module imtoolkit.Util)</a>
 </li>
       <li><a href="imtoolkit.Channel.html#imtoolkit.Channel.Channel.randomize">randomize() (imtoolkit.Channel.Channel method)</a>
@@ -646,15 +652,15 @@
 </li>
       <li><a href="imtoolkit.Parameters.html#imtoolkit.Parameters.Parameters.taps">taps (imtoolkit.Parameters.Parameters attribute)</a>
 </li>
-      <li><a href="imtoolkit.tests.IMUtilTest.html#imtoolkit.tests.IMUtilTest.IMUtilTest.test_checkConflict">test_checkConflict() (imtoolkit.tests.IMUtilTest.IMUtilTest method)</a>
+      <li><a href="imtoolkit.tests.UtilTest.html#imtoolkit.tests.UtilTest.UtilTest.test_CayleyTransform">test_CayleyTransform() (imtoolkit.tests.UtilTest.UtilTest method)</a>
 </li>
-      <li><a href="imtoolkit.tests.IMUtilTest.html#imtoolkit.tests.IMUtilTest.IMUtilTest.test_convertIndsToMatrix">test_convertIndsToMatrix() (imtoolkit.tests.IMUtilTest.IMUtilTest method)</a>
-</li>
-      <li><a href="imtoolkit.tests.IMUtilTest.html#imtoolkit.tests.IMUtilTest.IMUtilTest.test_convertIndsToVector">test_convertIndsToVector() (imtoolkit.tests.IMUtilTest.IMUtilTest method)</a>
+      <li><a href="imtoolkit.tests.UtilTest.html#imtoolkit.tests.UtilTest.UtilTest.test_countErrorBits">test_countErrorBits() (imtoolkit.tests.UtilTest.UtilTest method)</a>
 </li>
       <li><a href="imtoolkit.tests.UtilTest.html#imtoolkit.tests.UtilTest.UtilTest.test_frodiff">test_frodiff() (imtoolkit.tests.UtilTest.UtilTest method)</a>
 </li>
-      <li><a href="imtoolkit.tests.IMUtilTest.html#imtoolkit.tests.IMUtilTest.IMUtilTest.test_getDictionaryIndexesList">test_getDictionaryIndexesList() (imtoolkit.tests.IMUtilTest.IMUtilTest method)</a>
+      <li><a href="imtoolkit.tests.UtilTest.html#imtoolkit.tests.UtilTest.UtilTest.test_getDFTMatrix">test_getDFTMatrix() (imtoolkit.tests.UtilTest.UtilTest method)</a>
+</li>
+      <li><a href="imtoolkit.tests.UtilTest.html#imtoolkit.tests.UtilTest.UtilTest.test_getErrorBitsTable">test_getErrorBitsTable() (imtoolkit.tests.UtilTest.UtilTest method)</a>
 </li>
       <li><a href="imtoolkit.tests.UtilTest.html#imtoolkit.tests.UtilTest.UtilTest.test_getEuclideanDistances">test_getEuclideanDistances() (imtoolkit.tests.UtilTest.UtilTest method)</a>
 </li>
@@ -662,11 +668,15 @@
 </li>
       <li><a href="imtoolkit.tests.UtilTest.html#imtoolkit.tests.UtilTest.UtilTest.test_getMinimumEuclideanDistance">test_getMinimumEuclideanDistance() (imtoolkit.tests.UtilTest.UtilTest method)</a>
 </li>
+      <li><a href="imtoolkit.tests.IMUtilTest.html#imtoolkit.tests.IMUtilTest.IMUtilTest.test_getMinimumHammingDistance">test_getMinimumHammingDistance() (imtoolkit.tests.IMUtilTest.IMUtilTest method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="imtoolkit.tests.IMUtilTest.html#imtoolkit.tests.IMUtilTest.IMUtilTest.test_getProbabilityOfActivation">test_getProbabilityOfActivation() (imtoolkit.tests.IMUtilTest.IMUtilTest method)</a>
+      <li><a href="imtoolkit.tests.UtilTest.html#imtoolkit.tests.UtilTest.UtilTest.test_getRandomHermitianMatrix">test_getRandomHermitianMatrix() (imtoolkit.tests.UtilTest.UtilTest method)</a>
 </li>
-      <li><a href="imtoolkit.tests.IMUtilTest.html#imtoolkit.tests.IMUtilTest.IMUtilTest.test_getSumHamming">test_getSumHamming() (imtoolkit.tests.IMUtilTest.IMUtilTest method)</a>
+      <li><a href="imtoolkit.tests.UtilTest.html#imtoolkit.tests.UtilTest.UtilTest.test_getXCorrespondingToY">test_getXCorrespondingToY() (imtoolkit.tests.UtilTest.UtilTest method)</a>
+</li>
+      <li><a href="imtoolkit.tests.UtilTest.html#imtoolkit.tests.UtilTest.UtilTest.test_getXORtoErrorBitsArray">test_getXORtoErrorBitsArray() (imtoolkit.tests.UtilTest.UtilTest method)</a>
 </li>
       <li><a href="imtoolkit.tests.UtilTest.html#imtoolkit.tests.UtilTest.UtilTest.test_inv_dB">test_inv_dB() (imtoolkit.tests.UtilTest.UtilTest method)</a>
 </li>
@@ -676,11 +686,11 @@
 </li>
       <li><a href="imtoolkit.tests.ModulatorTest.html#imtoolkit.tests.ModulatorTest.ModulatorTest.test_QAM">test_QAM() (imtoolkit.tests.ModulatorTest.ModulatorTest method)</a>
 </li>
+      <li><a href="imtoolkit.tests.UtilTest.html#imtoolkit.tests.UtilTest.UtilTest.test_randn">test_randn() (imtoolkit.tests.UtilTest.UtilTest method)</a>
+</li>
       <li><a href="imtoolkit.tests.UtilTest.html#imtoolkit.tests.UtilTest.UtilTest.test_randn_c">test_randn_c() (imtoolkit.tests.UtilTest.UtilTest method)</a>
 </li>
       <li><a href="imtoolkit.tests.ModulatorTest.html#imtoolkit.tests.ModulatorTest.ModulatorTest.test_StarQAM">test_StarQAM() (imtoolkit.tests.ModulatorTest.ModulatorTest method)</a>
-</li>
-      <li><a href="imtoolkit.tests.IMUtilTest.html#imtoolkit.tests.IMUtilTest.IMUtilTest.test_wen2016EquiprobableSubcarrierActivation">test_wen2016EquiprobableSubcarrierActivation() (imtoolkit.tests.IMUtilTest.IMUtilTest method)</a>
 </li>
       <li><a href="imtoolkit.Util.html#imtoolkit.Util.testUnitary">testUnitary() (in module imtoolkit.Util)</a>
 </li>

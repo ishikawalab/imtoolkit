@@ -151,11 +151,11 @@
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
 <a class="reference external image-reference" href="https://ishikawa.cc/imtoolkit/"><img alt="IMToolkit logo." class="align-right" src="https://github.com/imtoolkit/imtoolkit/blob/master/docs/source/_static/imtoolkit-logo.png?raw=true" style="width: 150px; height: 150px;" /></a>
 <p>This webpage introduces an open-source index modulation toolkit (IMToolkit).
-This toolkit attempts to facilitate reproducible research in the field of wireless communications and IM studies.
+This toolkit attempts to facilitate reproducible research in wireless communications.
 The major advantages of this toolkit are highlighted as follows:</p>
 <ul class="simple">
-<li><p>With the aid of state-of-the-art Nvidia GPUs, it accelerates bit error ratio and average mutual information simulations by invoking massively parallel algorithms.</p></li>
-<li><p>In addition to the IM family, it also supports the conventional multiplexing scheme for ideal MIMO and OFDM scenarios.</p></li>
+<li><p>It accelerates bit error ratio and average mutual information simulations by relying on a state-of-the-art Nvidia GPU and the massively parallel algorithms proposed in [1].</p></li>
+<li><p>It also supports the representative multiplexing schemes for ideal MIMO and OFDM scenarios, in addition to the IM family.</p></li>
 <li><p>It contains <a class="reference internal" href="db/index.html"><span class="doc">a comprehensive database</span></a> of designed active indices, that determine the achievable performance of the generalized spatial modulation or the subcarrier-index modulation.</p></li>
 </ul>
 <div class="toctree-wrapper compound">
@@ -172,14 +172,14 @@ IMToolkit is heavily dependent on CuPy to achieve significantly fast Monte-Carlo
 <a class="reference external" href="https://docs-cupy.chainer.org/en/stable/install.html">The key components required by CuPy are listed here.</a>
 In case CuPy is not installed in your environment, IMToolkit uses NumPy only.
 Note that the CuPy-based simulation is 145 times faster than the NumPy-based calculation, as reported in [1].</p>
-<p>The above package does not include the designed active indices due to their large file size, which exceeds 500MB.
-Hence, the required files are automatically obtained from <a class="reference external" href="https://github.com/imtoolkit/imtoolkit">the GitHub repository</a> or a mirror website.
+<p><a class="reference external" href="https://pypi.org/project/imtoolkit/">The above PyPi package</a> excluded the designed active indices due to their large file size, which exceeds 500MB.
+Hence, this reduced-size PyPi package will automatically download a required file from <a class="reference external" href="https://github.com/imtoolkit/imtoolkit">the GitHub repository</a> or a mirror website.
 If you need all the project files, to use <cite>imtoolkit</cite> offline, it is recommended to obtain the package from GitHub as follows:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; pip install git+https://github.com/imtoolkit/imtoolkit
 </pre></div>
 </div>
 <p>The IMToolkit development team welcomes other researchers’ contributions and pull requests.
-In that case, it would be better to install the latest package as follows:</p>
+In that case, it would be better to install the latest package and activate the editable mode as follows:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; git clone https://github.com/imtoolkit/imtoolkit
 &gt; pip install -e ./imtoolkit <span class="c1"># this activates the editable mode</span>
 </pre></div>
@@ -206,8 +206,8 @@ In that case, it would be better to install the latest package as follows:</p>
 <div class="section" id="contributor-s">
 <h2>Contributor(s)<a class="headerlink" href="#contributor-s" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>Dr. Naoki Ishikawa (<a class="reference external" href="https://ishikawa.cc">Web</a> / <a class="reference external" href="https://scholar.google.co.jp/citations?user=JHnisGYAAAAJ">Google Scholar</a> / <a class="reference external" href="https://www.researchgate.net/profile/Naoki_Ishikawa">ResearchGate</a> / <a class="reference external" href="https://publons.com/researcher/3012020/naoki-ishikawa/">Publons</a>)</p></li>
-<li><p>YOU would become a valuable contributor of this project :) Any contributions and issues are appreciated.</p></li>
+<li><p>Naoki Ishikawa (<a class="reference external" href="https://ishikawa.cc">Web</a> / <a class="reference external" href="https://scholar.google.co.jp/citations?user=JHnisGYAAAAJ">Google Scholar</a> / <a class="reference external" href="https://www.researchgate.net/profile/Naoki_Ishikawa">ResearchGate</a> / <a class="reference external" href="https://publons.com/researcher/3012020/naoki-ishikawa/">Publons</a>)</p></li>
+<li><p>You might become a valuable contributor of this project. Any contributions and issues are appreciated.</p></li>
 </ul>
 </div>
 </div>
