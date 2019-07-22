@@ -2,8 +2,6 @@
 # This toolkit is released under the MIT License, see LICENSE.txt
 
 import os
-import sys
-import itertools
 from tqdm import tqdm, trange
 if os.getenv("USECUPY") == "1":
     from cupy import *

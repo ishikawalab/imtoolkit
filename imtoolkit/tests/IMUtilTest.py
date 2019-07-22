@@ -6,37 +6,64 @@ import numpy as np
 from imtoolkit.IMUtil import *
 
 class IMUtilTest(unittest.TestCase):
-    def test_convertIndsToVector(self):
-        ret = convertIndsToVector([[0, 1], [0, 2]], M = 4)
-        np.testing.assert_array_almost_equal(ret, [np.array([[1], [1], [0], [0]]), np.array([[1], [0], [1], [0]])])
+    # def test_convertIndsToVector(self):
+    #     ret = convertIndsToVector([[0, 1], [0, 2]], M = 4)
+    #     np.testing.assert_array_almost_equal(ret, [np.array([[1], [1], [0], [0]]), np.array([[1], [0], [1], [0]])])
 
-    def test_convertIndsToMatrix(self):
-        ret = convertIndsToMatrix([[0, 1], [0, 2]], M = 4)
-        np.testing.assert_array_almost_equal(ret, [np.array([[1., 0.], [0., 1.], [0., 0.], [0., 0.]]), np.array([[1., 0.], [0., 0.], [0., 1.], [0., 0.]])])
+    # def test_convertIndsToMatrix(self):
+    #     ret = convertIndsToMatrix([[0, 1], [0, 2]], M = 4)
+    #     np.testing.assert_array_almost_equal(ret, [np.array([[1., 0.], [0., 1.], [0., 0.], [0., 0.]]), np.array([[1., 0.], [0., 0.], [0., 1.], [0., 0.]])])
 
-    def test_getProbabilityOfActivation(self):
-        ret = getProbabilityOfActivation([[0], [1], [2], [3]], 4)
-        np.testing.assert_array_almost_equal(ret, np.ones(4) / 4)
+    # def test_convertIndsToIndsDec(self):
+    #     ret = convertIndsToIndsDec([[0, 1], [0, 2]], M = 4)
+    #     self.assertEqual(ret, [3, 5])
 
-    def test_getSumHamming(self):
-        ret = getSumHamming(inds = [[0,1],[2,3],[1,2],[0,3]], M = 4)
-        self.assertEqual(ret, 16)
+    # def test_convertIndsDecToInds(self):
+    #     ret = convertIndsDecToInds(indsdecs = [3,5,10,12], M = 4)
+    #     self.assertEqual(ret, [[0, 1], [0, 2], [1, 3], [2, 3]])
 
-    def test_checkConflict(self):
-        self.assertFalse(checkConflict([[0, 1], [0, 2]]))
-        self.assertTrue(checkConflict([[0, 1], [0, 1]]))
+    # def test_getIndexes(self):
+    #     self.assertEqual(getIndexes("opt", 4, 2, 4), [[0, 1], [0, 3], [1, 2], [2, 3]])
+    #     self.assertEqual(getIndexes("dic", 4, 2, 4), [[0, 1], [0, 2], [0, 3], [1, 2]])
+    #     self.assertEqual(getIndexes("mes", 4, 2, 4), [[2, 3], [1, 3], [1, 2], [0, 3]])
+    #     self.assertEqual(getIndexes("wen", 4, 2, 4), [[0, 1], [1, 2], [2, 3], [0, 3]])
 
-    def test_getDictionaryIndexesList(self):
-        ret = getDictionaryIndexesList(4, 2, 4)
-        self.assertTrue(ret == [[0, 1], [0, 2], [0, 3], [1, 2]])
+    # def test_getProbabilityOfActivation(self):
+    #     ret = getProbabilityOfActivation([[0], [1], [2], [3]], 4)
+    #     np.testing.assert_array_almost_equal(ret, np.ones(4) / 4)
+
+    #     ret = getProbabilityOfActivation([[0, 1], [0, 3], [1, 2], [2, 3]], 4)
+    #     np.testing.assert_array_almost_equal(ret, np.ones(4) / 2)
+
+    # def test_getHammingDistance(self):
+    #     self.assertEqual(getHammingDistance([0,1], [1,0]), 2)
+    #     self.assertEqual(getHammingDistance([1,1,0,0], [0,0,1,1]), 4)
+
+    def test_getMinimumHammingDistance(self):
+        minh = getMinimumHammingDistance(getIndexes("opt", 16, 8, 16), 16)
+        self.assertEqual(minh, 8)
+        minh = getMinimumHammingDistance(getIndexes("dic", 16, 8, 16), 16)
+        self.assertEqual(minh, 2)
+
+    # def test_getSumHamming(self):
+    #     ret = getSumHamming(inds = [[0,1],[2,3],[1,2],[0,3]], M = 4)
+    #     self.assertEqual(ret, 16)
+
+    # def test_checkConflict(self):
+    #     self.assertFalse(checkConflict([[0, 1], [0, 2]]))
+    #     self.assertTrue(checkConflict([[0, 1], [0, 1]]))
+
+    # def test_getDictionaryIndexesList(self):
+    #     ret = getDictionaryIndexesList(4, 2, 4)
+    #     self.assertTrue(ret == [[0, 1], [0, 2], [0, 3], [1, 2]])
     
-    def test_wen2016EquiprobableSubcarrierActivation(self):
-        ret = wen2016EquiprobableSubcarrierActivation(M = 2, K = 1)
-        np.testing.assert_array_equal(ret, [[0], [1]])
-        ret = wen2016EquiprobableSubcarrierActivation(M = 4, K = 1)
-        np.testing.assert_array_equal(ret, [[0], [1], [2], [3]])
-        ret = wen2016EquiprobableSubcarrierActivation(M = 4, K = 2)
-        np.testing.assert_array_equal(ret, [[0, 1], [1, 2], [2, 3], [0, 3]])
+    # def test_wen2016EquiprobableSubcarrierActivation(self):
+    #     ret = wen2016EquiprobableSubcarrierActivation(M = 2, K = 1)
+    #     np.testing.assert_array_equal(ret, [[0], [1]])
+    #     ret = wen2016EquiprobableSubcarrierActivation(M = 4, K = 1)
+    #     np.testing.assert_array_equal(ret, [[0], [1], [2], [3]])
+    #     ret = wen2016EquiprobableSubcarrierActivation(M = 4, K = 2)
+    #     np.testing.assert_array_equal(ret, [[0, 1], [1, 2], [2, 3], [0, 3]])
 
 if __name__ == '__main__':
     unittest.main()

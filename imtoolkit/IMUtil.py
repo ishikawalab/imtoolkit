@@ -9,34 +9,17 @@ import numpy as np
 from scipy import special
 from .Util import *
 
-# Optimized indexes set in terms of AMI
-INDS = {}
-INDS[2, 1, 2] = [[0], [1]]
-INDS[4, 2, 2] = [[0, 1], [0, 2]] # 
-#INDS[4, 2, 2] = [[0, 1], [2, 3]] # 
-INDS[4, 2, 4] = [[0, 1], [0, 2], [1, 3], [2, 3]] # 
-
-
 #
-# Utility functions for an indexes set
-#
-
-#
-# inds = [[0, 1], [0, 2]]; M = 4
-# return: [array([[1], [1], [0], [0]]), array([[1], [0], [1], [0]])]
+# Utility functions for active indices of IM
 #
 def convertIndsToVector(inds, M):
     Q = len(inds)
-    ret = np.tile(np.zeros((M, 1), dtype=np.int32), Q) # M \times Q matrix
+    ret = np.tile(np.zeros((M, 1), dtype=np.int), Q) # M \times Q
     for q in range(Q):
         for i in inds[q]:
             ret[i][q] = 1
     return np.hsplit(ret, Q)
 
-#
-# inds = [[0, 1], [0, 2]]; M = 4
-# return: [array([[1., 0.], [0., 1.], [0., 0.], [0., 0.]]), array([[1., 0.], [0., 0.], [0., 1.], [0., 0.]])]
-# 
 def convertIndsToMatrix(inds, M):
     Q = len(inds)
     K = len(inds[0])
@@ -56,7 +39,6 @@ def convertIndsToIndsDec(inds, M):
         ret.append(dec)
     return ret
 
-# convertIndsDecToInds(indsdecs = [3,5,10,12], M = 4) # [[0, 1], [0, 2], [1, 3], [2, 3]]
 def convertIndsDecToInds(indsdecs, M):
     Q = len(indsdecs)
     ret = []
@@ -285,9 +267,6 @@ def getProbabilityOfActivation(inds, M):
         prob[inds[q]] += 1
     return prob / len(inds)
 
-#
-# getHammingDistance([0,1], [1,0]) = 2
-# getHammingDistance([1,1,0,0], [0,0,1,1]) = 4
 def getHammingDistance(arr1, arr2):
     return np.sum(np.logical_xor(arr1, arr2))
 
