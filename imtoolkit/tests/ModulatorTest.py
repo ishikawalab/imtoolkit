@@ -3,7 +3,8 @@
 
 import unittest
 import numpy as np
-from imtoolkit.Modulator import *
+from imtoolkit.Util import getMinimumEuclideanDistance
+from imtoolkit.Modulator import Modulator
 
 class ModulatorTest(unittest.TestCase):
     def test_PSK(self):

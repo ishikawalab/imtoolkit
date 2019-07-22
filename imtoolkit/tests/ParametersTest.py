@@ -2,7 +2,7 @@
 # This toolkit is released under the MIT License, see LICENSE.txt
 
 import unittest
-from imtoolkit.Parameters import *
+from imtoolkit import Parameters
 
 class ParametersTest(unittest.TestCase):
     def test_Parameters(self):

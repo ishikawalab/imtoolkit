@@ -10,34 +10,31 @@ from sympy.combinatorics.graycode import GrayCode
 from scipy.interpolate import interp1d
 import numpy as np
 if os.getenv("USECUPY") == "1":
-    from cupy import *
-    # print("cupy is imported by Util.py")
+    import cupy as xp
 else:
-    from numpy import *
-    # print("numpy is imported by Util.py")
-
+    import numpy as xp
 
 def getGrayIndixes(bitWidth):
     gray = GrayCode(bitWidth)
     return [int(strb, 2) for strb in gray.generate_gray()]
 
 def frodiff(x, y):
-    return power(linalg.norm(x - y), 2)
+    return xp.power(xp.linalg.norm(x - y), 2)
 
 def getEuclideanDistances(symbols): 
     combsfro = itertools.starmap(frodiff, itertools.combinations(symbols, 2))
-    return array(list(combsfro))
+    return xp.array(list(combsfro))
 
 def getMinimumEuclideanDistance(symbols):
     return min(getEuclideanDistances(symbols))
 
 def getDFTMatrix(N):
-    W = zeros((N, N), dtype = complex)
-    omega = exp(2.0j * pi / N)
+    W = xp.zeros((N, N), dtype = complex)
+    omega = xp.exp(2.0j * xp.pi / N)
     for j in range(N):
         for k in range(N):
             W[j, k] = pow(omega, j * k)
-    W /= sqrt(N)
+    W /= xp.sqrt(N)
     return W
 
 #
@@ -47,13 +44,13 @@ def inv_dB(dB):
     return 10.0 ** (dB / 10.0)
 
 def randn(*size):
-    return random.normal(0, 1, size = size)
+    return xp.random.normal(0, 1, size = size)
 
 def randn_c(*size):
     """
     Complex normal distribution
     """
-    return random.normal(0, 1 / sqrt(2.0), size = size) + random.normal(0, 1 / sqrt(2.0), size = size) * 1j
+    return xp.random.normal(0, 1 / xp.sqrt(2.0), size = size) + xp.random.normal(0, 1 / xp.sqrt(2.0), size = size) * 1j
 #xp.random.randn_c = randn_c
 
 
@@ -61,13 +58,11 @@ def countErrorBits(x, y):
     return bin(x^y).count('1')
 
 def getXORtoErrorBitsArray(Nc):
-    return array(list(map(lambda x: bin(x).count('1'), range(Nc + 1))))
+    return xp.array(list(map(lambda x: bin(x).count('1'), range(Nc + 1))))
 
 def getErrorBitsTable(Nc):
-    B = log2(Nc)
     errorArray = getXORtoErrorBitsArray(Nc)
-
-    errorTable = zeros((Nc, Nc), dtype = int8)
+    errorTable = xp.zeros((Nc, Nc), dtype = xp.int8)
     for y in range(Nc):
         for x in range(y, Nc):
             errorTable[y][x] = errorTable[x][y] = errorArray[x^y]
@@ -76,7 +71,7 @@ def getErrorBitsTable(Nc):
 
 def getXCorrespondingToY(xarr, yarr, y):
     if y < np.min(yarr) or y > np.max(yarr):
-        return NaN
+        return xp.NaN
     spfunc = interp1d(yarr, xarr)
     return spfunc(y)
 
@@ -105,16 +100,16 @@ def c(APATH, label):
 
 def testUnitary(M, code):
     codes = code.codes.reshape(-1, M)
-    np.testing.assert_almost_equal(np.conj(codes.T).dot(codes) / code.Nc, eye(M))
+    np.testing.assert_almost_equal(np.conj(codes.T).dot(codes) / code.Nc, xp.eye(M))
 
 def getRandomHermitianMatrix(M):
-    ret = diag(0j + randn(M))
+    ret = xp.diag(0j + randn(M))
     for y in range(0, M - 1):
         for x in range(y + 1, M):
             ret[y, x] = randn_c()
-            ret[x, y] = conj(ret[y, x])
+            ret[x, y] = xp.conj(ret[y, x])
     return ret
 
 def CayleyTransform(H):
     M = H.shape[0]
-    return (eye(M, dtype=complex) - 1j * H).dot(linalg.inv(eye(M, dtype=complex) + 1j * H))
+    return (xp.eye(M, dtype=complex) - 1j * H).dot(xp.linalg.inv(xp.eye(M, dtype=complex) + 1j * H))

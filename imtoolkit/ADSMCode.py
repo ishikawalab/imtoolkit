@@ -2,8 +2,7 @@
 # This toolkit is released under the MIT License, see LICENSE.txt
 
 import numpy as np
-from .Modulator import *
-from .Util import *
+from .Modulator import Modulator
 
 class ADSMCode:
     """Algebraic differential spatial modulation (ADSM), which was firstly proposed in [1] and was later extended in [2].
@@ -37,7 +36,7 @@ class ADSMCode:
         #print(As)
         
         codestensor = np.kron(symbols, As) # M \times M \times M * L (=Nc)
-        self.codes = array(hsplit(hstack(codestensor), self.Nc)) # Nc \times M \times M
+        self.codes = np.array(np.hsplit(np.hstack(codestensor), self.Nc)) # Nc \times M \times M
 
     def putRate(self):
         print("B / M = %d / %d = %d [bit/symbol]" % (self.B, self.M, self.B / self.M))

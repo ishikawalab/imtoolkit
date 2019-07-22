@@ -3,7 +3,7 @@
 
 import numpy as np
 import scipy
-from .Util import *
+from .Util import getDFTMatrix, CayleyTransform, getRandomHermitianMatrix
 
 class Basis:
     """This class generates a basis set for nonsquare differential encoding and decoding, which is proposed in [1,2].
@@ -36,7 +36,7 @@ class Basis:
         elif type[0].lower() == 'h':
             P = int(type.replace('h',''))
             W = getDFTMatrix(P)
-            U = zeros((M, M), dtype=complex)
+            U = np.zeros((M, M), dtype=complex)
             for i in range(int(M / P)):
                 U[(i * P) : (i * P + P), (i * P) : (i * P + P)] = W
         

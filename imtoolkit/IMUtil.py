@@ -2,12 +2,13 @@
 # This toolkit is released under the MIT License, see LICENSE.txt
 
 import re
+import os
 import glob
 import itertools
 import urllib.request
 import numpy as np
 from scipy import special
-from .Util import *
+#from .Util import *
 
 #
 # Utility functions for active indices of IM
@@ -40,7 +41,6 @@ def convertIndsToIndsDec(inds, M):
     return ret
 
 def convertIndsDecToInds(indsdecs, M):
-    Q = len(indsdecs)
     ret = []
     for dec in indsdecs:
         binstr = np.binary_repr(dec)
@@ -321,7 +321,6 @@ def checkConflict(inds):
 #
 # Others
 #
-
 def getIMParameters(M, K):
     ret = []
     Qmax = int(np.exp2(np.floor(np.log2(special.binom(M, K)))))
@@ -332,8 +331,6 @@ def getIMParameters(M, K):
         ret.append((M, K, Q))
         Q *= 2
     return ret
-
-# getIMParameters(4, 2) # [(4, 2, 1), (4, 2, 2), (4, 2, 4)]
 
 def binom(M,K):
     return special.binom(M, K)

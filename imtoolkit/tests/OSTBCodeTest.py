@@ -4,7 +4,7 @@
 import unittest
 import numpy as np
 from imtoolkit.Util import testUnitary
-from imtoolkit.OSTBCode import *
+from imtoolkit.OSTBCode import OSTBCode
 
 class OSTBCodeTest(unittest.TestCase):
 

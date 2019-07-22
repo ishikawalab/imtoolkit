@@ -1,11 +1,11 @@
 # Copyright (c) IMToolkit Development Team
 # This toolkit is released under the MIT License, see LICENSE.txt
 
+import itertools
 import numpy as np
 from scipy import special
-from .Modulator import *
-from .Util import *
-from .IMUtil import *
+from .Modulator import Modulator
+from .IMUtil import convertIndsToMatrix, getIndexes
 
 class IMCode:
     def __init__(self, dm, M, K, Q, modtype, L, meanPower):

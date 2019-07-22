@@ -5,11 +5,8 @@ import os
 import pandas as pd
 if os.getenv("USECUPY") == "1":
     import cupy as xp
-    # print("cupy is imported by Simulator.py")
 else:
     import numpy as xp
-    # print("numpy is imported by Simulator.py")
-
 
 class Simulator(object):
     """A basis class for an arbitrary simulator, which has some useful functions for output simulation results.

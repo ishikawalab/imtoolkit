@@ -3,8 +3,8 @@
 
 import unittest
 import numpy as np
-from imtoolkit.Util import testUnitary
-from imtoolkit.TASTCode import *
+from imtoolkit.Util import testUnitary, getMinimumEuclideanDistance
+from imtoolkit.TASTCode import TASTCode
 
 class TASTCodeTest(unittest.TestCase):
 

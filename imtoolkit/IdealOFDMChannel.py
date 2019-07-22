@@ -1,8 +1,8 @@
 # Copyright (c) IMToolkit Development Team
 # This toolkit is released under the MIT License, see LICENSE.txt
 
-from .Channel import *
-from .Util import *
+from .Channel import Channel
+from .Util import xp, randn_c
 
 class IdealOFDMChannel(Channel):
 
@@ -11,7 +11,7 @@ class IdealOFDMChannel(Channel):
         self.M = M
     
     def randomize(self):
-        self.channelMatrix = (tile(eye(self.M), self.IT) * randn_c(self.IT * self.M)).T
+        self.channelMatrix = (xp.tile(xp.eye(self.M), self.IT) * randn_c(self.IT * self.M)).T
     
     def getChannel(self):
         return self.channelMatrix

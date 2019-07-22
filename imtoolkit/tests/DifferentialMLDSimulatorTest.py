@@ -3,12 +3,7 @@
 
 import unittest
 import numpy as np
-from imtoolkit.Parameters import *
-from imtoolkit.OSTBCode import *
-from imtoolkit.DiagonalUnitaryCode import *
-from imtoolkit.ADSMCode import *
-from imtoolkit.IdealRayleighChannel import *
-from imtoolkit.DifferentialMLDSimulator import *
+from imtoolkit import Parameters, OSTBCode, DiagonalUnitaryCode, ADSMCode, IdealRayleighChannel, DifferentialMLDSimulator
 
 class DifferentialMLDSimulatorTest(unittest.TestCase):
 

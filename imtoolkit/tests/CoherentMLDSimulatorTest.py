@@ -3,11 +3,7 @@
 
 import unittest
 import numpy as np
-from imtoolkit.Parameters import *
-from imtoolkit.IMCode import *
-from imtoolkit.OSTBCode import *
-from imtoolkit.IdealRayleighChannel import *
-from imtoolkit.CoherentMLDSimulator import *
+from imtoolkit import Parameters, IMCode, OSTBCode, IdealRayleighChannel, CoherentMLDSimulator
 
 class CoherentMLDSimulatorTest(unittest.TestCase):
 

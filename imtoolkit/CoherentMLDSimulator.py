@@ -4,14 +4,12 @@
 import os
 from tqdm import tqdm, trange
 if os.getenv("USECUPY") == "1":
-    from cupy import *
-    # print("cupy is imported by CoherentMLDSimulator.py")
+    from cupy import abs, arange, argmin, exp, hsplit, hstack, linalg, linspace, log2, matmul, mean, power, random, sqrt, sum, tile, zeros
 else:
-    from numpy import *
-    # print("numpy is imported by CoherentMLDSimulator.py")
+    from numpy import abs, arange, argmin, exp, hsplit, hstack, linalg, linspace, log2, matmul, mean, power, random, sqrt, sum, tile, zeros
 
-from .Simulator import *
-from .Util import *
+from .Simulator import Simulator
+from .Util import getXORtoErrorBitsArray, inv_dB, randn_c
 
 class CoherentMLDSimulator(Simulator):
     """A simulatror that relies on the coherent maximum likelihood detector, that assumes perfect channel state information at the receiver. The environment variable USECUPY determines whether to use cupy or not.
@@ -36,7 +34,7 @@ class CoherentMLDSimulator(Simulator):
             ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.
         """
 
-        IT, M, N, T, Nc, B, codes = params.IT, params.M, params.N, params.T, self.Nc, self.B, self.codes
+        IT, N, T, Nc, B, codes = params.IT, params.N, params.T, self.Nc, self.B, self.codes
         snr_dBs = linspace(params.snrfrom, params.to, params.len)
         sigmav2s = 1.0 / inv_dB(snr_dBs)
         xor2ebits = getXORtoErrorBitsArray(Nc)
@@ -44,7 +42,7 @@ class CoherentMLDSimulator(Simulator):
         bers = zeros(len(snr_dBs))
         for i in trange(len(snr_dBs)):
             errorBits = 0
-            for it in range(IT):
+            for _ in range(IT):
                 codei = random.randint(0, Nc)
                 self.channel.randomize()
                 h = self.channel.getChannel() # N \times M
@@ -78,7 +76,7 @@ class CoherentMLDSimulator(Simulator):
             ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.
         """
 
-        M, N, T, ITo, ITi, Nc, B, codes = params.M, params.N, params.T, params.ITo, params.ITi, self.Nc, self.B, self.codes
+        N, T, ITo, ITi, Nc, B, codes = params.N, params.T, params.ITo, params.ITi, self.Nc, self.B, self.codes
         snr_dBs = linspace(params.snrfrom, params.to, params.len)
         sigmav2s = 1.0 / inv_dB(snr_dBs)
         codei = tile(arange(Nc), ITi)
@@ -141,14 +139,14 @@ class CoherentMLDSimulator(Simulator):
             ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.
         """
 
-        IT, M, N, T, Nc, B, codes = params.IT, params.M, params.N, params.T, self.Nc, self.B, self.codes
+        IT, N, T, Nc, B, codes = params.IT, params.N, params.T, self.Nc, self.B, self.codes
         snr_dBs = linspace(params.snrfrom, params.to, params.len)
         sigmav2s = 1.0 / inv_dB(snr_dBs)
 
         amis = zeros(len(snr_dBs))
         for i in trange(len(snr_dBs)):
             sum_outer = 0.0
-            for it in range(IT):
+            for _ in range(IT):
                 V = sqrt(sigmav2s[i]) * randn_c(N, T)
                 #V = sqrt(sigmav2) * seedv.reshape(M, 1) # for debug
                 self.channel.randomize()
@@ -187,7 +185,7 @@ class CoherentMLDSimulator(Simulator):
             ret (dict): a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.
         """
         
-        M, N, T, ITo, ITi, Nc, B, codes = params.M, params.N, params.T, params.ITo, params.ITi, self.Nc, self.B, self.codes
+        N, T, ITo, ITi, Nc, B, codes = params.N, params.T, params.ITo, params.ITi, self.Nc, self.B, self.codes
         snr_dBs = linspace(params.snrfrom, params.to, params.len)
         sigmav2s = 1.0 / inv_dB(snr_dBs)
 

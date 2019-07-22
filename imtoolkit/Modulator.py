@@ -2,7 +2,7 @@
 # This toolkit is released under the MIT License, see LICENSE.txt
 
 import numpy as np
-from .Util import *
+from .Util import getGrayIndixes
 
 # Pahse-shift keying
 class PSK:
@@ -88,5 +88,4 @@ class Modulator:
             self.symbols = QAM(constellationSize).symbols
         elif mode == "SQAM" or mode == "StarQAM":
             self.symbols = StarQAM(constellationSize).symbols
-
 

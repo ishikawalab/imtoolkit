@@ -6,15 +6,15 @@ import sys
 import itertools
 from tqdm import tqdm, trange
 if os.getenv("USECUPY") == "1":
-    from cupy import *
+    from cupy import abs, arange, argmin, ceil, eye, exp, hsplit, hstack, linalg, linspace, log2, matmul, mean, power, random, repeat, sqrt, sum, take, tile, zeros
 else:
-    from numpy import *
+    from numpy import abs, arange, argmin, ceil, eye, exp, hsplit, hstack, linalg, linspace, log2, matmul, mean, power, random, repeat, sqrt, sum, take, tile, zeros
 
-from .Simulator import *
-from .Util import *
+from .Simulator import Simulator
+from .Util import getXORtoErrorBitsArray, inv_dB, randn_c
 
 class SemiUnitaryDifferentialMLDSimulator(Simulator):
-    """A simulatror that relies on the non-coherent maximum likelihood detector, where semi-unitary matrices are used for differential encoding and decdoing. The semi-unitary matrix is defined by U U^H = \alpha I_M and \alpha \in \mathbb{R}. The environment variable USECUPY determines whether to use cupy or not.
+    """A simulatror that relies on the non-coherent maximum likelihood detector, where semi-unitary matrices are used for differential encoding and decdoing. The semi-unitary matrix is defined by $U U^H = \alpha I_M$ and $\alpha \in \mathbb{R}$. The environment variable USECUPY determines whether to use cupy or not.
 
     Args:
         codes (ndarray): an input codebook, which is generated on the CPU memory and is transferred into the GPU memory.
@@ -48,7 +48,7 @@ class SemiUnitaryDifferentialMLDSimulator(Simulator):
             s0 = eye(M, dtype=complex)
             rs0 = s0 # the estimated codeword at the receiver
             currentBeta = linalg.norm(rs0) # the estimated normalizing factor at the receiver
-            for it in range(IT):
+            for _ in range(IT):
                 codei = random.randint(0, Nc)
                 s1 = matmul(s0, codes[codei]) / linalg.norm(s0) # semi-unitary differential encoding
 

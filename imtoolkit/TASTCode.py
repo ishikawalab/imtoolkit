@@ -3,7 +3,6 @@
 
 import numpy as np
 from .Modulator import StarQAM
-from .Util import *
 
 class TASTCode:
     """Differential space-time shift keying using threaded algebraic space-time (DSTSK-TAST) coding, which was proposed in [1]. Other relevant papers are found in [2,3]. 
@@ -154,5 +153,5 @@ class TASTCode:
             u = [63,0,18,34,62,36,37,1,26,55,37,54,46,15,39,26]
         else:
             print("TASTCode.py does not support the given parameters M = %d, Q = %d, La = %d, and Lp = %d" % (M, Q, La, Lp))
-            u = zeros(M)
+            u = np.zeros(M)
         return np.array(u)

@@ -3,7 +3,7 @@
 
 import unittest
 import numpy as np
-from imtoolkit.Basis import *
+from imtoolkit.Basis import Basis
 
 class BasisTest(unittest.TestCase):
     def getMeanNorm(self, b):

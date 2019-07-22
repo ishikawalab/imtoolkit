@@ -4,7 +4,7 @@
 import unittest
 import numpy as np
 from imtoolkit.Util import testUnitary
-from imtoolkit.ADSMCode import *
+from imtoolkit.ADSMCode import ADSMCode
 
 class ADSMCodeTest(unittest.TestCase):
 

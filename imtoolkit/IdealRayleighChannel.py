@@ -1,8 +1,8 @@
 # Copyright (c) IMToolkit Development Team
 # This toolkit is released under the MIT License, see LICENSE.txt
 
-from .Channel import *
-from .Util import *
+from .Channel import Channel
+from .Util import randn_c
 
 class IdealRayleighChannel(Channel):
 

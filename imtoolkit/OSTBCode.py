@@ -3,8 +3,7 @@
 
 import itertools
 import numpy as np
-from .Modulator import *
-from .Util import *
+from .Modulator import Modulator
 
 class OSTBCode:
     """Orthogonal space-time block code (OSTBC). A seminal research can be found in [1].

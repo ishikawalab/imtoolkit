@@ -3,12 +3,7 @@
 
 import unittest
 import numpy as np
-from imtoolkit.Parameters import *
-from imtoolkit.Modulator import *
-from imtoolkit.OSTBCode import *
-from imtoolkit.TASTCode import *
-from imtoolkit.IdealRayleighChannel import *
-from imtoolkit.SemiUnitaryDifferentialMLDSimulator import *
+from imtoolkit import Parameters, Modulator, OSTBCode, TASTCode, IdealRayleighChannel, SemiUnitaryDifferentialMLDSimulator
 
 class SemiUnitaryDifferentialMLDSimulatorTest(unittest.TestCase):
 
