@@ -21,12 +21,23 @@ def getGrayIndixes(bitWidth):
 def frodiff(x, y):
     return xp.power(xp.linalg.norm(x - y), 2)
 
-def getEuclideanDistances(symbols): 
-    combsfro = itertools.starmap(frodiff, itertools.combinations(symbols, 2))
-    return xp.array(list(combsfro))
+def getEuclideanDistances(codes): 
+    # The following implementation only supports NumPy
+    combsfro = itertools.starmap(frodiff, itertools.combinations(codes, 2))
+    return xp.asarray(list(combsfro))
+    # The following implementation supports NumPy and CuPy,
+    # although it is memory-thirsty
+    #Nc = codes.shape[0]
+    #M = codes.shape[1]
+    #T = codes.shape[2]
+    #x = xp.hstack(xp.tile(codes, Nc)) # M \times T * Nc^2
+    #y = xp.tile(xp.hstack(codes), Nc) # M \times T * Nc^2
+    #diffxy = (x - y).T.reshape(Nc, Nc, M, T) # Nc \times Nc \times M \times T
+    #frodiff = xp.power(xp.linalg.norm(diffxy, axis=(2,3)), 2)
+    #return frodiff[np.triu_indices(Nc, 1)]
 
-def getMinimumEuclideanDistance(symbols):
-    return min(getEuclideanDistances(symbols))
+def getMinimumEuclideanDistance(codes):
+    return min(getEuclideanDistances(codes))
 
 def getDFTMatrix(N):
     W = xp.zeros((N, N), dtype = complex)
@@ -113,3 +124,10 @@ def getRandomHermitianMatrix(M):
 def CayleyTransform(H):
     M = H.shape[0]
     return (xp.eye(M, dtype=complex) - 1j * H).dot(xp.linalg.inv(xp.eye(M, dtype=complex) + 1j * H))
+
+def asnumpy(xparr):
+    if 'cupy' in str(type(xparr)):
+        return xp.asnumpy(xparr) # cupy to numpy
+    return xparr # do nothing
+
+    

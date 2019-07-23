@@ -16,7 +16,7 @@ class IMCode:
         indsm = convertIndsToMatrix(self.inds, M)
         self.codes = np.matmul(indsm, kfoldsymbols / np.sqrt(K))
         self.codes *= np.sqrt(meanPower) # the mean power is normalized to meanPower
-        self.codes = np.hsplit(np.hstack(self.codes), Q * kfoldsymbols.shape[1]) # Nc \times M \times 1
+        self.codes = np.array(np.hsplit(np.hstack(self.codes), Q * kfoldsymbols.shape[1])) # Nc \times M \times 1
 
         self.B1 = np.floor(np.log2(Q))
         self.B2 = int(K * np.log2(L))
