@@ -3,22 +3,23 @@ IMTOOLKIT_VERSION = '0.6'
 
 from .Util import *
 from .IMUtil import *
-from .Modulator import *
-from .Parameters import *
 
-from .Channel import *
-from .IdealRayleighChannel import *
-from .IdealOFDMChannel import *
+from .Modulator import Modulator, PSK, QAM, StarQAM
+from .Parameters import Parameters
 
-from .Simulator import *
-from .CoherentMLDSimulator import *
-from .DifferentialMLDSimulator import *
-from .SemiUnitaryDifferentialMLDSimulator import *
-from .NonSquareDifferentialMLDSimulator import *
-from .Basis import *
+from .Channel import Channel
+from .IdealRayleighChannel import IdealRayleighChannel
+from .IdealOFDMChannel import IdealOFDMChannel
 
-from .IMCode import *
-from .OSTBCode import *
-from .DiagonalUnitaryCode import *
-from .ADSMCode import *
-from .TASTCode import *
+from .Simulator import Simulator
+from .CoherentMLDSimulator import CoherentMLDSimulator
+from .DifferentialMLDSimulator import DifferentialMLDSimulator
+from .SemiUnitaryDifferentialMLDSimulator import SemiUnitaryDifferentialMLDSimulator
+from .NonSquareDifferentialMLDSimulator import NonSquareDifferentialMLDSimulator
+from .Basis import Basis
+
+from .IMCode import IMCode
+from .OSTBCode import OSTBCode
+from .DiagonalUnitaryCode import DiagonalUnitaryCode
+from .ADSMCode import ADSMCode
+from .TASTCode import TASTCode

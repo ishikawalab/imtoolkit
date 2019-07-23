@@ -1,6 +1,5 @@
 # Copyright (c) IMToolkit Development Team
 # This toolkit is released under the MIT License, see LICENSE.txt
-
 import unittest
 import os
 import numpy as np
