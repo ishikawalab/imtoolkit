@@ -56,7 +56,7 @@ class CoherentMLDSimulator(Simulator):
 
             bers[i] = errorBits / (IT * B)
             if printValue:
-                print("At SNR = %1.2f dB, BER = %d / %d = %1.20f" % (snr_dBs[i], errorBits, IT * B, bers[i]))
+                print("At SNR = %1.2f dB, BER = %d / %d = %1.10e" % (snr_dBs[i], errorBits, IT * B, bers[i]))
 
         ret = self.dicToNumpy({"snr_dB": snr_dBs, "ber": bers})
         if outputFile:
@@ -117,7 +117,7 @@ class CoherentMLDSimulator(Simulator):
                 bers[i] += errorBits
                 nbits = (ito + 1) * ITi * B * Nc
                 if printValue:
-                    print("At SNR = %1.2f dB, BER = %d / %d = %1.20f" % (snr_dBs[i], bers[i], nbits, bers[i] / nbits))
+                    print("At SNR = %1.2f dB, BER = %d / %d = %1.10e" % (snr_dBs[i], bers[i], nbits, bers[i] / nbits))
 
         bers /= ITo * ITi * B * Nc
         ret = self.dicToNumpy({"snr_dB": snr_dBs, "ber": bers})
@@ -164,7 +164,7 @@ class CoherentMLDSimulator(Simulator):
             #print("bminus = " + str(sum_outer / Nc / IT))
             amis[i] = (B - sum_outer / Nc / IT) / T
             if printValue:
-                print("At SNR = %1.2f dB, AMI = %1.20f" % (snr_dBs[i], amis[i]))
+                print("At SNR = %1.2f dB, AMI = %1.10f" % (snr_dBs[i], amis[i]))
 
         ret = self.dicToNumpy({"snr_dB": snr_dBs, "ami": amis})
         if outputFile:
@@ -214,7 +214,7 @@ class CoherentMLDSimulator(Simulator):
 
                 amis[i] += (B - bminus) / T
                 if printValue:
-                    print("At SNR = %1.2f dB, AMI = %1.20f" % (snr_dBs[i], amis[i] / (ito + 1)))
+                    print("At SNR = %1.2f dB, AMI = %1.10f" % (snr_dBs[i], amis[i] / (ito + 1)))
             
         #
         amis /= ITo

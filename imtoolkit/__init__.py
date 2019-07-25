@@ -8,6 +8,7 @@ from .Modulator import Modulator, PSK, QAM, StarQAM
 from .Parameters import Parameters
 
 from .Channel import Channel
+from .AWGNChannel import AWGNChannel
 from .IdealRayleighChannel import IdealRayleighChannel
 from .IdealOFDMChannel import IdealOFDMChannel
 

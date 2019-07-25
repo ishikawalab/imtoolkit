@@ -68,7 +68,7 @@ class DifferentialMLDSimulator(Simulator):
 
             bers[i] = errorBits / (IT * B)
             if printValue:
-                print("At SNR = %1.2f dB, BER = %d / %d = %1.20f" % (snr_dBs[i], errorBits, IT * B, bers[i]))
+                print("At SNR = %1.2f dB, BER = %d / %d = %1.10e" % (snr_dBs[i], errorBits, IT * B, bers[i]))
 
         ret = self.dicToNumpy({"snr_dB": snr_dBs, "ber": bers})
         if outputFile:
@@ -127,7 +127,7 @@ class DifferentialMLDSimulator(Simulator):
                 bers[i] += errorBits
                 nbits = (ito + 1) * ITi * B
                 if printValue:
-                    print("At SNR = %1.2f dB, BER = %d / %d = %1.20f" % (snr_dBs[i], bers[i], nbits, bers[i] / nbits))
+                    print("At SNR = %1.2f dB, BER = %d / %d = %1.10e" % (snr_dBs[i], bers[i], nbits, bers[i] / nbits))
             
             v0 = v1
             s0 = s1

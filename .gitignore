@@ -153,3 +153,5 @@ imtoolkit/inds-raw/
 updatedoc.bat
 uploaddoc.rb
 uploadpypi.bat
+/.vs
+/.idea
