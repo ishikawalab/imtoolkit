@@ -3,7 +3,7 @@
 
 import unittest
 import numpy as np
-from imtoolkit import Parameters, IMCode, OSTBCode, IdealRayleighChannel, CoherentMLDSimulator
+from imtoolkit import Parameters, IMCode, OSTBCode, IdealRayleighChannel, CoherentMLDSimulator, Basis
 
 class CoherentMLDSimulatorTest(unittest.TestCase):
 
@@ -78,6 +78,19 @@ class CoherentMLDSimulatorTest(unittest.TestCase):
         retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
         self.assertLessEqual(retnorm, 1e-2)
 
+    def test_BERParallel_NDOSTC(self):
+       truth = np.log10(np.array([3.43530300000000010652e-01,2.47677700000000000635e-01,1.30837700000000001221e-01,4.04209000000000026609e-02,7.00869999999999965246e-03,8.46599999999999978419e-04,9.30999999999999997046e-05]))
+       params = Parameters("BERP_sim=rcoh_channel=rayleigh_code=OSTBC_basis=i_M=2_N=2_T=1_L=2_ITo=1e1_ITi=1e5_snrfrom=-10.00_to=20.00_len=7")
+       codes = OSTBCode(params.M, params.mod, params.L).codes
+       bases = Basis(params.basis, params.M, params.T).bases
+       codes = np.matmul(codes, bases[0])
+       channel = IdealRayleighChannel(params.ITi, params.M, params.N)
+       from imtoolkit import CoherentMLDSimulator
+       sim = CoherentMLDSimulator(codes, channel)
+       ret = sim.simulateBERParallel(params, outputFile = False)
+       retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
+       self.assertLessEqual(retnorm, 1e-2)
+
     def test_AMIReference_OSTBC(self):
         truth = np.array([2.34009305866733186008e-01,5.31335636295124702499e-01,8.56159232876912645871e-01,9.85823618846433324947e-01,9.99561665572359148157e-01,9.99989963240521695376e-01,9.99999993834903122547e-01])
         params = Parameters("AMI_sim=coh_channel=rayleigh_code=OSTBC_M=2_N=2_T=2_L=2_mod=PSK_IT=1e3_snrfrom=-10.00_to=20.00_len=7")
@@ -97,7 +110,8 @@ class CoherentMLDSimulatorTest(unittest.TestCase):
         ret = sim.simulateAMIParallel(params, outputFile = False)
         retnorm = np.mean(np.power(np.abs(ret["ami"] - truth), 2))
         self.assertLessEqual(retnorm, 1e-2)
-        
+
+
 if __name__ == '__main__':
     unittest.main()
 

@@ -138,8 +138,9 @@ class SemiUnitaryDifferentialMLDSimulator(Simulator):
 
                 errorBits = sum(xor2ebits[codei ^ mini])
                 bers[i] += errorBits
-                nbits = (ito + 1) * ITi * B
+
                 if printValue:
+                    nbits = (ito + 1) * ITi * B
                     print("At SNR = %1.2f dB, BER = %d / %d = %1.10e" % (snr_dBs[i], bers[i], nbits, bers[i] / nbits))
             
             v0 = v1
