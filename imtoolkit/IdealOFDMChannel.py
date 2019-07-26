@@ -4,9 +4,18 @@
 from .Channel import Channel
 from .Util import xp, randn_c
 
+
 class IdealOFDMChannel(Channel):
+    """
+        A `Channel` class that generates the ideal OFDM channel coefficients. All the channel matrix is set to a diagonal matrix of `M` Rayleigh coefficients.
+    """
 
     def __init__(self, IT, M):
+        """
+        Args:
+            IT (int): the number of parallel channel matrices.
+            M (int): the number of subcarriers.
+        """
         self.IT = IT
         self.M = M
     

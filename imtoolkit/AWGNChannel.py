@@ -5,8 +5,16 @@ from .Channel import Channel
 from .Util import xp, randn_c
 
 class AWGNChannel(Channel):
+    """
+    A `Channel` class that generates the additive white Gaussian noise (AWGN). All the channel matrix is set to an identity matrix.
+    """
 
     def __init__(self, IT, M):
+        """
+        Args:
+            IT (int): the number of parallel channel matrices.
+            M (int): the number of transmit antennas or subcarriers.
+        """
         self.IT = IT
         self.M = M
     

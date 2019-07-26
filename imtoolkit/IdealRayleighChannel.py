@@ -4,9 +4,18 @@
 from .Channel import Channel
 from .Util import randn_c
 
-class IdealRayleighChannel(Channel):
 
+class IdealRayleighChannel(Channel):
+    """
+    A `Channel` class that generates the ideal Rayleigh fading channel coefficients.
+    """
     def __init__(self, IT, M, N):
+        """
+        Args:
+            IT (int): the number of parallel channel matrices.
+            M (int): the number of transmit antennas.
+            N (int):the number of receive antennas.
+        """
         self.IT = IT
         self.M = M
         self.N = N

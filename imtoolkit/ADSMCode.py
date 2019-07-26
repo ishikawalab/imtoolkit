@@ -4,20 +4,22 @@
 import numpy as np
 from .Modulator import Modulator
 
-class ADSMCode:
+
+class ADSMCode(object):
     """Algebraic differential spatial modulation (ADSM), which was firstly proposed in [1] and was later extended in [2].
 
-    [1] R. Rajashekar, N. Ishikawa, S. Sugiura, K. V. S. Hari, and L. Hanzo, ``Full-diversity dispersion matrices from algebraic field extensions for differential spatial modulation,'' IEEE Trans. Veh. Technol., vol. 66, no. 1, pp. 385--394, 2017.
+    - [1] R. Rajashekar, N. Ishikawa, S. Sugiura, K. V. S. Hari, and L. Hanzo, ``Full-diversity dispersion matrices from algebraic field extensions for differential spatial modulation,'' IEEE Trans. Veh. Technol., vol. 66, no. 1, pp. 385--394, 2017.
 
-    [2] R. Rajashekar, C. Xu, N. Ishikawa, S. Sugiura, K. V. S. Hari, and L. Hanzo, ``Algebraic differential spatial modulation is capable of approaching the performance of its coherent counterpart,'' IEEE Trans. Commun., vol. 65, no. 10, pp. 4260--4273, 2017.
-
-    Args:
-        M (int): the number of transmit antennas.
-        modtype (string): the constellation type.
-        L (int): the constellation size.
+    - [2] R. Rajashekar, C. Xu, N. Ishikawa, S. Sugiura, K. V. S. Hari, and L. Hanzo, ``Algebraic differential spatial modulation is capable of approaching the performance of its coherent counterpart,'' IEEE Trans. Commun., vol. 65, no. 10, pp. 4260--4273, 2017.
     """
 
     def __init__(self, M, modtype, L):
+        """
+        Args:
+            M (int): the number of transmit antennas.
+            modtype (string): the constellation type.
+            L (int): the constellation size.
+        """
         self.M = M
         self.Nc = M * L
         self.B = np.log2(self.Nc)
