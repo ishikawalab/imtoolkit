@@ -45,11 +45,11 @@ In that case, it would be better to install the latest package and activate the 
 
 It would be highly appreciated if you cite the following reference when using IMToolkit.
 
-- [1] N. Ishikawa, ``[IMToolkit: An open-source index modulation toolkit for reproducible research based on massively parallel algorithms](https://doi.org/10.1109%2Faccess.2019.2928033),'' IEEE Access, in press.
+- [1] N. Ishikawa, ``[IMToolkit: An open-source index modulation toolkit for reproducible research based on massively parallel algorithms](https://doi.org/10.1109%2Faccess.2019.2928033),'' IEEE Access, vol. 7, pp. 93830--93846, July 2019.
 
 Of course, if your project relies on CuPy, the following reference is strongly recommended.
 
-- [2] R. Okuta, Y. Unno, D. Nishino, S. Hido, and C. Loomis, ``[CuPy: A NumPy-compatible library for NVIDIA GPU calculations](http://learningsys.org/nips17/assets/papers/paper_16.pdf),'' in Conference on Neural Information Processing Systems Workshop, Long Beach, CA, USA, Dec. 4-9, 2017.
+- [2] R. Okuta, Y. Unno, D. Nishino, S. Hido, and C. Loomis, ``[CuPy: A NumPy-compatible library for NVIDIA GPU calculations](http://learningsys.org/nips17/assets/papers/paper_16.pdf),'' in Conference on Neural Information Processing Systems Workshop, Long Beach, CA, USA, December 4--9, 2017.
 
 ## Contributor(s)
 
