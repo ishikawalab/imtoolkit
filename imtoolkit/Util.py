@@ -1,9 +1,6 @@
 # Copyright (c) IMToolkit Development Team
 # This toolkit is released under the MIT License, see LICENSE.txt
 
-"""
-Basic utility functions
-"""
 import os
 import itertools
 from sympy.combinatorics.graycode import GrayCode
@@ -130,4 +127,3 @@ def asnumpy(xparr):
         return xp.asnumpy(xparr) # cupy to numpy
     return xparr # do nothing
 
-    

@@ -3,11 +3,11 @@
 
 import itertools
 import numpy as np
-from scipy import special
 from .Modulator import Modulator
 from .IMUtil import convertIndsToMatrix, getIndexes
 
-class IMCode:
+
+class IMCode(object):
     def __init__(self, dm, M, K, Q, modtype, L, meanPower):
         mod = Modulator(modtype, L)
         kfoldsymbols = np.array(list(itertools.product(mod.symbols, repeat = K))).T
