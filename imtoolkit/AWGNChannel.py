@@ -17,6 +17,7 @@ class AWGNChannel(Channel):
         """
         self.IT = IT
         self.M = M
+        self.N = M
     
     def randomize(self):
         self.channelMatrix = xp.tile(xp.eye(self.M), self.IT).T
