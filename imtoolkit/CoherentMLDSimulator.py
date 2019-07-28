@@ -80,7 +80,6 @@ class CoherentMLDSimulator(Simulator):
 
         M, N, T, ITo, ITi, Nc, B, codes = params.M, params.N, params.T, params.ITo, params.ITi, self.Nc, self.B, self.codes
         snr_dBs = linspace(params.snrfrom, params.to, params.len)
-        lsnr = len(snr_dBs)
         sigmav2s = 1.0 / inv_dB(snr_dBs)
         codei = tile(arange(Nc), ITi)
         xor2ebits = getXORtoErrorBitsArray(Nc)
@@ -99,25 +98,26 @@ class CoherentMLDSimulator(Simulator):
         bers = zeros(len(snr_dBs))
         for ito in trange(ITo):
             self.channel.randomize()
-            Ho = self.channel.getChannel().reshape(ITi, N, M)  # ITi \times N \times M
-            Vo = randn_c(ITi, N, T)  # ITi \times N \times T
-            bigh = zeros((lsnr, ITi, N, M), dtype=complex)  # lsnr \times ITi \times N \times M
-            bigv = zeros((lsnr, ITi, N, T), dtype=complex)  # lsnr \times ITi \times N \times T
-            for i in range(lsnr):
-                bigh[i] = Ho
-                bigv[i] = sqrt(sigmav2s[i]) * Vo
+            bigh = self.channel.getChannel()  # ITi * N \times M
+            bigv = tile(randn_c(ITi * N, T), Nc * Nc)  # ITi * N \times T * Nc^2
 
-            ydiff = matmul(bigh, diffxy) + bigv  # lsnr \times ITi \times N \times T * Nc^2
-            ydifffro = power(abs(ydiff), 2).reshape(lsnr, ITi, N, Nc * Nc,
-                                                    T)  # lsnr \times ITi \times N \times Nc * Nc \times T
-            ydifffrosum = sum(ydifffro, axis=(2, 4))  # lsnr \times ITi \times Nc * Nc
-            norms = ydifffrosum.reshape(lsnr, ITi, Nc, Nc)  # lsnr \times ITi \times Nc \times Nc
-            mini = argmin(norms, axis=3).reshape(lsnr, ITi * Nc)  # lsnr \times ITi * Nc
-            bers += sum(xor2ebits[codei ^ mini], axis=1)
+            for i in range(len(snr_dBs)):
+                ydiff = matmul(bigh, diffxy) + bigv * sqrt(sigmav2s[i])  # ITi * N \times T * Nc^2
 
-            if printValue:
-                nbits = (ito + 1) * ITi * B * Nc
-                for i in range(lsnr):
+                # The followings are old implementation of [ishikawa2019im]
+                # ydifffro = power(abs(ydiff.reshape(ITi, N, T * Nc * Nc)), 2) # ITi \times N \times T * Nc * Nc
+                # ydifffrosum = sum(ydifffro, axis = 1) # ITi \times T * Nc * Nc
+
+                ydifffro = power(abs(ydiff), 2).reshape(ITi, N, Nc * Nc, T)  # ITi \times N \times Nc * Nc \times T
+                ydifffrosum = sum(ydifffro, axis=(1, 3))  # ITi \times Nc * Nc
+
+                norms = ydifffrosum.reshape(ITi, Nc, Nc)  # ITi \times Nc \times Nc
+                mini = argmin(norms, axis=2).reshape(ITi * Nc)
+                errorBits = sum(xor2ebits[codei ^ mini])
+
+                bers[i] += errorBits
+                if printValue:
+                    nbits = (ito + 1) * ITi * B * Nc
                     print("At SNR = %1.2f dB, BER = %d / %d = %1.10e" % (snr_dBs[i], bers[i], nbits, bers[i] / nbits))
 
         bers /= ITo * ITi * B * Nc
@@ -187,7 +187,6 @@ class CoherentMLDSimulator(Simulator):
         snr_dBs = linspace(params.snrfrom, params.to, params.len)
         lsnr = len(snr_dBs)
         sigmav2s = 1.0 / inv_dB(snr_dBs)
-        sigmav2stensor = repeat(sigmav2s, ITi * Nc * Nc).reshape(lsnr, ITi, Nc, Nc)
 
         # The following three variables are the same as those used in simulateBERParallel
         x = hstack(tile(codes, Nc))  # M \times T * Nc^2
@@ -197,25 +196,23 @@ class CoherentMLDSimulator(Simulator):
         amis = zeros(len(snr_dBs))
         for ito in trange(ITo):
             self.channel.randomize()
-            Ho = self.channel.getChannel().reshape(ITi, N, M)  # ITi \times N \times M
-            Vo = tile(randn_c(ITi, N, T), Nc ** 2)  # ITi \times N \times T * Nc**2
-            bigh = zeros((lsnr, ITi, N, M), dtype=complex)  # lsnr \times ITi \times N \times M
-            bigv = zeros((lsnr, ITi, N, T * Nc ** 2), dtype=complex)  # lsnr \times ITi \times N \times T * Nc**2
-            for i in range(lsnr):
-                bigh[i] = Ho
-                bigv[i] = sqrt(sigmav2s[i]) * Vo
+            bigh = self.channel.getChannel()  # ITi * N \times M
+            bigv = tile(randn_c(ITi * N * T).reshape(-1, T), Nc * Nc)  # ITi * N \times T * Nc^2
 
-            bigvfro = power(abs(bigv), 2).reshape(lsnr, ITi, N, Nc ** 2, T)  # lsnr \times ITi \times N \times Nc**2 \times T
-            frov = sum(bigvfro, axis=(2, 4)).reshape(lsnr, ITi, Nc, Nc)  # lsnr \times ITi \times Nc \times Nc
-            hsplusv = matmul(bigh, diffxy) + bigv  # lsnr \times ITi \times N \times T * Nc^2
-            hsvfro = power(abs(hsplusv), 2).reshape(lsnr, ITi, N, Nc * Nc, T)  # lsnr \times ITi \times N \times Nc**2 \times T
-            froy = sum(hsvfro, axis=(2, 4))  # lsnr \times ITi \times Nc^2
-            reds = froy.reshape(lsnr, ITi, Nc, Nc)  # lsnr \times ITi \times Nc \times Nc
-            ecoffs = (-reds + frov) / sigmav2stensor  # diagonal elements must be zero
-            bminus = mean(log2(sum(exp(ecoffs), axis=3)), axis=(1, 2))
-            amis += (B - bminus) / T
-            if printValue:
-                for i in range(len(snr_dBs)):
+            bigvfro = power(abs(bigv), 2).reshape(ITi, N, Nc * Nc, T)  # ITi \times N \times Nc^2 \times T
+            frov = sum(bigvfro, axis=(1, 3)).reshape(ITi, Nc, Nc)  # ITi \times Nc \times Nc
+
+            for i in range(len(snr_dBs)):
+                hsplusv = matmul(bigh, diffxy) + bigv * sqrt(sigmav2s[i])  # ITi * N \times T * Nc^2
+                hsvfro = power(abs(hsplusv), 2).reshape(ITi, N, Nc * Nc, T)  # ITi \times N \times Nc^2 \times T
+                froy = sum(hsvfro, axis=(1, 3))  # ITi \times Nc^2
+                reds = froy.reshape(ITi, Nc, Nc)  # ITi \times Nc \times Nc
+
+                ecoffs = -reds / sigmav2s[i] + frov  # diagonal elements must be zero
+                bminus = mean(log2(sum(exp(ecoffs), axis=2)))
+
+                amis[i] += (B - bminus) / T
+                if printValue:
                     print("At SNR = %1.2f dB, AMI = %1.10f" % (snr_dBs[i], amis[i] / (ito + 1)))
 
         #

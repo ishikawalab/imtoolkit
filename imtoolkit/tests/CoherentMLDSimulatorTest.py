@@ -19,7 +19,7 @@ class CoherentMLDSimulatorTest(unittest.TestCase):
     
     def test_BERParallel_SM(self):
         truth = np.log10(np.array([3.39290432141913567143e-01,2.28799154240169139163e-01,1.16562376687524657526e-01,4.63410907317818518414e-02,1.58151968369606328590e-02,5.27619894476021120827e-03,1.64459967108006571007e-03]))
-        params = Parameters("BERP_sim=coh_code=index_dm=dic_M=2_K=1_Q=2_L=4_mod=PSK_N=1_ITo=1e1_ITi=1e6_snrfrom=0.00_to=30.00_len=7")
+        params = Parameters("BERP_sim=coh_code=index_dm=dic_M=2_K=1_Q=2_L=4_mod=PSK_N=1_ITo=1e1_ITi=1e4_snrfrom=0.00_to=30.00_len=7")
         #params = Parameters("BERP_sim=coh_code=index_dm=dic_M=2_K=1_Q=2_L=1_mod=PSK_N=1_ITo=1_ITi=55_snrfrom=0.00_to=30.00_len=7")
         code = IMCode(params.dm, params.M, params.K, params.Q, params.mod, params.L, meanPower = 1)
         channel = IdealRayleighChannel(params.ITi, params.M, params.N)
