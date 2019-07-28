@@ -28,7 +28,7 @@ The major advantages of this toolkit are highlighted as follows:
    :hidden:
 
    self
-   tutorial
+   tutorial/index
    db/index
 
 Installation Guide
@@ -66,7 +66,7 @@ In that case, it would be better to install the latest package and activate the 
 
 How to Use
 ==========
-- :doc:`A detailed tutorial for the installed imtoolkit command. <tutorial>`
+- :doc:`A detailed tutorial for the imtoolkit command and APIs. <tutorial/index>`
 - :doc:`A comprehensive database of the designed active indices. <db/index>`
 
 Citations

@@ -1,5 +1,5 @@
 ========
-Tutorial
+imtoolkit command
 ========
 
 This webpage introduces a detailed tutorial for the ``imtoolkit`` command, which can be installed by ``pip install imtoolkit``.
@@ -8,7 +8,7 @@ This webpage introduces a detailed tutorial for the ``imtoolkit`` command, which
 Basic Usage
 ===========
 
-The ``imtoolkit`` options are specified by a sentence that concatenates parameters by underscores.
+The ``imtoolkit`` options are specified by a sentence that contains parameters and underscores.
 For example, the options are given by
 
 .. code-block:: bash
