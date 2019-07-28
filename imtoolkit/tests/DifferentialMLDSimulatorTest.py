@@ -16,8 +16,7 @@ class DifferentialMLDSimulatorTest(unittest.TestCase):
         channel = IdealRayleighChannel(1, params.M, params.N)
         sim = DifferentialMLDSimulator(code.codes, channel)
         ret = sim.simulateBERReference(params, outputFile = False, printValue = False)
-        retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
-        self.assertLessEqual(retnorm, 1e-2)
+        np.testing.assert_almost_equal(np.log10(ret["ber"]), truth, 1)
     
     def test_BERParallel_OSTBC(self):
         np.set_printoptions(linewidth=np.inf)
@@ -28,8 +27,7 @@ class DifferentialMLDSimulatorTest(unittest.TestCase):
         channel = IdealRayleighChannel(params.ITi, params.M, params.N)
         sim = DifferentialMLDSimulator(code.codes, channel)
         ret = sim.simulateBERParallel(params, outputFile = False, printValue = False)
-        retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
-        self.assertLessEqual(retnorm, 1e-2)
+        np.testing.assert_almost_equal(np.log10(ret["ber"]), truth, 1)
     
     def test_BERReference_DUC(self):
         truth = np.log10(np.array([4.86660099999999984366e-01,4.48927299999999973590e-01,3.32694099999999992612e-01,1.44086500000000006239e-01,2.63749999999999991396e-02]))
@@ -38,8 +36,7 @@ class DifferentialMLDSimulatorTest(unittest.TestCase):
         channel = IdealRayleighChannel(1, params.M, params.N)
         sim = DifferentialMLDSimulator(code.codes, channel)
         ret = sim.simulateBERReference(params, outputFile = False, printValue = False)
-        retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
-        self.assertLessEqual(retnorm, 1e-2)
+        np.testing.assert_almost_equal(np.log10(ret["ber"]), truth, 1)
 
     # Heavy test, somehow failed
     # def test_BERReference_DUC_largeL(self):
@@ -49,9 +46,7 @@ class DifferentialMLDSimulatorTest(unittest.TestCase):
     #     channel = IdealRayleighChannel(1, params.M, params.N)
     #     sim = DifferentialMLDSimulator(code.codes, channel)
     #     ret = sim.simulateBERReference(params, outputFile = False, printValue = True)
-    #     print(ret)
-    #     retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
-    #     self.assertLessEqual(retnorm, 1e-2)
+    #     np.testing.assert_almost_equal(np.log10(ret["ber"]), truth, 1)
 
     def test_BERParallel_DUC(self):
         truth = np.log10(np.array([4.86660099999999984366e-01,4.48927299999999973590e-01,3.32694099999999992612e-01,1.44086500000000006239e-01,2.63749999999999991396e-02]))
@@ -61,8 +56,7 @@ class DifferentialMLDSimulatorTest(unittest.TestCase):
         channel = IdealRayleighChannel(params.ITi, params.M, params.N)
         sim = DifferentialMLDSimulator(code.codes, channel)
         ret = sim.simulateBERParallel(params, outputFile = False, printValue = False)
-        retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
-        self.assertLessEqual(retnorm, 1e-2)
+        np.testing.assert_almost_equal(np.log10(ret["ber"]), truth, 1)
 
     def test_BERReference_ADSM(self):
         truth = np.log10(np.array([3.23886999999999980471e-01,1.08588000000000003964e-01,1.21379999999999994842e-02,5.29999999999999980675e-04]))
@@ -71,8 +65,7 @@ class DifferentialMLDSimulatorTest(unittest.TestCase):
         channel = IdealRayleighChannel(1, params.M, params.N)
         sim = DifferentialMLDSimulator(code.codes, channel)
         ret = sim.simulateBERReference(params, outputFile = False, printValue = False)
-        retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
-        self.assertLessEqual(retnorm, 1e-2)
+        np.testing.assert_almost_equal(np.log10(ret["ber"]), truth, 1)
 
     # Heavy test
     # def test_BERReference_ADSM_largeL(self):
@@ -82,9 +75,7 @@ class DifferentialMLDSimulatorTest(unittest.TestCase):
     #     channel = IdealRayleighChannel(1, params.M, params.N)
     #     sim = DifferentialMLDSimulator(code.codes, channel)
     #     ret = sim.simulateBERReference(params, outputFile = False, printValue = True)
-    #     print(ret)
-    #     retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
-    #     self.assertLessEqual(retnorm, 1e-2)
+    #     np.testing.assert_almost_equal(np.log10(ret["ber"]), truth, 1)
 
     def test_BERParallel_ADSM(self):
         truth = np.log10(np.array([3.23886999999999980471e-01,1.08588000000000003964e-01,1.21379999999999994842e-02,5.29999999999999980675e-04]))
@@ -94,8 +85,7 @@ class DifferentialMLDSimulatorTest(unittest.TestCase):
         channel = IdealRayleighChannel(params.ITi, params.M, params.N)
         sim = DifferentialMLDSimulator(code.codes, channel)
         ret = sim.simulateBERParallel(params, outputFile = False, printValue = False)
-        retnorm = np.mean(np.power(np.abs(np.log10(ret["ber"]) - truth), 2))
-        self.assertLessEqual(retnorm, 1e-2)
+        np.testing.assert_almost_equal(np.log10(ret["ber"]), truth, 1)
 
 if __name__ == '__main__':
     unittest.main()

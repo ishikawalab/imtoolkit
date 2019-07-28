@@ -56,7 +56,7 @@ class DifferentialMLDSimulator(Simulator):
                 y1 = matmul(h, s1) + v1  # N \times M
 
                 # non-coherent detection that is free from the channel matrix h
-                p = power(abs(y1 - matmul(y0, codes)), 2)  # Nc \times N \times M
+                p = square(abs(y1 - matmul(y0, codes)))  # Nc \times N \times M
                 norms = sum(p, axis=(1, 2))  # summation over the (N,M) axes
                 mini = argmin(norms)
                 errorBits += sum(xor2ebits[codei ^ mini])
@@ -116,7 +116,7 @@ class DifferentialMLDSimulator(Simulator):
 
                 Y0X = matmul(Y0, codesmat)  # ITi \times N \times M * Nc
                 Ydiff = tile(Y1, Nc) - Y0X  # ITi \times N \times M * Nc
-                Ydifffro = power(abs(Ydiff), 2).reshape(ITi, N, Nc, M)  # ITi \times N \times Nc \times M
+                Ydifffro = square(abs(Ydiff)).reshape(ITi, N, Nc, M)  # ITi \times N \times Nc \times M
                 norms = sum(Ydifffro, axis=(1, 3))  # ITi \times Nc
                 mini = argmin(norms, axis=1)  # ITi
 

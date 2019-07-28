@@ -75,7 +75,7 @@ class NonSquareDifferentialMLDSimulator(Simulator):
                         Y1 = matmul(H, Sr1) + randn_c(N, T) * sqrt(sigmav2s[i])  # N \times T
 
                         # estimate
-                        p = power(abs(Y1 - matmul(Yhat0, Xrs)), 2)  # Nc \times N \times M
+                        p = square(abs(Y1 - matmul(Yhat0, Xrs)))  # Nc \times N \times M
                         norms = sum(p, axis=(1, 2))  # summation over the (N,M) axes
                         mini = argmin(norms)
                         Xhat1 = codes[mini]
@@ -83,7 +83,7 @@ class NonSquareDifferentialMLDSimulator(Simulator):
                         # adaptive forgetting factor
                         Yhd = matmul(Yhat0, Xhat1)
                         D1 = Y1 - matmul(Yhd, E1)
-                        n1 = power(linalg.norm(D1), 2)
+                        n1 = square(linalg.norm(D1))
                         estimatedAlpha = N * T * sigmav2s[i] / n1
                         estimatedAlpha = min(max(estimatedAlpha, 0.01), 0.99)
                         Yhat1 = (1.0 - estimatedAlpha) * matmul(D1, E1H) + Yhd
@@ -174,7 +174,7 @@ class NonSquareDifferentialMLDSimulator(Simulator):
 
                     # estimate
                     YhXrs = matmul(Yhat0, Xrsmat)  # lsnr \times ITi \times N \times T * Nc
-                    ydifffro = power(abs(Y1 - YhXrs), 2).reshape(lsnr, ITi, N, Nc, T)
+                    ydifffro = square(abs(Y1 - YhXrs)).reshape(lsnr, ITi, N, Nc, T)
                     norms = sum(ydifffro, axis=(2, 4))  # lsnr \times ITi \times Nc
                     mini = argmin(norms, axis=2)  # lsnr \times ITi
                     Xhat1 = codes[mini]  # lsnr \times ITI \times M \time M
@@ -182,7 +182,7 @@ class NonSquareDifferentialMLDSimulator(Simulator):
                     # adaptive forgetting factor
                     Yhd = matmul(Yhat0, Xhat1)  # lsnr \times ITi \times N \times M
                     D1 = Y1 - matmul(Yhd, E1)  # lsnr \times ITi \times N \times T
-                    n1 = sum(power(abs(D1), 2), axis=(2, 3))  # lsnr \times ITi
+                    n1 = sum(square(abs(D1)), axis=(2, 3))  # lsnr \times ITi
 
                     elphas = N * T * matmul(diag(sigmav2s), 1.0 / n1)  # lsnr \times ITi estimated alpha coefficients
                     elphas[where(elphas < 0.01)] = 0.01

@@ -16,7 +16,7 @@ def getGrayIndixes(bitWidth):
     return [int(strb, 2) for strb in gray.generate_gray()]
 
 def frodiff(x, y):
-    return xp.power(xp.linalg.norm(x - y), 2)
+    return xp.square(xp.linalg.norm(x - y))
 
 def getEuclideanDistances(codes): 
     # The following implementation only supports NumPy

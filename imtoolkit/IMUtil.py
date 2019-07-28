@@ -37,7 +37,7 @@ def convertIndsToMatrix(inds, M):
 def convertIndsToIndsDec(inds, M):
     ret = []
     for row in inds:
-        dec = np.sum(np.power(2, row))
+        dec = np.sum(np.exp2(row))
         ret.append(dec)
     return ret
 

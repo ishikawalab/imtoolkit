@@ -51,7 +51,7 @@ class CoherentMLDSimulator(Simulator):
                 v = randn_c(N, T) * sqrt(sigmav2s[i])  # N \times T
                 y = matmul(h, codes[codei]) + v  # N \times T
 
-                p = power(abs(y - matmul(h, codes)), 2)  # Nc \times N \times T
+                p = square(abs(y - matmul(h, codes)))  # Nc \times N \times T
                 norms = sum(p, axis=(1, 2))  # summation over the (N,T) axes
                 mini = argmin(norms)
                 errorBits += sum(xor2ebits[codei ^ mini])
@@ -108,7 +108,7 @@ class CoherentMLDSimulator(Simulator):
                 # ydifffro = power(abs(ydiff.reshape(ITi, N, T * Nc * Nc)), 2) # ITi \times N \times T * Nc * Nc
                 # ydifffrosum = sum(ydifffro, axis = 1) # ITi \times T * Nc * Nc
 
-                ydifffro = power(abs(ydiff), 2).reshape(ITi, N, Nc * Nc, T)  # ITi \times N \times Nc * Nc \times T
+                ydifffro = square(abs(ydiff)).reshape(ITi, N, Nc * Nc, T)  # ITi \times N \times Nc * Nc \times T
                 ydifffrosum = sum(ydifffro, axis=(1, 3))  # ITi \times Nc * Nc
 
                 norms = ydifffrosum.reshape(ITi, Nc, Nc)  # ITi \times Nc \times Nc
@@ -157,7 +157,7 @@ class CoherentMLDSimulator(Simulator):
                         hxy = matmul(H, codes[outer] - codes[inner])
                         head = hxy + V
                         tail = V
-                        coeff = (-power(linalg.norm(head), 2) + power(linalg.norm(tail), 2)) / sigmav2s[i]
+                        coeff = (-square(linalg.norm(head)) + square(linalg.norm(tail))) / sigmav2s[i]
                         sum_inner += exp(coeff)
                     sum_outer += log2(sum_inner)
             # print("bminus = " + str(sum_outer / Nc / IT))
@@ -185,7 +185,6 @@ class CoherentMLDSimulator(Simulator):
 
         M, N, T, ITo, ITi, Nc, B, codes = params.M, params.N, params.T, params.ITo, params.ITi, self.Nc, self.B, self.codes
         snr_dBs = linspace(params.snrfrom, params.to, params.len)
-        lsnr = len(snr_dBs)
         sigmav2s = 1.0 / inv_dB(snr_dBs)
 
         # The following three variables are the same as those used in simulateBERParallel
@@ -197,14 +196,14 @@ class CoherentMLDSimulator(Simulator):
         for ito in trange(ITo):
             self.channel.randomize()
             bigh = self.channel.getChannel()  # ITi * N \times M
-            bigv = tile(randn_c(ITi * N * T).reshape(-1, T), Nc * Nc)  # ITi * N \times T * Nc^2
+            bigv = tile(randn_c(ITi * N, T), Nc * Nc)  # ITi * N \times T * Nc^2
 
-            bigvfro = power(abs(bigv), 2).reshape(ITi, N, Nc * Nc, T)  # ITi \times N \times Nc^2 \times T
+            bigvfro = square(abs(bigv)).reshape(ITi, N, Nc * Nc, T)  # ITi \times N \times Nc^2 \times T
             frov = sum(bigvfro, axis=(1, 3)).reshape(ITi, Nc, Nc)  # ITi \times Nc \times Nc
 
             for i in range(len(snr_dBs)):
                 hsplusv = matmul(bigh, diffxy) + bigv * sqrt(sigmav2s[i])  # ITi * N \times T * Nc^2
-                hsvfro = power(abs(hsplusv), 2).reshape(ITi, N, Nc * Nc, T)  # ITi \times N \times Nc^2 \times T
+                hsvfro = square(abs(hsplusv)).reshape(ITi, N, Nc * Nc, T)  # ITi \times N \times Nc^2 \times T
                 froy = sum(hsvfro, axis=(1, 3))  # ITi \times Nc^2
                 reds = froy.reshape(ITi, Nc, Nc)  # ITi \times Nc \times Nc
 

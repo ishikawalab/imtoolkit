@@ -7,7 +7,7 @@ from imtoolkit.Basis import Basis
 
 class BasisTest(unittest.TestCase):
     def getMeanNorm(self, b):
-        return np.mean(np.power(np.linalg.norm(b, axis=(1,2)), 2))
+        return np.mean(np.square(np.linalg.norm(b, axis=(1,2))))
     
     def test_IdentityBasis(self):
         np.set_printoptions(linewidth=np.inf)

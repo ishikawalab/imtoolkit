@@ -60,7 +60,7 @@ class SemiUnitaryDifferentialMLDSimulator(Simulator):
                 y1 = matmul(h, s1) + v1  # N \times M
 
                 # semi-unitary non-coherent detection
-                p = power(abs(y1 - matmul(y0, codes) / currentBeta), 2)  # Nc \times N \times M
+                p = square(abs(y1 - matmul(y0, codes) / currentBeta))  # Nc \times N \times M
                 norms = sum(p, axis=(1, 2))  # summation over the (N,M) axes
                 mini = argmin(norms)
                 errorBits += sum(xor2ebits[codei ^ mini])
@@ -129,7 +129,7 @@ class SemiUnitaryDifferentialMLDSimulator(Simulator):
                 y0x = matmul(y0, codesmat) / currentBetas[i]  # ITi \times N \times M * Nc
 
                 ydiff = tile(y1, Nc) - y0x  # ITi \times N \times M * Nc
-                ydifffro = power(abs(ydiff), 2).reshape(ITi, N, Nc, M)  # ITi \times N \times Nc \times M
+                ydifffro = square(abs(ydiff)).reshape(ITi, N, Nc, M)  # ITi \times N \times Nc \times M
                 norms = sum(ydifffro, axis=(1, 3))  # ITi \times Nc
                 mini = argmin(norms, axis=1)  # ITi
 
