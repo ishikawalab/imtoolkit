@@ -57,7 +57,7 @@ class StarQAM(object):
     """
     This StarQAM class is an efficient implementation of the following paper [1].
 
-    - [1] W. T. Webb, L. Hanzo, and R. Steele, ``Bandwidth efficient QAM schemes for Rayleigh fading channels,'' IEE Proc., vol. 138, no. 3, pp. 169--175, 1991.
+    - [1] W. T. Webb, L. Hanzo, and R. Steele, "Bandwidth efficient QAM schemes for Rayleigh fading channels," IEE Proc., vol. 138, no. 3, pp. 169--175, 1991.
     """
     def __init__(self, constellationSize=2):
         self.L = constellationSize
@@ -80,7 +80,9 @@ class StarQAM(object):
 
 
 class Modulator(object):
-    """This class generates a constellation such as PSK, QAM, and star-QAM (SQAM)."""
+    """
+    This class generates a constellation such as PSK, QAM, and star-QAM (SQAM).
+    """
 
     def __init__(self, mode="PSK", constellationSize=2):
         """

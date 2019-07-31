@@ -1,0 +1,280 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorial &mdash; imtoolkit 0.6 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="IMToolkit Command Usage" href="imtoolkit-command.html" />
+    <link rel="prev" title="Overview" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> imtoolkit
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="imtoolkit-command.html">IMToolkit Command Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CoherentMIMO-IdealRayleigh-BER.html">CoherentMIMO-IdealRayleigh-BER.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CoherentMIMO-IdealRayleigh-AMI.html">CoherentMIMO-IdealRayleigh-AMI.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CoherentOFDM-IdealRayleigh-BER.html">CoherentOFDM-IdealRayleigh-BER.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CoherentOFDM-IdealRayleigh-BER-diversity.html">CoherentOFDM-IdealRayleigh-BER-diversity.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CoherentOFDM-IdealRayleigh-AMI.html">CoherentOFDM-IdealRayleigh-AMI.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../db/index.html">Active Indices Database</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">imtoolkit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Tutorial</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<p>This webpage introduces a detailed tutorial for the <code class="docutils literal notranslate"><span class="pre">imtoolkit</span></code> command and APIs. Before using the command and the APIs, the CuPy-aided GPGPU acceleration is activated by setting an environment variable <code class="docutils literal notranslate"><span class="pre">USECUPY=1</span></code> as follows.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; <span class="nb">export</span> <span class="nv">USECUPY</span><span class="o">=</span><span class="m">1</span>
+</pre></div>
+</div>
+<p>In case you would like to use the CPU backend, NumPy, please unset the environment variable.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; <span class="nb">unset</span> USECUPY
+</pre></div>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<h2>How to use the imtoolkit command</h2><ul class="simple">
+<li><p><a class="reference internal" href="imtoolkit-command.html"><span class="doc">Tutorial for the installed imtoolkit command.</span></a></p></li>
+</ul>
+<h2>API examples for the imtoolkit package</h2><a class="reference external image-reference" href="CoherentMIMO-IdealRayleigh-BER.html"><div align="right" class="align-right"><img alt="../_images/CoherentMIMO-IdealRayleigh-BER.svg" src="../_images/CoherentMIMO-IdealRayleigh-BER.svg" width="150px" /></div>
+</a>
+<ul>
+<li><p><a class="reference internal" href="CoherentMIMO-IdealRayleigh-BER.html"><span class="doc">CoherentMIMO-IdealRayleigh-BER.py</span></a></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This example compares the BER performance of the coherent BLAST and spatial modulation schemes</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<br clear="all"><a class="reference external image-reference" href="CoherentMIMO-IdealRayleigh-AMI.html"><div align="right" class="align-right"><img alt="../_images/CoherentMIMO-IdealRayleigh-AMI.svg" src="../_images/CoherentMIMO-IdealRayleigh-AMI.svg" width="150px" /></div>
+</a>
+<ul>
+<li><p><a class="reference internal" href="CoherentMIMO-IdealRayleigh-AMI.html"><span class="doc">CoherentMIMO-IdealRayleigh-AMI.py</span></a></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This example compares the AMI performance of the coherent BLAST and spatial modulation schemes</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<br clear="all"><a class="reference external image-reference" href="CoherentOFDM-IdealRayleigh-BER.html"><div align="right" class="align-right"><img alt="../_images/CoherentOFDM-IdealRayleigh-BER.svg" src="../_images/CoherentOFDM-IdealRayleigh-BER.svg" width="150px" /></div>
+</a>
+<ul>
+<li><p><a class="reference internal" href="CoherentOFDM-IdealRayleigh-BER.html"><span class="doc">CoherentOFDM-IdealRayleigh-BER.py</span></a></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This example compares the BER performance of the coherent OFDM and subcarrier-index modulation schemes.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<br clear="all"><a class="reference external image-reference" href="CoherentOFDM-IdealRayleigh-BER-diversity.html"><div align="right" class="align-right"><img alt="../_images/CoherentOFDM-IdealRayleigh-BER-diversity.svg" src="../_images/CoherentOFDM-IdealRayleigh-BER-diversity.svg" width="150px" /></div>
+</a>
+<ul>
+<li><p><a class="reference internal" href="CoherentOFDM-IdealRayleigh-BER-diversity.html"><span class="doc">CoherentOFDM-IdealRayleigh-BER-diversity.py</span></a></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This example evaluates the BER performance of the coherent subcarrier-index modulation scheme, where three subcarrier activation patterns are considered.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<br clear="all"><a class="reference external image-reference" href="CoherentOFDM-IdealRayleigh-AMI.html"><div align="right" class="align-right"><img alt="../_images/CoherentOFDM-IdealRayleigh-AMI.svg" src="../_images/CoherentOFDM-IdealRayleigh-AMI.svg" width="150px" /></div>
+</a>
+<ul>
+<li><p><a class="reference internal" href="CoherentOFDM-IdealRayleigh-AMI.html"><span class="doc">CoherentOFDM-IdealRayleigh-AMI.py</span></a></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This example compares the AMI performance of the coherent OFDM and subcarrier-index modulation schemes.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<br clear="all"></div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="imtoolkit-command.html" class="btn btn-neutral float-right" title="IMToolkit Command Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Naoki Ishikawa
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

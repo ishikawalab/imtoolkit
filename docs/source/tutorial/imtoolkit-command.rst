@@ -1,6 +1,6 @@
-========
-imtoolkit command
-========
+=======================
+IMToolkit Command Usage
+=======================
 
 This webpage introduces a detailed tutorial for the ``imtoolkit`` command, which can be installed by ``pip install imtoolkit``.
 

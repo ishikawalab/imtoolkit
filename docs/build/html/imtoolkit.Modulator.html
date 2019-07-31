@@ -82,7 +82,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/index.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="db/index.html">Active Indices Database</a></li>
 </ul>
 
@@ -153,14 +153,6 @@
 <em class="property">class </em><code class="descclassname">imtoolkit.Modulator.</code><code class="descname">Modulator</code><span class="sig-paren">(</span><em>mode='PSK'</em>, <em>constellationSize=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imtoolkit/Modulator.html#Modulator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.Modulator.Modulator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>This class generates a constellation such as PSK, QAM, and star-QAM (SQAM).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>mode</strong> (<em>string</em>) – the type of constellation, such as PSK, QAM, and SQAM.</p></li>
-<li><p><strong>L</strong> (<em>int</em>) – the constellation size.</p></li>
-</ul>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="class">
@@ -179,6 +171,10 @@
 <dt id="imtoolkit.Modulator.StarQAM">
 <em class="property">class </em><code class="descclassname">imtoolkit.Modulator.</code><code class="descname">StarQAM</code><span class="sig-paren">(</span><em>constellationSize=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imtoolkit/Modulator.html#StarQAM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.Modulator.StarQAM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This StarQAM class is an efficient implementation of the following paper [1].</p>
+<ul class="simple">
+<li><p>[1] W. T. Webb, L. Hanzo, and R. Steele, “Bandwidth efficient QAM schemes for Rayleigh fading channels,” IEE Proc., vol. 138, no. 3, pp. 169–175, 1991.</p></li>
+</ul>
 </dd></dl>
 
 </div>

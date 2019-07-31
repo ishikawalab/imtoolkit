@@ -82,7 +82,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../db/index.html">Active Indices Database</a></li>
 </ul>
 
@@ -150,12 +150,21 @@
 <span></span><span class="c1"># Copyright (c) IMToolkit Development Team</span>
 <span class="c1"># This toolkit is released under the MIT License, see LICENSE.txt</span>
 
-<span class="kn">from</span> <span class="nn">.Channel</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">.Util</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.Channel</span> <span class="k">import</span> <span class="n">Channel</span>
+<span class="kn">from</span> <span class="nn">.Util</span> <span class="k">import</span> <span class="n">randn_c</span>
+
 
 <div class="viewcode-block" id="IdealRayleighChannel"><a class="viewcode-back" href="../../imtoolkit.IdealRayleighChannel.html#imtoolkit.IdealRayleighChannel.IdealRayleighChannel">[docs]</a><span class="k">class</span> <span class="nc">IdealRayleighChannel</span><span class="p">(</span><span class="n">Channel</span><span class="p">):</span>
-
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A `Channel` class that generates the ideal Rayleigh fading channel coefficients.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">IT</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            IT (int): the number of parallel channel matrices.</span>
+<span class="sd">            M (int): the number of transmit antennas.</span>
+<span class="sd">            N (int):the number of receive antennas.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">IT</span> <span class="o">=</span> <span class="n">IT</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">=</span> <span class="n">M</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="n">N</span>

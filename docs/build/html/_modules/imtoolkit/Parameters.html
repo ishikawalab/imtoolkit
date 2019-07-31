@@ -82,7 +82,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../db/index.html">Active Indices Database</a></li>
 </ul>
 
@@ -152,57 +152,63 @@
 
 <span class="kn">import</span> <span class="nn">re</span>
 
+
 <div class="viewcode-block" id="Parameters"><a class="viewcode-back" href="../../imtoolkit.Parameters.html#imtoolkit.Parameters.Parameters">[docs]</a><span class="k">class</span> <span class="nc">Parameters</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;description of class&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;This class is used to pack various simulation parameters into an instance.&quot;&quot;&quot;</span>
 
     <span class="n">arg</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="n">table</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="c1"># default parameters</span>
-    <span class="n">M</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Number of transmit antennas or subcarriers</span>
-    <span class="n">N</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Number of receive antennas</span>
-    <span class="n">T</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Number of timeslots in a space-time codeword</span>
-    <span class="n">Q</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Number of dispersion matrices or active indices</span>
-    <span class="n">P</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Number of selected elements</span>
-    <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Number of selected elements</span>
-    <span class="n">O</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Number of embedded symbols in a space-time codeword</span>
-    <span class="n">IT</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Number of iterations</span>
-    <span class="n">ITo</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Number of outer iterations</span>
-    <span class="n">ITi</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Number of inner iterations</span>
-    <span class="n">snrfrom</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># The beginning of SNR</span>
-    <span class="n">to</span> <span class="o">=</span> <span class="mf">50.0</span> <span class="c1"># The end of SNR</span>
-    <span class="nb">len</span> <span class="o">=</span> <span class="mi">11</span> <span class="c1"># The above SNR range is divided by len</span>
-    <span class="n">by</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="c1"># SNR step size</span>
-    <span class="n">optsnr</span> <span class="o">=</span> <span class="n">snr</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># A specific SNR</span>
-    <span class="n">sim</span> <span class="o">=</span> <span class="s2">&quot;coh&quot;</span> <span class="c1"># Type of simulator</span>
-    <span class="n">channel</span> <span class="o">=</span> <span class="s2">&quot;rayleigh&quot;</span> <span class="c1"># Channel environment</span>
-    <span class="n">mod</span> <span class="o">=</span> <span class="s2">&quot;PSK&quot;</span> <span class="c1"># Type of modulation such as PAM, PSK, QAM...</span>
-    <span class="n">L</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># Number of constellation</span>
-    <span class="n">RC</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># The number of repetition</span>
-    
+    <span class="n">M</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Number of transmit antennas or subcarriers</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Number of receive antennas</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Number of timeslots in a space-time codeword</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Number of dispersion matrices or active indices</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Number of selected elements</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Number of selected elements</span>
+    <span class="n">O</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Number of embedded symbols in a space-time codeword</span>
+    <span class="n">IT</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Number of iterations</span>
+    <span class="n">ITo</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Number of outer iterations</span>
+    <span class="n">ITi</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Number of inner iterations</span>
+    <span class="n">snrfrom</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># The beginning of SNR</span>
+    <span class="n">to</span> <span class="o">=</span> <span class="mf">50.0</span>  <span class="c1"># The end of SNR</span>
+    <span class="nb">len</span> <span class="o">=</span> <span class="mi">11</span>  <span class="c1"># The above SNR range is divided by len</span>
+    <span class="n">by</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># SNR step size</span>
+    <span class="n">optsnr</span> <span class="o">=</span> <span class="n">snr</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># A specific SNR</span>
+    <span class="n">sim</span> <span class="o">=</span> <span class="s2">&quot;coh&quot;</span>  <span class="c1"># Type of simulator</span>
+    <span class="n">channel</span> <span class="o">=</span> <span class="s2">&quot;rayleigh&quot;</span>  <span class="c1"># Channel environment</span>
+    <span class="n">mod</span> <span class="o">=</span> <span class="s2">&quot;PSK&quot;</span>  <span class="c1"># Type of modulation such as PAM, PSK, QAM...</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Number of constellation</span>
+    <span class="n">RC</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># The number of repetition</span>
+
     <span class="c1"># other parameters (avoid pylint errors)</span>
-    <span class="n">Nsc</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># Number of subcarriers</span>
-    <span class="n">Ncp</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># CP length</span>
-    <span class="n">Ns</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># Number of scatters in Jakes channel model</span>
+    <span class="n">Nsc</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Number of subcarriers</span>
+    <span class="n">Ncp</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># CP length</span>
+    <span class="n">Ns</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Number of scatters in Jakes channel model</span>
     <span class="n">Nt</span> <span class="o">=</span> <span class="n">Nr</span> <span class="o">=</span> <span class="n">Mt</span> <span class="o">=</span> <span class="n">Mr</span> <span class="o">=</span> <span class="n">Nu</span> <span class="o">=</span> <span class="n">NRF</span> <span class="o">=</span> <span class="n">Lc</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">W</span> <span class="o">=</span> <span class="n">R</span> <span class="o">=</span> <span class="n">Wl</span> <span class="o">=</span> <span class="n">J</span> <span class="o">=</span> <span class="n">PsiHalf</span> <span class="o">=</span> <span class="n">PhiHalf</span> <span class="o">=</span> <span class="n">deg</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">taps</span> <span class="o">=</span> <span class="n">mind</span> <span class="o">=</span> <span class="n">hit</span> <span class="o">=</span> <span class="n">limit</span> <span class="o">=</span> <span class="n">Hflu</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="n">a</span> <span class="o">=</span> <span class="n">d</span> <span class="o">=</span> <span class="n">r</span> <span class="o">=</span> <span class="n">v</span> <span class="o">=</span> <span class="n">u1</span> <span class="o">=</span> <span class="n">u2</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">=</span> <span class="n">rate</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="n">dTx</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># Space between source antennas or LEDs</span>
-    <span class="n">Rx</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># Horizontal position of a receiver</span>
-    <span class="n">FdTs</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># Normalized Doppler frequency in Jakes channel model</span>
+    <span class="n">dTx</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># Space between source antennas or LEDs</span>
+    <span class="n">Rx</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># Horizontal position of a receiver</span>
+    <span class="n">FdTs</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># Normalized Doppler frequency in Jakes channel model</span>
     <span class="n">delta</span> <span class="o">=</span> <span class="n">Herr</span> <span class="o">=</span> <span class="n">cfo</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="n">Kf</span> <span class="o">=</span> <span class="n">Dt</span> <span class="o">=</span> <span class="n">Dr</span> <span class="o">=</span> <span class="mf">0.0</span>
 
-    <span class="n">dm</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># Type of dispersion matrices or active indices</span>
+    <span class="n">dm</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># Type of dispersion matrices or active indices</span>
     <span class="n">dec</span> <span class="o">=</span> <span class="n">code</span> <span class="o">=</span> <span class="n">Wmode</span> <span class="o">=</span> <span class="n">Fmode</span> <span class="o">=</span> <span class="n">dmi</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="n">det</span> <span class="o">=</span> <span class="n">basis</span> <span class="o">=</span> <span class="n">CR</span> <span class="o">=</span> <span class="n">option</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="n">minh</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            arg (string): the specified simulation parameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">arg</span> <span class="o">=</span> <span class="n">arg</span>
-        
+
         <span class="n">options</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="s2">&quot;=&quot;</span> <span class="ow">in</span> <span class="n">options</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -210,15 +216,15 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span>
         <span class="bp">self</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="s2">&quot;mode&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
-        
+
         <span class="c1"># parse arguments such as &quot;M=2&quot;</span>
         <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
             <span class="n">pair</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">)</span>
             <span class="n">pv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parseValue</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">pv</span>
             <span class="bp">self</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pv</span><span class="p">)</span>
-    
-    <span class="c1">#def __setattr__(self, key, value):</span>
+
+    <span class="c1"># def __setattr__(self, key, value):</span>
     <span class="c1">#    self.table[key] = value</span>
     <span class="c1">#    print(self.table)</span>
     <span class="c1">#    return super(Parameters, self).__setattr__(key, value)</span>
@@ -228,23 +234,23 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
-    
+
 <div class="viewcode-block" id="Parameters.isSpeficied"><a class="viewcode-back" href="../../imtoolkit.Parameters.html#imtoolkit.Parameters.Parameters.isSpeficied">[docs]</a>    <span class="k">def</span> <span class="nf">isSpeficied</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span></div>
-    
+
 <div class="viewcode-block" id="Parameters.parseValue"><a class="viewcode-back" href="../../imtoolkit.Parameters.html#imtoolkit.Parameters.Parameters.parseValue">[docs]</a>    <span class="k">def</span> <span class="nf">parseValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;-*\d+&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;e&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span> <span class="c1"># e.g. IT=1e5, IT=2.5e7</span>
+                <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>  <span class="c1"># e.g. IT=1e5, IT=2.5e7</span>
             <span class="k">elif</span> <span class="n">value</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="c1"># e.g. to=50.00</span>
+                <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1"># e.g. to=50.00</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="c1"># e.g. M=4</span>
+                <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1"># e.g. M=4</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">value</span> <span class="c1"># e.g. channel=rayleigh</span></div></div>
+            <span class="k">return</span> <span class="n">value</span>  <span class="c1"># e.g. channel=rayleigh</span></div></div>
 </pre></div>
 
            </div>

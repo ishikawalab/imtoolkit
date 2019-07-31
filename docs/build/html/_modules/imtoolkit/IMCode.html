@@ -82,7 +82,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../db/index.html">Active Indices Database</a></li>
 </ul>
 
@@ -150,13 +150,13 @@
 <span></span><span class="c1"># Copyright (c) IMToolkit Development Team</span>
 <span class="c1"># This toolkit is released under the MIT License, see LICENSE.txt</span>
 
+<span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">special</span>
-<span class="kn">from</span> <span class="nn">.Modulator</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">.Util</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">.IMUtil</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.Modulator</span> <span class="k">import</span> <span class="n">Modulator</span>
+<span class="kn">from</span> <span class="nn">.IMUtil</span> <span class="k">import</span> <span class="n">convertIndsToMatrix</span><span class="p">,</span> <span class="n">getIndexes</span>
 
-<div class="viewcode-block" id="IMCode"><a class="viewcode-back" href="../../imtoolkit.IMCode.html#imtoolkit.IMCode.IMCode">[docs]</a><span class="k">class</span> <span class="nc">IMCode</span><span class="p">:</span>
+
+<div class="viewcode-block" id="IMCode"><a class="viewcode-back" href="../../imtoolkit.IMCode.html#imtoolkit.IMCode.IMCode">[docs]</a><span class="k">class</span> <span class="nc">IMCode</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dm</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">modtype</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">meanPower</span><span class="p">):</span>
         <span class="n">mod</span> <span class="o">=</span> <span class="n">Modulator</span><span class="p">(</span><span class="n">modtype</span><span class="p">,</span> <span class="n">L</span><span class="p">)</span>
         <span class="n">kfoldsymbols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">mod</span><span class="o">.</span><span class="n">symbols</span><span class="p">,</span> <span class="n">repeat</span> <span class="o">=</span> <span class="n">K</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span>
@@ -165,7 +165,7 @@
         <span class="n">indsm</span> <span class="o">=</span> <span class="n">convertIndsToMatrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">codes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">indsm</span><span class="p">,</span> <span class="n">kfoldsymbols</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">K</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">codes</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">meanPower</span><span class="p">)</span> <span class="c1"># the mean power is normalized to meanPower</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">codes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hsplit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">codes</span><span class="p">),</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">kfoldsymbols</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># Nc \times M \times 1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">codes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hsplit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">codes</span><span class="p">),</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">kfoldsymbols</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="c1"># Nc \times M \times 1</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">B1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">Q</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">B2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">K</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">L</span><span class="p">))</span>

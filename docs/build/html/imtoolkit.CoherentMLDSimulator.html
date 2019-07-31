@@ -82,7 +82,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/index.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="db/index.html">Active Indices Database</a></li>
 </ul>
 
@@ -152,15 +152,7 @@
 <dt id="imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator">
 <em class="property">class </em><code class="descclassname">imtoolkit.CoherentMLDSimulator.</code><code class="descname">CoherentMLDSimulator</code><span class="sig-paren">(</span><em>codes</em>, <em>channel</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imtoolkit/CoherentMLDSimulator.html#CoherentMLDSimulator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="imtoolkit.Simulator.html#imtoolkit.Simulator.Simulator" title="imtoolkit.Simulator.Simulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">imtoolkit.Simulator.Simulator</span></code></a></p>
-<p>A simulatror that relies on the coherent maximum likelihood detector, that assumes perfect channel state information at the receiver. The environment variable USECUPY determines whether to use cupy or not.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>codes</strong> (<em>ndarray</em>) – an input codebook, which is generated on the CPU memory and is transferred into the GPU memory.</p></li>
-<li><p><strong>channel</strong> (<em>imtoolkit.Channel</em>) – a channel model used in simulation.</p></li>
-</ul>
-</dd>
-</dl>
+<p>A simulator that relies on the coherent maximum likelihood detector, that assumes perfect channel state information at the receiver. The environment variable USECUPY determines whether to use cupy or not.</p>
 <dl class="method">
 <dt id="imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateAMIParallel">
 <code class="descname">simulateAMIParallel</code><span class="sig-paren">(</span><em>params</em>, <em>outputFile=True</em>, <em>printValue=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imtoolkit/CoherentMLDSimulator.html#CoherentMLDSimulator.simulateAMIParallel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateAMIParallel" title="Permalink to this definition">¶</a></dt>
@@ -174,10 +166,10 @@
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.</p>
+<dd class="field-even"><p>a dict that has two keys: snr_dB and ami, and contains the corresponding results. All the results are transferred into the CPU memory.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>ret (dict)</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -195,10 +187,10 @@
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.</p>
+<dd class="field-even"><p>a dict that has two keys: snr_dB and ami, and contains the corresponding results. All the results are transferred into the CPU memory.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>ret (dict)</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -219,7 +211,7 @@
 <dd class="field-even"><p>a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>ret (dict)</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -240,7 +232,7 @@
 <dd class="field-even"><p>a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>ret (dict)</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>

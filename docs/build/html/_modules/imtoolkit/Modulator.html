@@ -82,7 +82,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../db/index.html">Active Indices Database</a></li>
 </ul>
 
@@ -151,11 +151,12 @@
 <span class="c1"># This toolkit is released under the MIT License, see LICENSE.txt</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">.Util</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.Util</span> <span class="k">import</span> <span class="n">getGrayIndixes</span>
+
 
 <span class="c1"># Pahse-shift keying</span>
-<div class="viewcode-block" id="PSK"><a class="viewcode-back" href="../../imtoolkit.Modulator.html#imtoolkit.Modulator.PSK">[docs]</a><span class="k">class</span> <span class="nc">PSK</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constellationSize</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="PSK"><a class="viewcode-back" href="../../imtoolkit.Modulator.html#imtoolkit.Modulator.PSK">[docs]</a><span class="k">class</span> <span class="nc">PSK</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constellationSize</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">constellationSize</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bitWidth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">)</span>
 
@@ -175,9 +176,10 @@
         <span class="n">originalSymbols</span><span class="p">[</span><span class="n">indsAxis</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">rint</span><span class="p">(</span><span class="n">originalSymbols</span><span class="p">[</span><span class="n">indsAxis</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">symbols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">originalSymbols</span><span class="p">,</span> <span class="n">grayIndexes</span><span class="p">)</span></div>
 
+
 <span class="c1"># Quadrature amplitude modulation</span>
-<div class="viewcode-block" id="QAM"><a class="viewcode-back" href="../../imtoolkit.Modulator.html#imtoolkit.Modulator.QAM">[docs]</a><span class="k">class</span> <span class="nc">QAM</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constellationSize</span> <span class="o">=</span> <span class="mi">4</span><span class="p">):</span>
+<div class="viewcode-block" id="QAM"><a class="viewcode-back" href="../../imtoolkit.Modulator.html#imtoolkit.Modulator.QAM">[docs]</a><span class="k">class</span> <span class="nc">QAM</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constellationSize</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">constellationSize</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bitWidth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">)</span>
         <span class="n">sqrtL</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">))</span>
@@ -185,25 +187,28 @@
         <span class="k">if</span> <span class="n">sqrtL</span> <span class="o">*</span> <span class="n">sqrtL</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The specified constellationSize is not an even power of two&quot;</span><span class="p">)</span>
             <span class="k">return</span>
-      
+
         <span class="n">logsqL</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">sqrtL</span><span class="p">))</span>
         <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">)</span> <span class="o">/</span> <span class="n">sqrtL</span><span class="p">)</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">)</span> <span class="o">%</span> <span class="n">sqrtL</span>
         <span class="n">originalSymbols</span> <span class="o">=</span> <span class="p">((</span><span class="n">sqrtL</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">sigma</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">((</span><span class="n">sqrtL</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="n">sigma</span>
-        <span class="c1">#originalSymbols</span>
-        
+        <span class="c1"># originalSymbols</span>
+
         <span class="n">grayIndexes</span> <span class="o">=</span> <span class="n">getGrayIndixes</span><span class="p">(</span><span class="n">logsqL</span><span class="p">)</span>
         <span class="n">grayIndexes</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">grayIndexes</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">logsqL</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">grayIndexes</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
-        <span class="c1">#grayIndexes</span>
+        <span class="c1"># grayIndexes</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">symbols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">originalSymbols</span><span class="p">,</span> <span class="n">grayIndexes</span><span class="p">)</span></div>
 
 
-<span class="c1"># This StarQAM class is an efficient implementation of the following paper.</span>
-<span class="c1"># W. T. Webb, L. Hanzo, and R. Steele, ``Bandwidth efficient QAM schemes for Rayleigh fading channels,&#39;&#39; IEE Proc., vol. 138, no. 3, pp. 169--175, 1991.</span>
-<div class="viewcode-block" id="StarQAM"><a class="viewcode-back" href="../../imtoolkit.Modulator.html#imtoolkit.Modulator.StarQAM">[docs]</a><span class="k">class</span> <span class="nc">StarQAM</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constellationSize</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="StarQAM"><a class="viewcode-back" href="../../imtoolkit.Modulator.html#imtoolkit.Modulator.StarQAM">[docs]</a><span class="k">class</span> <span class="nc">StarQAM</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This StarQAM class is an efficient implementation of the following paper [1].</span>
+
+<span class="sd">    - [1] W. T. Webb, L. Hanzo, and R. Steele, &quot;Bandwidth efficient QAM schemes for Rayleigh fading channels,&quot; IEE Proc., vol. 138, no. 3, pp. 169--175, 1991.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constellationSize</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">constellationSize</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bitWidth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">)</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span>
@@ -213,23 +218,27 @@
         <span class="c1"># print(&quot;self.subConstellationSize * self.Nlevels = &quot; + str(self.subConstellationSize) + &quot; * &quot; + str(self.Nlevels) + &quot; = &quot; + str(self.subConstellationSize * self.Nlevels))</span>
 
         <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">6.0</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nlevels</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nlevels</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">symbols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">complex</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">symbols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">level_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nlevels</span><span class="p">):</span>
             <span class="n">mod</span> <span class="o">=</span> <span class="n">PSK</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subConstellationSize</span><span class="p">)</span>
-            <span class="c1">#self.symbols.append((1.0 + level_id) * sigma * mod.symbols)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">symbols</span><span class="p">[(</span><span class="n">level_id</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">subConstellationSize</span><span class="p">):((</span><span class="n">level_id</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">subConstellationSize</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">level_id</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">mod</span><span class="o">.</span><span class="n">symbols</span></div>
+            <span class="c1"># self.symbols.append((1.0 + level_id) * sigma * mod.symbols)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">symbols</span><span class="p">[(</span><span class="n">level_id</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">subConstellationSize</span><span class="p">):((</span><span class="n">level_id</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">subConstellationSize</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span>
+                                                                                                                            <span class="mf">1.0</span> <span class="o">+</span> <span class="n">level_id</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">mod</span><span class="o">.</span><span class="n">symbols</span></div>
 
-        <span class="c1">#print(&quot;StartQAM: the constellation size of &quot; + str(self.L) + &quot; is not supported yet&quot;)</span>
+        <span class="c1"># print(&quot;StartQAM: the constellation size of &quot; + str(self.L) + &quot; is not supported yet&quot;)</span>
 
-<div class="viewcode-block" id="Modulator"><a class="viewcode-back" href="../../imtoolkit.Modulator.html#imtoolkit.Modulator.Modulator">[docs]</a><span class="k">class</span> <span class="nc">Modulator</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;This class generates a constellation such as PSK, QAM, and star-QAM (SQAM).</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        mode (string): the type of constellation, such as PSK, QAM, and SQAM.</span>
-<span class="sd">        L (int): the constellation size.</span>
+<div class="viewcode-block" id="Modulator"><a class="viewcode-back" href="../../imtoolkit.Modulator.html#imtoolkit.Modulator.Modulator">[docs]</a><span class="k">class</span> <span class="nc">Modulator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class generates a constellation such as PSK, QAM, and star-QAM (SQAM).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;PSK&quot;</span><span class="p">,</span> <span class="n">constellationSize</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;PSK&quot;</span><span class="p">,</span> <span class="n">constellationSize</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            mode (string): the type of constellation, such as PSK, QAM, and SQAM.</span>
+<span class="sd">            L (int): the constellation size.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">constellationSize</span> <span class="o">=</span> <span class="n">constellationSize</span>
         <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;PSK&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">symbols</span> <span class="o">=</span> <span class="n">PSK</span><span class="p">(</span><span class="n">constellationSize</span><span class="p">)</span><span class="o">.</span><span class="n">symbols</span>
@@ -237,8 +246,6 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">symbols</span> <span class="o">=</span> <span class="n">QAM</span><span class="p">(</span><span class="n">constellationSize</span><span class="p">)</span><span class="o">.</span><span class="n">symbols</span>
         <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;SQAM&quot;</span> <span class="ow">or</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;StarQAM&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">symbols</span> <span class="o">=</span> <span class="n">StarQAM</span><span class="p">(</span><span class="n">constellationSize</span><span class="p">)</span><span class="o">.</span><span class="n">symbols</span></div>
-
-
 </pre></div>
 
            </div>

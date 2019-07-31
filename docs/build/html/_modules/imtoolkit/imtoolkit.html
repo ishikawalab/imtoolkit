@@ -82,7 +82,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../db/index.html">Active Indices Database</a></li>
 </ul>
 
@@ -151,13 +151,15 @@
 <span class="c1"># This toolkit is released under the MIT License, see LICENSE.txt</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">special</span>
-<span class="kn">from</span> <span class="nn">imtoolkit</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">imtoolkit</span> <span class="k">import</span> <span class="n">IMTOOLKIT_VERSION</span><span class="p">,</span> <span class="n">Parameters</span><span class="p">,</span> <span class="n">IMCode</span><span class="p">,</span> <span class="n">OSTBCode</span><span class="p">,</span> <span class="n">IdealRayleighChannel</span><span class="p">,</span> <span class="n">IdealOFDMChannel</span><span class="p">,</span> <span class="n">CoherentMLDSimulator</span><span class="p">,</span> \
+    <span class="n">getMinimumEuclideanDistance</span><span class="p">,</span> <span class="n">getInequalityL1</span><span class="p">,</span> <span class="n">getMinimumHammingDistance</span><span class="p">,</span> <span class="n">convertIndsToVector</span>
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../imtoolkit.imtoolkit.html#imtoolkit.imtoolkit.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
