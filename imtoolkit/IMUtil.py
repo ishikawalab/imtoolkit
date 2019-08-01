@@ -5,8 +5,9 @@ import os
 import glob
 import itertools
 import urllib.request
+from numba import jit
 import numpy as np
-from scipy import special
+from scipy.special import binom
 
 
 #
@@ -68,31 +69,45 @@ def outputIndsToFile(inds, M):
     print("Saved to " + fname)
     return fname
 
+def getMaxQ(M, K):
+    return int(np.exp2(np.floor(np.log2(binom(M, K)))))
 
 # Usage: convertIndsToMatrix(getDictionaryIndexesList(M, K, Q), M)
+@jit
 def getDictionaryIndexesList(M, K, Q):
-    ret = [list(l) for l in itertools.combinations(range(M), K)]
-    maxQ = int(np.exp2(np.floor(np.log2(len(ret)))))
-
+    maxQ = getMaxQ(M, K)
     if Q > maxQ:
         print("The given Q is larger than the maximum:" + str(Q) + " > " + str(maxQ))
-        return ret[0:maxQ]
+        Q = maxQ
 
-    return ret[0:Q]
+    ret = [[0] * K] * Q
+    q = 0
+    for pair in itertools.combinations(range(M), K):
+        ret[q] = list(pair)
+        q += 1
+        if q >= Q:
+            break
 
+    return ret
 
 # This method is based on the Matlab implementation for the GSM scheme,
 # which is given by the following book.
 # R. Mesleh and A. Alhassi, Space modulation techniques. Wiley, 2018.
 def getMeslehIndexesList(M, K, Q):
-    ret = [list(l) for l in reversed(list(itertools.combinations(range(M), K)))]
-    maxQ = int(np.exp2(np.floor(np.log2(len(ret)))))
-
+    maxQ = getMaxQ(M, K)
     if Q > maxQ:
         print("The given Q is larger than the maximum:" + str(Q) + " > " + str(maxQ))
-        return ret[0:maxQ]
+        Q = maxQ
 
-    return ret[0:Q]
+    ret = [[0] * K] * Q
+    q = 0
+    for pair in reversed(itertools.combinations(range(M), K)):
+        ret[q] = list(pair)
+        q += 1
+        if q >= Q:
+            break
+
+    return ret
 
 
 # M. Wen, Y. Zhang, J. Li, E. Basar, and F. Chen,
@@ -341,15 +356,11 @@ def checkConflict(inds):
 #
 def getIMParameters(M, K):
     ret = []
-    Qmax = int(np.exp2(np.floor(np.log2(special.binom(M, K)))))
-    if Qmax == 1:
+    maxQ = getMaxQ(M, K)
+    if maxQ == 1:
         return ret
     Q = 2
-    while Q <= Qmax:
+    while Q <= maxQ:
         ret.append((M, K, Q))
         Q *= 2
     return ret
-
-
-def binom(M, K):
-    return special.binom(M, K)

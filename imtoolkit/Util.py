@@ -2,9 +2,9 @@
 # This toolkit is released under the MIT License, see LICENSE.txt
 
 import os
-import itertools
 from sympy.combinatorics.graycode import GrayCode
 from scipy.interpolate import interp1d
+from numba import jit
 import numpy as np
 if os.getenv("USECUPY") == "1":
     import cupy as xp
@@ -18,10 +18,23 @@ def getGrayIndixes(bitWidth):
 def frodiff(x, y):
     return xp.square(xp.linalg.norm(x - y))
 
+@jit
 def getEuclideanDistances(codes): 
-    # The following implementation only supports NumPy
-    combsfro = itertools.starmap(frodiff, itertools.combinations(codes, 2))
-    return xp.asarray(list(combsfro))
+    # The following implementation only supports NumPy, slow
+    #combsfro = itertools.starmap(frodiff, itertools.combinations(codes, 2))
+    #return xp.asarray(list(combsfro))
+    # The following is also slow
+    #combsfro = [frodiff(p[0], p[1]) for p in itertools.combinations(codes, 2)]
+    #return xp.asarray(combsfro)
+    # The following straightforward implementation with numba is the fastest
+    Nc = codes.shape[0]
+    ret = xp.zeros(int(Nc * (Nc - 1) / 2))
+    i = 0
+    for y in range(0, Nc):
+        for x in range(y+1, Nc):
+            ret[i] = xp.square(xp.linalg.norm(codes[y] - codes[x]))
+            i += 1
+    return ret
     # The following implementation supports NumPy and CuPy,
     # although it is memory-thirsty
     #Nc = codes.shape[0]
@@ -33,8 +46,18 @@ def getEuclideanDistances(codes):
     #frodiff = xp.power(xp.linalg.norm(diffxy, axis=(2,3)), 2)
     #return frodiff[np.triu_indices(Nc, 1)]
 
+@jit
 def getMinimumEuclideanDistance(codes):
-    return min(getEuclideanDistances(codes))
+    #return min(getEuclideanDistances(codes))
+    # The following straightforward implementation with numba is the fastest
+    Nc = codes.shape[0]
+    mind = xp.inf
+    for y in range(0, Nc):
+        for x in range(y + 1, Nc):
+            d = xp.square(xp.linalg.norm(codes[y] - codes[x]))
+            if d < mind:
+                mind = d
+    return mind
 
 def getDFTMatrix(N):
     W = xp.zeros((N, N), dtype = complex)

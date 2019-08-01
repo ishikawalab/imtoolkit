@@ -48,7 +48,7 @@ class UtilTest(unittest.TestCase):
         codes = IMCode("opt", 4, 2, 4, "PSK", 4, 1).codes
         med = util.getMinimumEuclideanDistance(xp.array(codes))
         self.assertAlmostEqual(med, 1.0)
-        
+
     def test_getDFTMatrix(self):
         W = util.getDFTMatrix(4)
         xp.testing.assert_almost_equal(W.dot(W.conj().T), xp.eye(4, dtype=xp.complex), decimal=3)
