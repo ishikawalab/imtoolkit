@@ -1,5 +1,5 @@
 global IMTOOLKIT_VERSION
-IMTOOLKIT_VERSION = '0.6'
+IMTOOLKIT_VERSION = '0.7'
 
 from .Util import *
 from .IMUtil import *

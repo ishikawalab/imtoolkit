@@ -18,7 +18,7 @@ setup(name='imtoolkit',
       license='MIT',
       packages=['imtoolkit'],
       install_requires=[
-          'numpy', 'pandas', 'scipy', 'sympy', 'tqdm' # cupy
+          'numpy', 'pandas', 'scipy', 'sympy', 'numba', 'tqdm' # cupy
       ],
       entry_points={
           'console_scripts': [
