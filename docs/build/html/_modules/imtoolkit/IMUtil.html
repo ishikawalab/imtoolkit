@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>imtoolkit.IMUtil &mdash; imtoolkit 0.6 documentation</title>
+  <title>imtoolkit.IMUtil &mdash; imtoolkit 0.7 documentation</title>
   
 
   
@@ -154,8 +154,9 @@
 <span class="kn">import</span> <span class="nn">glob</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="k">import</span> <span class="n">jit</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">special</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="k">import</span> <span class="n">binom</span>
 
 
 <span class="c1">#</span>
@@ -217,31 +218,45 @@
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saved to &quot;</span> <span class="o">+</span> <span class="n">fname</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fname</span></div>
 
+<div class="viewcode-block" id="getMaxQ"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getMaxQ">[docs]</a><span class="k">def</span> <span class="nf">getMaxQ</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">binom</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)))))</span></div>
 
 <span class="c1"># Usage: convertIndsToMatrix(getDictionaryIndexesList(M, K, Q), M)</span>
-<div class="viewcode-block" id="getDictionaryIndexesList"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getDictionaryIndexesList">[docs]</a><span class="k">def</span> <span class="nf">getDictionaryIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">K</span><span class="p">)]</span>
-    <span class="n">maxQ</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)))))</span>
-
+<div class="viewcode-block" id="getDictionaryIndexesList"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getDictionaryIndexesList">[docs]</a><span class="nd">@jit</span>
+<span class="k">def</span> <span class="nf">getDictionaryIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+    <span class="n">maxQ</span> <span class="o">=</span> <span class="n">getMaxQ</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">Q</span> <span class="o">&gt;</span> <span class="n">maxQ</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The given Q is larger than the maximum:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &gt; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">maxQ</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">maxQ</span><span class="p">]</span>
+        <span class="n">Q</span> <span class="o">=</span> <span class="n">maxQ</span>
 
-    <span class="k">return</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">Q</span><span class="p">]</span></div>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">K</span><span class="p">]</span> <span class="o">*</span> <span class="n">Q</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">K</span><span class="p">):</span>
+        <span class="n">ret</span><span class="p">[</span><span class="n">q</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">q</span> <span class="o">&gt;=</span> <span class="n">Q</span><span class="p">:</span>
+            <span class="k">break</span>
 
+    <span class="k">return</span> <span class="n">ret</span></div>
 
 <span class="c1"># This method is based on the Matlab implementation for the GSM scheme,</span>
 <span class="c1"># which is given by the following book.</span>
 <span class="c1"># R. Mesleh and A. Alhassi, Space modulation techniques. Wiley, 2018.</span>
 <div class="viewcode-block" id="getMeslehIndexesList"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getMeslehIndexesList">[docs]</a><span class="k">def</span> <span class="nf">getMeslehIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">K</span><span class="p">)))]</span>
-    <span class="n">maxQ</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)))))</span>
-
+    <span class="n">maxQ</span> <span class="o">=</span> <span class="n">getMaxQ</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">Q</span> <span class="o">&gt;</span> <span class="n">maxQ</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The given Q is larger than the maximum:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &gt; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">maxQ</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">maxQ</span><span class="p">]</span>
+        <span class="n">Q</span> <span class="o">=</span> <span class="n">maxQ</span>
 
-    <span class="k">return</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">Q</span><span class="p">]</span></div>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">K</span><span class="p">]</span> <span class="o">*</span> <span class="n">Q</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">K</span><span class="p">)):</span>
+        <span class="n">ret</span><span class="p">[</span><span class="n">q</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">q</span> <span class="o">&gt;=</span> <span class="n">Q</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">ret</span></div>
 
 
 <span class="c1"># M. Wen, Y. Zhang, J. Li, E. Basar, and F. Chen,</span>
@@ -490,18 +505,14 @@
 <span class="c1">#</span>
 <div class="viewcode-block" id="getIMParameters"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getIMParameters">[docs]</a><span class="k">def</span> <span class="nf">getIMParameters</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">Qmax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">special</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)))))</span>
-    <span class="k">if</span> <span class="n">Qmax</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">maxQ</span> <span class="o">=</span> <span class="n">getMaxQ</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">maxQ</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">ret</span>
     <span class="n">Q</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="k">while</span> <span class="n">Q</span> <span class="o">&lt;=</span> <span class="n">Qmax</span><span class="p">:</span>
+    <span class="k">while</span> <span class="n">Q</span> <span class="o">&lt;=</span> <span class="n">maxQ</span><span class="p">:</span>
         <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">))</span>
         <span class="n">Q</span> <span class="o">*=</span> <span class="mi">2</span>
     <span class="k">return</span> <span class="n">ret</span></div>
-
-
-<div class="viewcode-block" id="binom"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.binom">[docs]</a><span class="k">def</span> <span class="nf">binom</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">special</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
