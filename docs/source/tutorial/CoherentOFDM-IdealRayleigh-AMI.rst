@@ -2,7 +2,7 @@
 CoherentOFDM-IdealRayleigh-AMI.py
 =================================
 
-This webpage introduces an API example for the cohrent OFDM scenario, which uses :doc:`CoherentMLDSimulator. <../module/imtoolkit.CoherentMLDSimulator>`.
+This webpage introduces an API example for the cohrent OFDM scenario, which uses :doc:`CoherentMLDSimulator <../module/imtoolkit.CoherentMLDSimulator>`.
 Other examples are found in :doc:`CoherentMLDSimulatorTest <../module/imtoolkit.tests.CoherentMLDSimulatorTest>`.
 
 This example compares the AMI performance of the coherent OFDM and subcarrier-index modulation schemes, where the simulation parameters are given in the table below.

@@ -2,7 +2,7 @@
 NonSquareDifferentialMIMO-IdealRayleigh-BER.py
 ==============================================
 
-This webpage introduces an API example for the noncohrent scenario, which uses :doc:`NonSquareDifferentialMLDSimulator. <../module/imtoolkit.NonSquareDifferentialMLDSimulator>`.
+This webpage introduces an API example for the noncohrent scenario, which uses :doc:`NonSquareDifferentialMLDSimulator <../module/imtoolkit.NonSquareDifferentialMLDSimulator>`.
 Other examples are found in :doc:`NonSquareDifferentialMLDSimulatorTest <../module/imtoolkit.tests.NonSquareDifferentialMLDSimulatorTest>`.
 
 This example compares the BER performance of the differential star-QAM (SQAM), square diagonal unitary code (DUC), and nonsquare DUC schemes.

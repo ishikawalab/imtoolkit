@@ -2,7 +2,7 @@
 SemiUnitaryDifferentialMIMO-IdealRayleigh-BER.py
 ================================================
 
-This webpage introduces an API example for the noncohrent scenario, which uses :doc:`SemiUnitaryDifferentialMLDSimulator. <../module/imtoolkit.SemiUnitaryDifferentialMLDSimulator>`.
+This webpage introduces an API example for the noncohrent scenario, which uses :doc:`SemiUnitaryDifferentialMLDSimulator <../module/imtoolkit.SemiUnitaryDifferentialMLDSimulator>`.
 Other examples are found in :doc:`SemiUnitaryDifferentialMLDSimulatorTest <../module/imtoolkit.tests.SemiUnitaryDifferentialMLDSimulatorTest>`.
 
 This example compares the BER performance of the differential star-QAM (SQAM), differential orthogonal space-time block code (DOSTBC) with SQAM, and diagonal unitary code (DUC) schemes.

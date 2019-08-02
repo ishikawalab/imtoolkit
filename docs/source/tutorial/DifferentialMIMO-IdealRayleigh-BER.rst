@@ -2,7 +2,7 @@
 DifferentialMIMO-IdealRayleigh-BER.py
 =====================================
 
-This webpage introduces an API example for the noncohrent scenario, which uses :doc:`DifferentialMLDSimulator. <../module/imtoolkit.DifferentialMLDSimulator>`.
+This webpage introduces an API example for the noncohrent scenario, which uses :doc:`DifferentialMLDSimulator <../module/imtoolkit.DifferentialMLDSimulator>`.
 Other examples are found in :doc:`DifferentialMLDSimulatorTest <../module/imtoolkit.tests.DifferentialMLDSimulatorTest>`.
 
 This example compares the BER performance of the differential BPSK, differential orthogonal space-time block code (DOSTBC), diagonal unitary code (DUC), algebraic differential spatial modulation (ADSM), and differential threaded algebraic space-time (DTAST) schemes.

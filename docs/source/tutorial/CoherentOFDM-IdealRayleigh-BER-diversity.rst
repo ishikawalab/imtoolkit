@@ -2,7 +2,7 @@
 CoherentOFDM-IdealRayleigh-BER-diversity.py
 ===========================================
 
-This webpage introduces an API example for the cohrent OFDM scenario, which uses :doc:`CoherentMLDSimulator. <../module/imtoolkit.CoherentMLDSimulator>`.
+This webpage introduces an API example for the cohrent OFDM scenario, which uses :doc:`CoherentMLDSimulator <../module/imtoolkit.CoherentMLDSimulator>`.
 Other examples are found in :doc:`CoherentMLDSimulatorTest <../module/imtoolkit.tests.CoherentMLDSimulatorTest>`.
 
 This example evaluates the BER performance of the coherent subcarrier-index modulation scheme, where three subcarrier activation patterns are considered.
