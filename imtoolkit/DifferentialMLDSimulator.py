@@ -2,7 +2,7 @@
 # This toolkit is released under the MIT License, see LICENSE.txt
 
 import os
-from tqdm import tqdm, trange
+from tqdm import trange
 if os.getenv("USECUPY") == "1":
     from cupy import *
 else:
@@ -33,14 +33,13 @@ class DifferentialMLDSimulator(Simulator):
         Returns:
             dict: a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.
         """
-
         IT, M, N, Nc, B, codes = params.IT, params.M, params.N, self.Nc, self.B, self.codes
         snr_dBs = linspace(params.snrfrom, params.to, params.len)
         sigmav2s = 1.0 / inv_dB(snr_dBs)
         xor2ebits = getXORtoErrorBitsArray(Nc)
 
-        bers = zeros(len(snr_dBs))
-        for i in trange(len(snr_dBs)):
+        bers = zeros(params.len)
+        for i in trange(params.len):
             errorBits = 0
             v0 = randn_c(N, M) * sqrt(sigmav2s[i])  # N \times M
             s0 = eye(M, dtype=complex)
@@ -57,9 +56,9 @@ class DifferentialMLDSimulator(Simulator):
 
                 # non-coherent detection that is free from the channel matrix h
                 p = square(abs(y1 - matmul(y0, codes)))  # Nc \times N \times M
-                norms = sum(p, axis=(1, 2))  # summation over the (N,M) axes
+                norms = p.sum(axis=(1, 2))  # summation over the (N,M) axes
                 mini = argmin(norms)
-                errorBits += sum(xor2ebits[codei ^ mini])
+                errorBits += xor2ebits[codei ^ mini].sum()
 
                 v0 = v1
                 s0 = s1

@@ -13,11 +13,14 @@ from imtoolkit import Modulator, IMCode, DiagonalUnitaryCode
 class UtilTest(unittest.TestCase):
     
     def test_getGrayIndixes(self):
-        self.assertEqual(util.getGrayIndixes(2), [0, 1, 3, 2], "getGrayIndixes does not work")
+        self.assertEqual(util.getGrayIndixes(2), [0, 1, 3, 2])
+        self.assertEqual(util.getGrayIndixes(4), [0, 1, 3, 2, 6, 7, 5, 4, 12, 13, 15, 14, 10, 11, 9, 8])
 
     def test_frodiff(self):
         fro = util.frodiff(xp.array([1, 1j, 0, 0]), xp.array([1, 0, 1j, 0]))
         self.assertAlmostEqual(fro, 2.0, msg = "The Frobenius norm calculation is wrong")
+        fro = util.frodiff(util.randn_c(int(1e6)), util.randn_c(int(1e6)))
+        self.assertAlmostEqual(fro/2e6, 1.0, places = 2)
 
     def test_getEuclideanDistances(self):
         codes = Modulator("PSK", 4).symbols.reshape(4, 1, 1)
@@ -35,6 +38,10 @@ class UtilTest(unittest.TestCase):
         codes = DiagonalUnitaryCode(2, 2).codes
         ret = util.asnumpy(util.getEuclideanDistances(xp.array(codes)))
         np.testing.assert_almost_equal(ret, [8.])
+        #
+        codes = IMCode("opt", 16, 8, 16, "PSK", 2, 1).codes
+        ret = util.asnumpy(util.getEuclideanDistances(xp.array(codes)))
+        self.assertAlmostEqual(xp.mean(ret), 2.000, places = 2)
 
     def test_getMinimumEuclideanDistance(self):
         codes = Modulator("PSK", 4).symbols.reshape(4, 1, 1)
@@ -49,6 +56,10 @@ class UtilTest(unittest.TestCase):
         med = util.getMinimumEuclideanDistance(xp.array(codes))
         self.assertAlmostEqual(med, 1.0)
 
+        codes = IMCode("opt", 16, 8, 16, "PSK", 2, 1).codes
+        med = util.getMinimumEuclideanDistance(xp.array(codes))
+        self.assertAlmostEqual(med, 0.5, places = 2)
+
     def test_getDFTMatrix(self):
         W = util.getDFTMatrix(4)
         xp.testing.assert_almost_equal(W.dot(W.conj().T), xp.eye(4, dtype=xp.complex), decimal=3)
@@ -61,12 +72,12 @@ class UtilTest(unittest.TestCase):
         self.assertAlmostEqual(util.inv_dB(0.0), 1.0, msg = "The implementation of inv_dB may be wrong.")
     
     def test_randn(self):
-        ret = util.randn(int(1e5))
+        ret = util.randn(int(1e6))
         meanPower = xp.mean(xp.power(xp.abs(ret), 2))
         self.assertAlmostEqual(meanPower, 1.0, places = 2, msg = "The mean power of randn differs from 1.0")
 
     def test_randn_c(self):
-        ret = util.randn_c(int(1e5))
+        ret = util.randn_c(int(1e6))
         meanPower = xp.mean(xp.power(xp.abs(ret), 2))
         self.assertAlmostEqual(meanPower, 1.0, places = 2, msg = "The mean power of randn_c differs from 1.0")
 

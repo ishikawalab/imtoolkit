@@ -73,8 +73,7 @@ class StarQAM(object):
         for level_id in range(self.Nlevels):
             mod = PSK(self.subConstellationSize)
             # self.symbols.append((1.0 + level_id) * sigma * mod.symbols)
-            self.symbols[(level_id * self.subConstellationSize):((level_id + 1) * self.subConstellationSize)] = (
-                                                                                                                            1.0 + level_id) * sigma * mod.symbols
+            self.symbols[(level_id * self.subConstellationSize):((level_id + 1) * self.subConstellationSize)] = (1.0 + level_id) * sigma * mod.symbols
 
         # print("StartQAM: the constellation size of " + str(self.L) + " is not supported yet")
 

@@ -3,7 +3,7 @@
 
 import numpy as np
 import scipy
-from .Util import getDFTMatrix, CayleyTransform, getRandomHermitianMatrix
+from .Util import getDFTMatrixNumpy, CayleyTransform, getRandomHermitianMatrix
 
 
 class Basis(object):
@@ -30,13 +30,13 @@ class Basis(object):
             U = np.eye(M, dtype=np.complex)
         elif type[0].lower() == 'd':
             # DFT basis
-            U = getDFTMatrix(M)
+            U = np.array(getDFTMatrixNumpy(M))
         elif type[0].lower() == 'r':
             # Random basis
             U = CayleyTransform(getRandomHermitianMatrix(M))
         elif type[0].lower() == 'h':
             P = int(type.replace('h', ''))
-            W = getDFTMatrix(P)
+            W = getDFTMatrixNumpy(P)
             U = np.zeros((M, M), dtype=complex)
             for i in range(int(M / P)):
                 U[(i * P): (i * P + P), (i * P): (i * P + P)] = W

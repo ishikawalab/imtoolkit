@@ -69,15 +69,16 @@ def outputIndsToFile(inds, M):
     print("Saved to " + fname)
     return fname
 
+@jit('i8(i8,i8)')
 def getMaxQ(M, K):
     return int(np.exp2(np.floor(np.log2(binom(M, K)))))
 
 # Usage: convertIndsToMatrix(getDictionaryIndexesList(M, K, Q), M)
-@jit
+@jit('i8[:,:](i8,i8,i8)')
 def getDictionaryIndexesList(M, K, Q):
     maxQ = getMaxQ(M, K)
     if Q > maxQ:
-        print("The given Q is larger than the maximum:" + str(Q) + " > " + str(maxQ))
+        print("The given Q is larger than the maximum: %d > %d" %(Q, maxQ))
         Q = maxQ
 
     ret = [[0] * K] * Q

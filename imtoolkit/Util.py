@@ -4,7 +4,7 @@
 import os
 from sympy.combinatorics.graycode import GrayCode
 from scipy.interpolate import interp1d
-from numba import jit
+from numba import jit, njit
 import numpy as np
 if os.getenv("USECUPY") == "1":
     import cupy as xp
@@ -18,7 +18,7 @@ def getGrayIndixes(bitWidth):
 def frodiff(x, y):
     return xp.square(xp.linalg.norm(x - y))
 
-@jit
+@njit(['f8[:](c16[:,:,:])', 'f8[:](f8[:,:,:])'])
 def getEuclideanDistances(codes): 
     # The following implementation only supports NumPy, slow
     #combsfro = itertools.starmap(frodiff, itertools.combinations(codes, 2))
@@ -46,7 +46,7 @@ def getEuclideanDistances(codes):
     #frodiff = xp.power(xp.linalg.norm(diffxy, axis=(2,3)), 2)
     #return frodiff[np.triu_indices(Nc, 1)]
 
-@jit
+@njit(['f8(c16[:,:,:])', 'f8(f8[:,:,:])'])
 def getMinimumEuclideanDistance(codes):
     #return min(getEuclideanDistances(codes))
     # The following straightforward implementation with numba is the fastest
@@ -68,6 +68,15 @@ def getDFTMatrix(N):
     W /= xp.sqrt(N)
     return W
 
+def getDFTMatrixNumpy(N):
+    W = np.zeros((N, N), dtype = complex)
+    omega = np.exp(2.0j * np.pi / N)
+    for j in range(N):
+        for k in range(N):
+            W[j, k] = pow(omega, j * k)
+    W /= np.sqrt(N)
+    return W
+
 #
 # IT++ like functions
 #
@@ -84,12 +93,16 @@ def randn_c(*size):
     return xp.random.normal(0, 1 / xp.sqrt(2.0), size = size) + xp.random.normal(0, 1 / xp.sqrt(2.0), size = size) * 1j
 #xp.random.randn_c = randn_c
 
-
 def countErrorBits(x, y):
     return bin(x^y).count('1')
 
 def getXORtoErrorBitsArray(Nc):
-    return xp.array(list(map(lambda x: bin(x).count('1'), range(Nc + 1))))
+    #return xp.array(list(map(lambda x: bin(x).count('1'), range(Nc + 1))))
+    ret = xp.zeros(Nc + 1)
+    for x in range(Nc + 1):
+        ret[x] = bin(x).count('1')
+
+    return ret
 
 def getErrorBitsTable(Nc):
     errorArray = getXORtoErrorBitsArray(Nc)

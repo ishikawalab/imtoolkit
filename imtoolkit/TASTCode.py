@@ -2,7 +2,7 @@
 # This toolkit is released under the MIT License, see LICENSE.txt
 
 import numpy as np
-from .Modulator import StarQAM
+from .Modulator import PSK, StarQAM
 
 
 class TASTCode(object):
@@ -13,21 +13,27 @@ class TASTCode(object):
     - [3] C. Xu, P. Zhang, R. Rajashekar, N. Ishikawa, S. Sugiura, Z. Wang, and L. Hanzo, ````Near-perfect'' finite-cardinality generalized space-time shift keying,'' IEEE J. Sel. Areas Commun., in press.
     """
 
-    def __init__(self, M, Q, L):
+    def __init__(self, M, Q, L, modtype = "SQAM"):
         """
         Args:
             M (int): the number of transmit antennas.
             Q (int): the number of dispersion elements.
-            L (int): the SQAM constellation size.
+            L (int): the constellation size.
+            modtype (str): the constellation type.
         """
         self.M = M
         self.Nc = M * L * Q
         self.B = np.log2(self.Nc)
 
-        mod = StarQAM(L)
+        if modtype == "SQAM":
+            mod = StarQAM(L)
+            La = mod.Nlevels
+            Lp = mod.subConstellationSize
+        elif modtype == "PSK":
+            mod = PSK(L)
+            La = 1
+            Lp = L
         apsksymbols = mod.symbols
-        La = mod.Nlevels
-        Lp = mod.subConstellationSize
 
         G = np.zeros((M, M), dtype=np.complex)
         G[0, M - 1] = 1

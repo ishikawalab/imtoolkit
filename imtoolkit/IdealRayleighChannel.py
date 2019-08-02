@@ -1,10 +1,11 @@
 # Copyright (c) IMToolkit Development Team
 # This toolkit is released under the MIT License, see LICENSE.txt
 
+from numba import jitclass, int64, complex128
 from .Channel import Channel
 from .Util import randn_c
 
-
+@jitclass([('IT', int64), ('M', int64), ('N', int64), ('channelMatrix', complex128[:,:])])
 class IdealRayleighChannel(Channel):
     """
     A `Channel` class that generates the ideal Rayleigh fading channel coefficients.
