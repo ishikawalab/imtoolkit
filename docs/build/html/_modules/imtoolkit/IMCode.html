@@ -84,6 +84,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../db/index.html">Active Indices Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module/modules.html">Modules</a></li>
 </ul>
 
             
@@ -156,7 +157,7 @@
 <span class="kn">from</span> <span class="nn">.IMUtil</span> <span class="k">import</span> <span class="n">convertIndsToMatrix</span><span class="p">,</span> <span class="n">getIndexes</span>
 
 
-<div class="viewcode-block" id="IMCode"><a class="viewcode-back" href="../../imtoolkit.IMCode.html#imtoolkit.IMCode.IMCode">[docs]</a><span class="k">class</span> <span class="nc">IMCode</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="IMCode"><a class="viewcode-back" href="../../module/imtoolkit.IMCode.html#imtoolkit.IMCode.IMCode">[docs]</a><span class="k">class</span> <span class="nc">IMCode</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dm</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">modtype</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">meanPower</span><span class="p">):</span>
         <span class="n">mod</span> <span class="o">=</span> <span class="n">Modulator</span><span class="p">(</span><span class="n">modtype</span><span class="p">,</span> <span class="n">L</span><span class="p">)</span>
         <span class="n">kfoldsymbols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">mod</span><span class="o">.</span><span class="n">symbols</span><span class="p">,</span> <span class="n">repeat</span> <span class="o">=</span> <span class="n">K</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span>
@@ -171,7 +172,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">B2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">K</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">L</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">B1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">B2</span>
     
-<div class="viewcode-block" id="IMCode.putRate"><a class="viewcode-back" href="../../imtoolkit.IMCode.html#imtoolkit.IMCode.IMCode.putRate">[docs]</a>    <span class="k">def</span> <span class="nf">putRate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IMCode.putRate"><a class="viewcode-back" href="../../module/imtoolkit.IMCode.html#imtoolkit.IMCode.IMCode.putRate">[docs]</a>    <span class="k">def</span> <span class="nf">putRate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;B = B1 + B2 = </span><span class="si">%d</span><span class="s2"> + </span><span class="si">%d</span><span class="s2"> = </span><span class="si">%d</span><span class="s2"> [bit/symbol]&quot;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">B1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">))</span></div></div>
     
 

@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>imtoolkit.NonSquareDifferentialMLDSimulator module &mdash; imtoolkit 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="imtoolkit.OSTBCode module" href="imtoolkit.OSTBCode.html" />
+    <link rel="prev" title="imtoolkit.Modulator module" href="imtoolkit.Modulator.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> imtoolkit
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../db/index.html">Active Indices Database</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="imtoolkit.html">imtoolkit package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="imtoolkit.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="imtoolkit.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.ADSMCode.html">imtoolkit.ADSMCode module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.AWGNChannel.html">imtoolkit.AWGNChannel module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.Basis.html">imtoolkit.Basis module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.Channel.html">imtoolkit.Channel module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.CoherentMLDSimulator.html">imtoolkit.CoherentMLDSimulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.DiagonalUnitaryCode.html">imtoolkit.DiagonalUnitaryCode module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.DifferentialMLDSimulator.html">imtoolkit.DifferentialMLDSimulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.IMCode.html">imtoolkit.IMCode module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.IMUtil.html">imtoolkit.IMUtil module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.IdealOFDMChannel.html">imtoolkit.IdealOFDMChannel module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.IdealRayleighChannel.html">imtoolkit.IdealRayleighChannel module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.Modulator.html">imtoolkit.Modulator module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">imtoolkit.NonSquareDifferentialMLDSimulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.OSTBCode.html">imtoolkit.OSTBCode module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.Parameters.html">imtoolkit.Parameters module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.SemiUnitaryDifferentialMLDSimulator.html">imtoolkit.SemiUnitaryDifferentialMLDSimulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.Simulator.html">imtoolkit.Simulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.TASTCode.html">imtoolkit.TASTCode module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.Util.html">imtoolkit.Util module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.imsearch.html">imtoolkit.imsearch module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.imtoolkit.html">imtoolkit.imtoolkit module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imtoolkit.html#module-imtoolkit">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">imtoolkit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">imtoolkit</a> &raquo;</li>
+        
+          <li><a href="imtoolkit.html">imtoolkit package</a> &raquo;</li>
+        
+      <li>imtoolkit.NonSquareDifferentialMLDSimulator module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-imtoolkit.NonSquareDifferentialMLDSimulator">
+<span id="imtoolkit-nonsquaredifferentialmldsimulator-module"></span><h1>imtoolkit.NonSquareDifferentialMLDSimulator module<a class="headerlink" href="#module-imtoolkit.NonSquareDifferentialMLDSimulator" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="imtoolkit.NonSquareDifferentialMLDSimulator.NonSquareDifferentialMLDSimulator">
+<em class="property">class </em><code class="descclassname">imtoolkit.NonSquareDifferentialMLDSimulator.</code><code class="descname">NonSquareDifferentialMLDSimulator</code><span class="sig-paren">(</span><em>codes</em>, <em>channel</em>, <em>bases</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/NonSquareDifferentialMLDSimulator.html#NonSquareDifferentialMLDSimulator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.NonSquareDifferentialMLDSimulator.NonSquareDifferentialMLDSimulator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="imtoolkit.Simulator.html#imtoolkit.Simulator.Simulator" title="imtoolkit.Simulator.Simulator"><code class="xref py py-class docutils literal notranslate"><span class="pre">imtoolkit.Simulator.Simulator</span></code></a></p>
+<p>A simulator that relies on the nonsquare differential space-time block codes, which are proposed in [1-3]. This implementation uses the square-to-nonsquare projection concept of [2] and the adaptive forgetting factor of [3] for time-varying channels. The environment variable USECUPY determines whether to use cupy or not.</p>
+<ul class="simple">
+<li><p>[1] N. Ishikawa and S. Sugiura, <a href="#id1"><span class="problematic" id="id2">``</span></a>Rectangular differential spatial modulation for open-loop noncoherent massive-MIMO downlink,’’ IEEE Trans. Wirel. Commun., vol. 16, no. 3, pp. 1908–1920, 2017.</p></li>
+<li><p>[2] N. Ishikawa, R. Rajashekar, C. Xu, S. Sugiura, and L. Hanzo, <a href="#id3"><span class="problematic" id="id4">``</span></a>Differential space-time coding dispensing with channel-estimation approaches the performance of its coherent counterpart in the open-loop massive MIMO-OFDM downlink,’’ IEEE Trans. Commun., vol. 66, no. 12, pp. 6190–6204, 2018.</p></li>
+<li><p>[3] N. Ishikawa, R. Rajashekar, C. Xu, M. El-Hajjar, S. Sugiura, L. L. Yang, and L. Hanzo, <a href="#id5"><span class="problematic" id="id6">``</span></a>Differential-detection aided large-scale generalized spatial modulation is capable of operating in high-mobility millimeter-wave channels,’’ IEEE J. Sel. Top. Signal Process., in press.</p></li>
+</ul>
+<dl class="method">
+<dt id="imtoolkit.NonSquareDifferentialMLDSimulator.NonSquareDifferentialMLDSimulator.simulateBERParallel">
+<code class="descname">simulateBERParallel</code><span class="sig-paren">(</span><em>params</em>, <em>outputFile=True</em>, <em>printValue=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/NonSquareDifferentialMLDSimulator.html#NonSquareDifferentialMLDSimulator.simulateBERParallel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.NonSquareDifferentialMLDSimulator.NonSquareDifferentialMLDSimulator.simulateBERParallel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulates BER values at multiple SNRs, where the massively parallel algorithm is used. This implementation is especially designed for cupy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>imtoolkit.Parameter</em>) – simulation parameters.</p></li>
+<li><p><strong>outputFile</strong> (<em>bool</em>) – a flag that determines whether to output the obtained results to the results/ directory.</p></li>
+<li><p><strong>printValue</strong> (<em>bool</em>) – a flag that determines whether to print the simulated values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ret (dict)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="imtoolkit.NonSquareDifferentialMLDSimulator.NonSquareDifferentialMLDSimulator.simulateBERReference">
+<code class="descname">simulateBERReference</code><span class="sig-paren">(</span><em>params</em>, <em>outputFile=True</em>, <em>printValue=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/NonSquareDifferentialMLDSimulator.html#NonSquareDifferentialMLDSimulator.simulateBERReference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.NonSquareDifferentialMLDSimulator.NonSquareDifferentialMLDSimulator.simulateBERReference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulates BER values at multiple SNRs, where the straightforward reference algorithm is used. Note that this time complexity is unrealistically high.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>imtoolkit.Parameter</em>) – simulation parameters.</p></li>
+<li><p><strong>outputFile</strong> (<em>bool</em>) – a flag that determines whether to output the obtained results to the results/ directory.</p></li>
+<li><p><strong>printValue</strong> (<em>bool</em>) – a flag that determines whether to print the simulated values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dict that has two keys: snr_dB and ber, and contains the corresponding results. All the results are transferred into the CPU memory.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ret (dict)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="imtoolkit.OSTBCode.html" class="btn btn-neutral float-right" title="imtoolkit.OSTBCode module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="imtoolkit.Modulator.html" class="btn btn-neutral float-left" title="imtoolkit.Modulator module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Naoki Ishikawa
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

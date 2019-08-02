@@ -84,6 +84,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../db/index.html">Active Indices Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module/modules.html">Modules</a></li>
 </ul>
 
             
@@ -153,7 +154,7 @@
 <span class="kn">import</span> <span class="nn">re</span>
 
 
-<div class="viewcode-block" id="Parameters"><a class="viewcode-back" href="../../imtoolkit.Parameters.html#imtoolkit.Parameters.Parameters">[docs]</a><span class="k">class</span> <span class="nc">Parameters</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Parameters"><a class="viewcode-back" href="../../module/imtoolkit.Parameters.html#imtoolkit.Parameters.Parameters">[docs]</a><span class="k">class</span> <span class="nc">Parameters</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This class is used to pack various simulation parameters into an instance.&quot;&quot;&quot;</span>
 
     <span class="n">arg</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -235,13 +236,13 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-<div class="viewcode-block" id="Parameters.isSpeficied"><a class="viewcode-back" href="../../imtoolkit.Parameters.html#imtoolkit.Parameters.Parameters.isSpeficied">[docs]</a>    <span class="k">def</span> <span class="nf">isSpeficied</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="Parameters.isSpeficied"><a class="viewcode-back" href="../../module/imtoolkit.Parameters.html#imtoolkit.Parameters.Parameters.isSpeficied">[docs]</a>    <span class="k">def</span> <span class="nf">isSpeficied</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="Parameters.parseValue"><a class="viewcode-back" href="../../imtoolkit.Parameters.html#imtoolkit.Parameters.Parameters.parseValue">[docs]</a>    <span class="k">def</span> <span class="nf">parseValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="Parameters.parseValue"><a class="viewcode-back" href="../../module/imtoolkit.Parameters.html#imtoolkit.Parameters.Parameters.parseValue">[docs]</a>    <span class="k">def</span> <span class="nf">parseValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;-*\d+&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;e&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>  <span class="c1"># e.g. IT=1e5, IT=2.5e7</span>

@@ -1,0 +1,345 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>imtoolkit.IMUtil module &mdash; imtoolkit 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="imtoolkit.IdealOFDMChannel module" href="imtoolkit.IdealOFDMChannel.html" />
+    <link rel="prev" title="imtoolkit.IMCode module" href="imtoolkit.IMCode.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> imtoolkit
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../db/index.html">Active Indices Database</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="imtoolkit.html">imtoolkit package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="imtoolkit.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="imtoolkit.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.ADSMCode.html">imtoolkit.ADSMCode module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.AWGNChannel.html">imtoolkit.AWGNChannel module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.Basis.html">imtoolkit.Basis module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.Channel.html">imtoolkit.Channel module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.CoherentMLDSimulator.html">imtoolkit.CoherentMLDSimulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.DiagonalUnitaryCode.html">imtoolkit.DiagonalUnitaryCode module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.DifferentialMLDSimulator.html">imtoolkit.DifferentialMLDSimulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.IMCode.html">imtoolkit.IMCode module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">imtoolkit.IMUtil module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.IdealOFDMChannel.html">imtoolkit.IdealOFDMChannel module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.IdealRayleighChannel.html">imtoolkit.IdealRayleighChannel module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.Modulator.html">imtoolkit.Modulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.NonSquareDifferentialMLDSimulator.html">imtoolkit.NonSquareDifferentialMLDSimulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.OSTBCode.html">imtoolkit.OSTBCode module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.Parameters.html">imtoolkit.Parameters module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.SemiUnitaryDifferentialMLDSimulator.html">imtoolkit.SemiUnitaryDifferentialMLDSimulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.Simulator.html">imtoolkit.Simulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.TASTCode.html">imtoolkit.TASTCode module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.Util.html">imtoolkit.Util module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.imsearch.html">imtoolkit.imsearch module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.imtoolkit.html">imtoolkit.imtoolkit module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imtoolkit.html#module-imtoolkit">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">imtoolkit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">imtoolkit</a> &raquo;</li>
+        
+          <li><a href="imtoolkit.html">imtoolkit package</a> &raquo;</li>
+        
+      <li>imtoolkit.IMUtil module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-imtoolkit.IMUtil">
+<span id="imtoolkit-imutil-module"></span><h1>imtoolkit.IMUtil module<a class="headerlink" href="#module-imtoolkit.IMUtil" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="imtoolkit.IMUtil.checkConflict">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">checkConflict</code><span class="sig-paren">(</span><em>inds</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#checkConflict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.checkConflict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imtoolkit.IMUtil.convertIndsDecToInds">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">convertIndsDecToInds</code><span class="sig-paren">(</span><em>indsdecs</em>, <em>M</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#convertIndsDecToInds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.convertIndsDecToInds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imtoolkit.IMUtil.convertIndsToIndsDec">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">convertIndsToIndsDec</code><span class="sig-paren">(</span><em>inds</em>, <em>M</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#convertIndsToIndsDec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.convertIndsToIndsDec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imtoolkit.IMUtil.convertIndsToMatrix">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">convertIndsToMatrix</code><span class="sig-paren">(</span><em>inds</em>, <em>M</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#convertIndsToMatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.convertIndsToMatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imtoolkit.IMUtil.convertIndsToVector">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">convertIndsToVector</code><span class="sig-paren">(</span><em>inds</em>, <em>M</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#convertIndsToVector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.convertIndsToVector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imtoolkit.IMUtil.downloadOptimizedIndexesList">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">downloadOptimizedIndexesList</code><span class="sig-paren">(</span><em>basePath</em>, <em>M</em>, <em>K</em>, <em>Q</em>, <em>source</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#downloadOptimizedIndexesList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.downloadOptimizedIndexesList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.IMUtil.getDictionaryIndexesList">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">getDictionaryIndexesList</code><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#getDictionaryIndexesList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.getDictionaryIndexesList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imtoolkit.IMUtil.getHammingDistance">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">getHammingDistance</code><span class="sig-paren">(</span><em>arr1</em>, <em>arr2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#getHammingDistance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.getHammingDistance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imtoolkit.IMUtil.getIMParameters">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">getIMParameters</code><span class="sig-paren">(</span><em>M</em>, <em>K</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#getIMParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.getIMParameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imtoolkit.IMUtil.getIndexes">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">getIndexes</code><span class="sig-paren">(</span><em>type</em>, <em>M</em>, <em>K</em>, <em>Q</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#getIndexes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.getIndexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imtoolkit.IMUtil.getInequalityL1">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">getInequalityL1</code><span class="sig-paren">(</span><em>inds</em>, <em>M</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#getInequalityL1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.getInequalityL1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.IMUtil.getMaxQ">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">getMaxQ</code><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#getMaxQ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.getMaxQ" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imtoolkit.IMUtil.getMeslehIndexesList">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">getMeslehIndexesList</code><span class="sig-paren">(</span><em>M</em>, <em>K</em>, <em>Q</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#getMeslehIndexesList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.getMeslehIndexesList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imtoolkit.IMUtil.getMinimumHammingDistance">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">getMinimumHammingDistance</code><span class="sig-paren">(</span><em>inds</em>, <em>M</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#getMinimumHammingDistance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.getMinimumHammingDistance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imtoolkit.IMUtil.getOptimizedIndexesList">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">getOptimizedIndexesList</code><span class="sig-paren">(</span><em>M</em>, <em>K</em>, <em>Q</em>, <em>minh=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#getOptimizedIndexesList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.getOptimizedIndexesList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imtoolkit.IMUtil.getProbabilityOfActivation">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">getProbabilityOfActivation</code><span class="sig-paren">(</span><em>inds</em>, <em>M</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#getProbabilityOfActivation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.getProbabilityOfActivation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imtoolkit.IMUtil.getRandomIndexesList">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">getRandomIndexesList</code><span class="sig-paren">(</span><em>M</em>, <em>K</em>, <em>Q</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#getRandomIndexesList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.getRandomIndexesList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imtoolkit.IMUtil.getSumDistanceBetweenActivatedElements">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">getSumDistanceBetweenActivatedElements</code><span class="sig-paren">(</span><em>inds</em>, <em>M</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#getSumDistanceBetweenActivatedElements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.getSumDistanceBetweenActivatedElements" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imtoolkit.IMUtil.getSumHamming">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">getSumHamming</code><span class="sig-paren">(</span><em>inds</em>, <em>M</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#getSumHamming"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.getSumHamming" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imtoolkit.IMUtil.outputIndsToFile">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">outputIndsToFile</code><span class="sig-paren">(</span><em>inds</em>, <em>M</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#outputIndsToFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.outputIndsToFile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imtoolkit.IMUtil.wen2016EquiprobableSubcarrierActivation">
+<code class="descclassname">imtoolkit.IMUtil.</code><code class="descname">wen2016EquiprobableSubcarrierActivation</code><span class="sig-paren">(</span><em>M</em>, <em>K</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/IMUtil.html#wen2016EquiprobableSubcarrierActivation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.IMUtil.wen2016EquiprobableSubcarrierActivation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="imtoolkit.IdealOFDMChannel.html" class="btn btn-neutral float-right" title="imtoolkit.IdealOFDMChannel module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="imtoolkit.IMCode.html" class="btn btn-neutral float-left" title="imtoolkit.IMCode module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Naoki Ishikawa
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

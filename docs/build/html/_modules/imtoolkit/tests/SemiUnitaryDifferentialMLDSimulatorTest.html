@@ -1,0 +1,239 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>imtoolkit.tests.SemiUnitaryDifferentialMLDSimulatorTest &mdash; imtoolkit 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> imtoolkit
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../db/index.html">Active Indices Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module/modules.html">Modules</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">imtoolkit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>imtoolkit.tests.SemiUnitaryDifferentialMLDSimulatorTest</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for imtoolkit.tests.SemiUnitaryDifferentialMLDSimulatorTest</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) IMToolkit Development Team</span>
+<span class="c1"># This toolkit is released under the MIT License, see LICENSE.txt</span>
+
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">imtoolkit</span> <span class="k">import</span> <span class="n">Parameters</span><span class="p">,</span> <span class="n">Modulator</span><span class="p">,</span> <span class="n">OSTBCode</span><span class="p">,</span> <span class="n">TASTCode</span><span class="p">,</span> <span class="n">IdealRayleighChannel</span><span class="p">,</span> <span class="n">SemiUnitaryDifferentialMLDSimulator</span>
+
+<div class="viewcode-block" id="SemiUnitaryDifferentialMLDSimulatorTest"><a class="viewcode-back" href="../../../module/imtoolkit.tests.SemiUnitaryDifferentialMLDSimulatorTest.html#imtoolkit.tests.SemiUnitaryDifferentialMLDSimulatorTest.SemiUnitaryDifferentialMLDSimulatorTest">[docs]</a><span class="k">class</span> <span class="nc">SemiUnitaryDifferentialMLDSimulatorTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SemiUnitaryDifferentialMLDSimulatorTest.test_BERReference_SQAM"><a class="viewcode-back" href="../../../module/imtoolkit.tests.SemiUnitaryDifferentialMLDSimulatorTest.html#imtoolkit.tests.SemiUnitaryDifferentialMLDSimulatorTest.SemiUnitaryDifferentialMLDSimulatorTest.test_BERReference_SQAM">[docs]</a>    <span class="k">def</span> <span class="nf">test_BERReference_SQAM</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">truth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.94573999999999980304e-01</span><span class="p">,</span><span class="mf">3.05669000000000024020e-01</span><span class="p">,</span><span class="mf">2.02045000000000002371e-01</span><span class="p">,</span><span class="mf">1.10306000000000001271e-01</span><span class="p">,</span><span class="mf">4.76810000000000011600e-02</span><span class="p">,</span><span class="mf">1.77129999999999995786e-02</span><span class="p">,</span><span class="mf">6.14199999999999989020e-03</span><span class="p">]))</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">Parameters</span><span class="p">(</span><span class="s2">&quot;BER_sim=sudiff_channel=rayleigh_M=1_N=1_L=16_mod=SQAM_IT=1e5_snrfrom=0.00_to=30.00_len=7&quot;</span><span class="p">)</span>
+        <span class="n">codes</span> <span class="o">=</span> <span class="n">Modulator</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">mod</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">L</span><span class="p">)</span><span class="o">.</span><span class="n">symbols</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">L</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">IdealRayleighChannel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+        <span class="n">sim</span> <span class="o">=</span> <span class="n">SemiUnitaryDifferentialMLDSimulator</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">simulateBERReference</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ber&quot;</span><span class="p">]),</span> <span class="n">truth</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SemiUnitaryDifferentialMLDSimulatorTest.test_BERParallel_SQAM"><a class="viewcode-back" href="../../../module/imtoolkit.tests.SemiUnitaryDifferentialMLDSimulatorTest.html#imtoolkit.tests.SemiUnitaryDifferentialMLDSimulatorTest.SemiUnitaryDifferentialMLDSimulatorTest.test_BERParallel_SQAM">[docs]</a>    <span class="k">def</span> <span class="nf">test_BERParallel_SQAM</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">truth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.94573999999999980304e-01</span><span class="p">,</span><span class="mf">3.05669000000000024020e-01</span><span class="p">,</span><span class="mf">2.02045000000000002371e-01</span><span class="p">,</span><span class="mf">1.10306000000000001271e-01</span><span class="p">,</span><span class="mf">4.76810000000000011600e-02</span><span class="p">,</span><span class="mf">1.77129999999999995786e-02</span><span class="p">,</span><span class="mf">6.14199999999999989020e-03</span><span class="p">]))</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">Parameters</span><span class="p">(</span><span class="s2">&quot;BER_sim=sudiff_channel=rayleigh_M=1_N=1_L=16_mod=SQAM_ITo=1e1_ITi=1e4_snrfrom=0.00_to=30.00_len=7&quot;</span><span class="p">)</span>
+        <span class="n">codes</span> <span class="o">=</span> <span class="n">Modulator</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">mod</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">L</span><span class="p">)</span><span class="o">.</span><span class="n">symbols</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">L</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">IdealRayleighChannel</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">ITi</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+        <span class="n">sim</span> <span class="o">=</span> <span class="n">SemiUnitaryDifferentialMLDSimulator</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">simulateBERParallel</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ber&quot;</span><span class="p">]),</span> <span class="n">truth</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SemiUnitaryDifferentialMLDSimulatorTest.test_BERReference_TAST"><a class="viewcode-back" href="../../../module/imtoolkit.tests.SemiUnitaryDifferentialMLDSimulatorTest.html#imtoolkit.tests.SemiUnitaryDifferentialMLDSimulatorTest.SemiUnitaryDifferentialMLDSimulatorTest.test_BERReference_TAST">[docs]</a>    <span class="k">def</span> <span class="nf">test_BERReference_TAST</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">truth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">4.42719114561770876737e-01</span><span class="p">,</span><span class="mf">3.35158329683340638905e-01</span><span class="p">,</span><span class="mf">1.74362651274697438852e-01</span><span class="p">,</span><span class="mf">4.47959104081791861796e-02</span><span class="p">,</span><span class="mf">4.18899162201675622635e-03</span><span class="p">]))</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">Parameters</span><span class="p">(</span><span class="s2">&quot;BER_sim=sudiff_channel=rayleigh_code=TAST_M=2_T=2_Q=2_L=16_mod=SQAM_N=2_IT=1e5_snrfrom=0.00_to=20.00_len=5&quot;</span><span class="p">)</span>
+        <span class="n">codes</span> <span class="o">=</span> <span class="n">TASTCode</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">Q</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">L</span><span class="p">)</span><span class="o">.</span><span class="n">codes</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">IdealRayleighChannel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+        <span class="n">sim</span> <span class="o">=</span> <span class="n">SemiUnitaryDifferentialMLDSimulator</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">simulateBERReference</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ber&quot;</span><span class="p">]),</span> <span class="n">truth</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SemiUnitaryDifferentialMLDSimulatorTest.test_BERParallel_TAST"><a class="viewcode-back" href="../../../module/imtoolkit.tests.SemiUnitaryDifferentialMLDSimulatorTest.html#imtoolkit.tests.SemiUnitaryDifferentialMLDSimulatorTest.SemiUnitaryDifferentialMLDSimulatorTest.test_BERParallel_TAST">[docs]</a>    <span class="k">def</span> <span class="nf">test_BERParallel_TAST</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">truth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">4.42719114561770876737e-01</span><span class="p">,</span><span class="mf">3.35158329683340638905e-01</span><span class="p">,</span><span class="mf">1.74362651274697438852e-01</span><span class="p">,</span><span class="mf">4.47959104081791861796e-02</span><span class="p">,</span><span class="mf">4.18899162201675622635e-03</span><span class="p">]))</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">Parameters</span><span class="p">(</span><span class="s2">&quot;BERP_sim=sudiff_channel=rayleigh_code=TAST_M=2_T=2_Q=2_L=16_mod=SQAM_N=2_ITo=1e1_ITi=1e4_snrfrom=0.00_to=20.00_len=5&quot;</span><span class="p">)</span>
+        <span class="n">codes</span> <span class="o">=</span> <span class="n">TASTCode</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">Q</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">L</span><span class="p">)</span><span class="o">.</span><span class="n">codes</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">IdealRayleighChannel</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">ITi</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+        <span class="n">sim</span> <span class="o">=</span> <span class="n">SemiUnitaryDifferentialMLDSimulator</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">simulateBERParallel</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ber&quot;</span><span class="p">]),</span> <span class="n">truth</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Naoki Ishikawa
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>imtoolkit.tests.DifferentialMLDSimulatorTest &mdash; imtoolkit 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> imtoolkit
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../db/index.html">Active Indices Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module/modules.html">Modules</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">imtoolkit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>imtoolkit.tests.DifferentialMLDSimulatorTest</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for imtoolkit.tests.DifferentialMLDSimulatorTest</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) IMToolkit Development Team</span>
+<span class="c1"># This toolkit is released under the MIT License, see LICENSE.txt</span>
+
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">imtoolkit</span> <span class="k">import</span> <span class="n">Parameters</span><span class="p">,</span> <span class="n">OSTBCode</span><span class="p">,</span> <span class="n">DiagonalUnitaryCode</span><span class="p">,</span> <span class="n">ADSMCode</span><span class="p">,</span> <span class="n">IdealRayleighChannel</span><span class="p">,</span> <span class="n">DifferentialMLDSimulator</span>
+
+
+<div class="viewcode-block" id="DifferentialMLDSimulatorTest"><a class="viewcode-back" href="../../../module/imtoolkit.tests.DifferentialMLDSimulatorTest.html#imtoolkit.tests.DifferentialMLDSimulatorTest.DifferentialMLDSimulatorTest">[docs]</a><span class="k">class</span> <span class="nc">DifferentialMLDSimulatorTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DifferentialMLDSimulatorTest.test_BERReference_OSTBC"><a class="viewcode-back" href="../../../module/imtoolkit.tests.DifferentialMLDSimulatorTest.html#imtoolkit.tests.DifferentialMLDSimulatorTest.DifferentialMLDSimulatorTest.test_BERReference_OSTBC">[docs]</a>    <span class="k">def</span> <span class="nf">test_BERReference_OSTBC</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">truth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">4.30007799999999995588e-01</span><span class="p">,</span><span class="mf">3.16763799999999984269e-01</span><span class="p">,</span><span class="mf">1.40630900000000003125e-01</span><span class="p">,</span><span class="mf">2.39459999999999985365e-02</span><span class="p">,</span><span class="mf">1.21079999999999994055e-03</span><span class="p">]))</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">Parameters</span><span class="p">(</span><span class="s2">&quot;BER_sim=diff_channel=rayleigh_code=OSTBC_M=2_N=2_T=2_L=2_mod=PSK_IT=1e4_snrfrom=-10.00_to=10.00_len=5&quot;</span><span class="p">)</span>
+        <span class="c1">#params = Parameters(&quot;BER_sim=diff_channel=rayleigh_code=OSTBC_M=2_N=2_T=2_L=2_mod=PSK_IT=1e6_snrfrom=-10.00_to=10.00_len=5&quot;)</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="n">OSTBCode</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="s2">&quot;PSK&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">L</span><span class="p">)</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">IdealRayleighChannel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+        <span class="n">sim</span> <span class="o">=</span> <span class="n">DifferentialMLDSimulator</span><span class="p">(</span><span class="n">code</span><span class="o">.</span><span class="n">codes</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">simulateBERReference</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">printValue</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ber&quot;</span><span class="p">]),</span> <span class="n">truth</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="DifferentialMLDSimulatorTest.test_BERParallel_OSTBC"><a class="viewcode-back" href="../../../module/imtoolkit.tests.DifferentialMLDSimulatorTest.html#imtoolkit.tests.DifferentialMLDSimulatorTest.DifferentialMLDSimulatorTest.test_BERParallel_OSTBC">[docs]</a>    <span class="k">def</span> <span class="nf">test_BERParallel_OSTBC</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+        <span class="n">truth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">4.30007799999999995588e-01</span><span class="p">,</span><span class="mf">3.16763799999999984269e-01</span><span class="p">,</span><span class="mf">1.40630900000000003125e-01</span><span class="p">,</span><span class="mf">2.39459999999999985365e-02</span><span class="p">,</span><span class="mf">1.21079999999999994055e-03</span><span class="p">]))</span>
+        <span class="c1">#params = Parameters(&quot;BERP_sim=diff_channel=rayleigh_code=OSTBC_M=2_N=2_T=2_L=2_mod=PSK_ITo=1e1_ITi=1e3_snrfrom=-10.00_to=10.00_len=5&quot;)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">Parameters</span><span class="p">(</span><span class="s2">&quot;BERP_sim=diff_channel=rayleigh_code=OSTBC_M=2_N=2_T=2_L=2_mod=PSK_ITo=1_ITi=1e6_snrfrom=-10.00_to=10.00_len=5&quot;</span><span class="p">)</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="n">OSTBCode</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="s2">&quot;PSK&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">L</span><span class="p">)</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">IdealRayleighChannel</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">ITi</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+        <span class="n">sim</span> <span class="o">=</span> <span class="n">DifferentialMLDSimulator</span><span class="p">(</span><span class="n">code</span><span class="o">.</span><span class="n">codes</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">simulateBERParallel</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">printValue</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ber&quot;</span><span class="p">]),</span> <span class="n">truth</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="DifferentialMLDSimulatorTest.test_BERReference_DUC"><a class="viewcode-back" href="../../../module/imtoolkit.tests.DifferentialMLDSimulatorTest.html#imtoolkit.tests.DifferentialMLDSimulatorTest.DifferentialMLDSimulatorTest.test_BERReference_DUC">[docs]</a>    <span class="k">def</span> <span class="nf">test_BERReference_DUC</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">truth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">4.86660099999999984366e-01</span><span class="p">,</span><span class="mf">4.48927299999999973590e-01</span><span class="p">,</span><span class="mf">3.32694099999999992612e-01</span><span class="p">,</span><span class="mf">1.44086500000000006239e-01</span><span class="p">,</span><span class="mf">2.63749999999999991396e-02</span><span class="p">]))</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">Parameters</span><span class="p">(</span><span class="s2">&quot;BER_sim=diff_channel=rayleigh_code=DUC_M=2_L=16_N=2_T=2_IT=1e5_snrfrom=-10.00_to=10.00_len=5&quot;</span><span class="p">)</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="n">DiagonalUnitaryCode</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">L</span><span class="p">)</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">IdealRayleighChannel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+        <span class="n">sim</span> <span class="o">=</span> <span class="n">DifferentialMLDSimulator</span><span class="p">(</span><span class="n">code</span><span class="o">.</span><span class="n">codes</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">simulateBERReference</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">printValue</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ber&quot;</span><span class="p">]),</span> <span class="n">truth</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+
+    <span class="c1"># Heavy test, somehow failed</span>
+    <span class="c1"># def test_BERReference_DUC_largeL(self):</span>
+    <span class="c1">#     truth = np.log10(np.array([3.67063492063492036177e-01,2.95634920634920639326e-01,2.29166666666666657415e-01,1.79563492063492063933e-01,1.36904761904761917979e-01,7.53968253968253926400e-02,4.06746031746031758147e-02,8.92857142857142807579e-03,9.92063492063492008421e-04]))</span>
+    <span class="c1">#     params = Parameters(&quot;BER_sim=diff_channel=rayleigh_code=DUC_M=4_L=65536_N=4_T=4_IT=1e3_snrfrom=00.00_to=40.00_len=9&quot;)</span>
+    <span class="c1">#     code = DiagonalUnitaryCode(params.M, params.L)</span>
+    <span class="c1">#     channel = IdealRayleighChannel(1, params.M, params.N)</span>
+    <span class="c1">#     sim = DifferentialMLDSimulator(code.codes, channel)</span>
+    <span class="c1">#     ret = sim.simulateBERReference(params, outputFile = False, printValue = True)</span>
+    <span class="c1">#     np.testing.assert_almost_equal(np.log10(ret[&quot;ber&quot;]), truth, 1)</span>
+
+<div class="viewcode-block" id="DifferentialMLDSimulatorTest.test_BERParallel_DUC"><a class="viewcode-back" href="../../../module/imtoolkit.tests.DifferentialMLDSimulatorTest.html#imtoolkit.tests.DifferentialMLDSimulatorTest.DifferentialMLDSimulatorTest.test_BERParallel_DUC">[docs]</a>    <span class="k">def</span> <span class="nf">test_BERParallel_DUC</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">truth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">4.86660099999999984366e-01</span><span class="p">,</span><span class="mf">4.48927299999999973590e-01</span><span class="p">,</span><span class="mf">3.32694099999999992612e-01</span><span class="p">,</span><span class="mf">1.44086500000000006239e-01</span><span class="p">,</span><span class="mf">2.63749999999999991396e-02</span><span class="p">]))</span>
+        <span class="c1">#params = Parameters(&quot;BERP_sim=diff_channel=rayleigh_code=DUC_M=2_L=16_N=2_T=2_ITo=1e1_ITi=1e4_snrfrom=-10.00_to=10.00_len=5&quot;)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">Parameters</span><span class="p">(</span><span class="s2">&quot;BERP_sim=diff_channel=rayleigh_code=DUC_M=2_L=16_N=2_T=2_ITo=1_ITi=1e6_snrfrom=-10.00_to=10.00_len=5&quot;</span><span class="p">)</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="n">DiagonalUnitaryCode</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">L</span><span class="p">)</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">IdealRayleighChannel</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">ITi</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+        <span class="n">sim</span> <span class="o">=</span> <span class="n">DifferentialMLDSimulator</span><span class="p">(</span><span class="n">code</span><span class="o">.</span><span class="n">codes</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">simulateBERParallel</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">printValue</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ber&quot;</span><span class="p">]),</span> <span class="n">truth</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DifferentialMLDSimulatorTest.test_BERReference_ADSM"><a class="viewcode-back" href="../../../module/imtoolkit.tests.DifferentialMLDSimulatorTest.html#imtoolkit.tests.DifferentialMLDSimulatorTest.DifferentialMLDSimulatorTest.test_BERReference_ADSM">[docs]</a>    <span class="k">def</span> <span class="nf">test_BERReference_ADSM</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">truth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.23886999999999980471e-01</span><span class="p">,</span><span class="mf">1.08588000000000003964e-01</span><span class="p">,</span><span class="mf">1.21379999999999994842e-02</span><span class="p">,</span><span class="mf">5.29999999999999980675e-04</span><span class="p">]))</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">Parameters</span><span class="p">(</span><span class="s2">&quot;BER_sim=diff_channel=rayleigh_code=ADSM_M=4_L=4_mod=PSK_T=4_N=1_IT=1e5_snrfrom=0.00_to=15.00_len=4&quot;</span><span class="p">)</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="n">ADSMCode</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="s2">&quot;PSK&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">L</span><span class="p">)</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">IdealRayleighChannel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+        <span class="n">sim</span> <span class="o">=</span> <span class="n">DifferentialMLDSimulator</span><span class="p">(</span><span class="n">code</span><span class="o">.</span><span class="n">codes</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">simulateBERReference</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">printValue</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ber&quot;</span><span class="p">]),</span> <span class="n">truth</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+
+    <span class="c1"># Heavy test</span>
+    <span class="c1"># def test_BERReference_ADSM_largeL(self):</span>
+    <span class="c1">#     truth = np.log10(np.array([4.16666666666666685170e-01,3.43253968253968255731e-01,3.34325396825396803369e-01,2.76785714285714301575e-01,2.75793650793650813036e-01,2.60912698412698429440e-01,2.31150793650793662248e-01,2.07341269841269854046e-01,1.60714285714285726181e-01,1.34920634920634913145e-01,1.19047619047619041011e-01]))</span>
+    <span class="c1">#     params = Parameters(&quot;BER_sim=diff_channel=rayleigh_code=ADSM_M=4_L=16384_mod=PSK_N=4_T=4_IT=1e2_snrfrom=00.00_to=50.00_len=11&quot;)</span>
+    <span class="c1">#     code = ADSMCode(params.M, params.mod, params.L)</span>
+    <span class="c1">#     channel = IdealRayleighChannel(1, params.M, params.N)</span>
+    <span class="c1">#     sim = DifferentialMLDSimulator(code.codes, channel)</span>
+    <span class="c1">#     ret = sim.simulateBERReference(params, outputFile = False, printValue = True)</span>
+    <span class="c1">#     np.testing.assert_almost_equal(np.log10(ret[&quot;ber&quot;]), truth, 1)</span>
+
+<div class="viewcode-block" id="DifferentialMLDSimulatorTest.test_BERParallel_ADSM"><a class="viewcode-back" href="../../../module/imtoolkit.tests.DifferentialMLDSimulatorTest.html#imtoolkit.tests.DifferentialMLDSimulatorTest.DifferentialMLDSimulatorTest.test_BERParallel_ADSM">[docs]</a>    <span class="k">def</span> <span class="nf">test_BERParallel_ADSM</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">truth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.23886999999999980471e-01</span><span class="p">,</span><span class="mf">1.08588000000000003964e-01</span><span class="p">,</span><span class="mf">1.21379999999999994842e-02</span><span class="p">,</span><span class="mf">5.29999999999999980675e-04</span><span class="p">]))</span>
+        <span class="c1">#params = Parameters(&quot;BERP_sim=diff_channel=rayleigh_code=ADSM_M=4_L=4_mod=PSK_T=4_N=1_ITo=1e1_ITi=1e4_snrfrom=0.00_to=15.00_len=4&quot;)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">Parameters</span><span class="p">(</span><span class="s2">&quot;BERP_sim=diff_channel=rayleigh_code=ADSM_M=4_L=4_mod=PSK_T=4_N=1_ITo=1_ITi=1e6_snrfrom=0.00_to=15.00_len=4&quot;</span><span class="p">)</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="n">ADSMCode</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="s2">&quot;PSK&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">L</span><span class="p">)</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">IdealRayleighChannel</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">ITi</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+        <span class="n">sim</span> <span class="o">=</span> <span class="n">DifferentialMLDSimulator</span><span class="p">(</span><span class="n">code</span><span class="o">.</span><span class="n">codes</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">simulateBERParallel</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">printValue</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ber&quot;</span><span class="p">]),</span> <span class="n">truth</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Naoki Ishikawa
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

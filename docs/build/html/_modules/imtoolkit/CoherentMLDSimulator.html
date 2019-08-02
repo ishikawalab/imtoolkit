@@ -84,6 +84,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../db/index.html">Active Indices Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module/modules.html">Modules</a></li>
 </ul>
 
             
@@ -162,7 +163,7 @@
 <span class="kn">from</span> <span class="nn">.Util</span> <span class="k">import</span> <span class="n">getXORtoErrorBitsArray</span><span class="p">,</span> <span class="n">inv_dB</span><span class="p">,</span> <span class="n">randn_c</span>
 
 
-<div class="viewcode-block" id="CoherentMLDSimulator"><a class="viewcode-back" href="../../imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator">[docs]</a><span class="k">class</span> <span class="nc">CoherentMLDSimulator</span><span class="p">(</span><span class="n">Simulator</span><span class="p">):</span>
+<div class="viewcode-block" id="CoherentMLDSimulator"><a class="viewcode-back" href="../../module/imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator">[docs]</a><span class="k">class</span> <span class="nc">CoherentMLDSimulator</span><span class="p">(</span><span class="n">Simulator</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A simulator that relies on the coherent maximum likelihood detector, that assumes perfect channel state information at the receiver. The environment variable USECUPY determines whether to use cupy or not.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codes</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
@@ -173,7 +174,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
 
-<div class="viewcode-block" id="CoherentMLDSimulator.simulateBERReference"><a class="viewcode-back" href="../../imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateBERReference">[docs]</a>    <span class="k">def</span> <span class="nf">simulateBERReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">printValue</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="CoherentMLDSimulator.simulateBERReference"><a class="viewcode-back" href="../../module/imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateBERReference">[docs]</a>    <span class="k">def</span> <span class="nf">simulateBERReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">printValue</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Simulates BER values at multiple SNRs, where the straightforward reference algorithm is used. Note that this time complexity is unrealistically high. </span>
 
 <span class="sd">        Args:</span>
@@ -215,7 +216,7 @@
             <span class="nb">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span></div>
 
-<div class="viewcode-block" id="CoherentMLDSimulator.simulateBERParallel"><a class="viewcode-back" href="../../imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateBERParallel">[docs]</a>    <span class="k">def</span> <span class="nf">simulateBERParallel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">printValue</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="CoherentMLDSimulator.simulateBERParallel"><a class="viewcode-back" href="../../module/imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateBERParallel">[docs]</a>    <span class="k">def</span> <span class="nf">simulateBERParallel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">printValue</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Simulates BER values at multiple SNRs, where the massively parallel algorithm is used. This implementation is especially designed for cupy.</span>
 
 <span class="sd">        Args:</span>
@@ -276,7 +277,7 @@
             <span class="nb">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span></div>
 
-<div class="viewcode-block" id="CoherentMLDSimulator.simulateAMIReference"><a class="viewcode-back" href="../../imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateAMIReference">[docs]</a>    <span class="k">def</span> <span class="nf">simulateAMIReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">printValue</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="CoherentMLDSimulator.simulateAMIReference"><a class="viewcode-back" href="../../module/imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateAMIReference">[docs]</a>    <span class="k">def</span> <span class="nf">simulateAMIReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">printValue</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Simulates AMI values at multiple SNRs, where the straightforward reference algorithm is used. Note that this time complexity is unrealistically high. </span>
 
 <span class="sd">        Args:</span>
@@ -320,7 +321,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">saveCSV</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">arg</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span></div>
 
-<div class="viewcode-block" id="CoherentMLDSimulator.simulateAMIParallel"><a class="viewcode-back" href="../../imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateAMIParallel">[docs]</a>    <span class="k">def</span> <span class="nf">simulateAMIParallel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">printValue</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="CoherentMLDSimulator.simulateAMIParallel"><a class="viewcode-back" href="../../module/imtoolkit.CoherentMLDSimulator.html#imtoolkit.CoherentMLDSimulator.CoherentMLDSimulator.simulateAMIParallel">[docs]</a>    <span class="k">def</span> <span class="nf">simulateAMIParallel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">outputFile</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">printValue</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Simulates AMI values at multiple SNRs, where the massively parallel algorithm is used. This implementation is especially designed for cupy.</span>
 
 <span class="sd">        Args:</span>

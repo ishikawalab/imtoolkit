@@ -1,0 +1,622 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>imtoolkit.Parameters module &mdash; imtoolkit 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="imtoolkit.SemiUnitaryDifferentialMLDSimulator module" href="imtoolkit.SemiUnitaryDifferentialMLDSimulator.html" />
+    <link rel="prev" title="imtoolkit.OSTBCode module" href="imtoolkit.OSTBCode.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> imtoolkit
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../db/index.html">Active Indices Database</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="imtoolkit.html">imtoolkit package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="imtoolkit.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="imtoolkit.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.ADSMCode.html">imtoolkit.ADSMCode module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.AWGNChannel.html">imtoolkit.AWGNChannel module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.Basis.html">imtoolkit.Basis module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.Channel.html">imtoolkit.Channel module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.CoherentMLDSimulator.html">imtoolkit.CoherentMLDSimulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.DiagonalUnitaryCode.html">imtoolkit.DiagonalUnitaryCode module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.DifferentialMLDSimulator.html">imtoolkit.DifferentialMLDSimulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.IMCode.html">imtoolkit.IMCode module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.IMUtil.html">imtoolkit.IMUtil module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.IdealOFDMChannel.html">imtoolkit.IdealOFDMChannel module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.IdealRayleighChannel.html">imtoolkit.IdealRayleighChannel module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.Modulator.html">imtoolkit.Modulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.NonSquareDifferentialMLDSimulator.html">imtoolkit.NonSquareDifferentialMLDSimulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.OSTBCode.html">imtoolkit.OSTBCode module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">imtoolkit.Parameters module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.SemiUnitaryDifferentialMLDSimulator.html">imtoolkit.SemiUnitaryDifferentialMLDSimulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.Simulator.html">imtoolkit.Simulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.TASTCode.html">imtoolkit.TASTCode module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.Util.html">imtoolkit.Util module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.imsearch.html">imtoolkit.imsearch module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imtoolkit.imtoolkit.html">imtoolkit.imtoolkit module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imtoolkit.html#module-imtoolkit">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">imtoolkit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">imtoolkit</a> &raquo;</li>
+        
+          <li><a href="imtoolkit.html">imtoolkit package</a> &raquo;</li>
+        
+      <li>imtoolkit.Parameters module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-imtoolkit.Parameters">
+<span id="imtoolkit-parameters-module"></span><h1>imtoolkit.Parameters module<a class="headerlink" href="#module-imtoolkit.Parameters" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="imtoolkit.Parameters.Parameters">
+<em class="property">class </em><code class="descclassname">imtoolkit.Parameters.</code><code class="descname">Parameters</code><span class="sig-paren">(</span><em>arg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/Parameters.html#Parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.Parameters.Parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class is used to pack various simulation parameters into an instance.</p>
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.CR">
+<code class="descname">CR</code><em class="property"> = ''</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.CR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Dr">
+<code class="descname">Dr</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Dr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Dt">
+<code class="descname">Dt</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Dt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.FdTs">
+<code class="descname">FdTs</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.FdTs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Fmode">
+<code class="descname">Fmode</code><em class="property"> = ''</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Fmode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Herr">
+<code class="descname">Herr</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Herr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Hflu">
+<code class="descname">Hflu</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Hflu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.IT">
+<code class="descname">IT</code><em class="property"> = 1</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.IT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.ITi">
+<code class="descname">ITi</code><em class="property"> = 1</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.ITi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.ITo">
+<code class="descname">ITo</code><em class="property"> = 1</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.ITo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.J">
+<code class="descname">J</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.J" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.K">
+<code class="descname">K</code><em class="property"> = 1</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.K" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Kf">
+<code class="descname">Kf</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Kf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.L">
+<code class="descname">L</code><em class="property"> = 2</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.L" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Lc">
+<code class="descname">Lc</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Lc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.M">
+<code class="descname">M</code><em class="property"> = 1</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.M" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Mr">
+<code class="descname">Mr</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Mr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Mt">
+<code class="descname">Mt</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Mt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.N">
+<code class="descname">N</code><em class="property"> = 1</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.N" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.NRF">
+<code class="descname">NRF</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.NRF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Ncp">
+<code class="descname">Ncp</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Ncp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Nr">
+<code class="descname">Nr</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Nr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Ns">
+<code class="descname">Ns</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Ns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Nsc">
+<code class="descname">Nsc</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Nsc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Nt">
+<code class="descname">Nt</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Nt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Nu">
+<code class="descname">Nu</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Nu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.O">
+<code class="descname">O</code><em class="property"> = 1</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.O" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.P">
+<code class="descname">P</code><em class="property"> = 1</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.P" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.PhiHalf">
+<code class="descname">PhiHalf</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.PhiHalf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.PsiHalf">
+<code class="descname">PsiHalf</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.PsiHalf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Q">
+<code class="descname">Q</code><em class="property"> = 1</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.R">
+<code class="descname">R</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.R" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.RC">
+<code class="descname">RC</code><em class="property"> = 1</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.RC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Rx">
+<code class="descname">Rx</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Rx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.T">
+<code class="descname">T</code><em class="property"> = 1</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.T" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.W">
+<code class="descname">W</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.W" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Wl">
+<code class="descname">Wl</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Wl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.Wmode">
+<code class="descname">Wmode</code><em class="property"> = ''</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.Wmode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.a">
+<code class="descname">a</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.alpha">
+<code class="descname">alpha</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.alpha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.arg">
+<code class="descname">arg</code><em class="property"> = ''</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.arg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.basis">
+<code class="descname">basis</code><em class="property"> = ''</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.basis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.by">
+<code class="descname">by</code><em class="property"> = 1.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.by" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.cfo">
+<code class="descname">cfo</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.cfo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.channel">
+<code class="descname">channel</code><em class="property"> = 'rayleigh'</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.channel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.code">
+<code class="descname">code</code><em class="property"> = ''</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.code" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.d">
+<code class="descname">d</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.dTx">
+<code class="descname">dTx</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.dTx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.dec">
+<code class="descname">dec</code><em class="property"> = ''</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.dec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.deg">
+<code class="descname">deg</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.deg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.delta">
+<code class="descname">delta</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.delta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.det">
+<code class="descname">det</code><em class="property"> = ''</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.det" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.dm">
+<code class="descname">dm</code><em class="property"> = ''</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.dm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.dmi">
+<code class="descname">dmi</code><em class="property"> = ''</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.dmi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.hit">
+<code class="descname">hit</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.hit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="imtoolkit.Parameters.Parameters.isSpeficied">
+<code class="descname">isSpeficied</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/Parameters.html#Parameters.isSpeficied"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.Parameters.Parameters.isSpeficied" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.len">
+<code class="descname">len</code><em class="property"> = 11</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.len" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.limit">
+<code class="descname">limit</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.limit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.mind">
+<code class="descname">mind</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.mind" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.minh">
+<code class="descname">minh</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.minh" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.mod">
+<code class="descname">mod</code><em class="property"> = 'PSK'</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.mod" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.option">
+<code class="descname">option</code><em class="property"> = ''</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.option" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.optsnr">
+<code class="descname">optsnr</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.optsnr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="imtoolkit.Parameters.Parameters.parseValue">
+<code class="descname">parseValue</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imtoolkit/Parameters.html#Parameters.parseValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imtoolkit.Parameters.Parameters.parseValue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.r">
+<code class="descname">r</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.r" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.rate">
+<code class="descname">rate</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.rate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.sim">
+<code class="descname">sim</code><em class="property"> = 'coh'</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.sim" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.snr">
+<code class="descname">snr</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.snr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.snrfrom">
+<code class="descname">snrfrom</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.snrfrom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.table">
+<code class="descname">table</code><em class="property"> = {}</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.taps">
+<code class="descname">taps</code><em class="property"> = 0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.taps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.to">
+<code class="descname">to</code><em class="property"> = 50.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.to" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.u1">
+<code class="descname">u1</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.u1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.u2">
+<code class="descname">u2</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.u2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="imtoolkit.Parameters.Parameters.v">
+<code class="descname">v</code><em class="property"> = 0.0</em><a class="headerlink" href="#imtoolkit.Parameters.Parameters.v" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="imtoolkit.SemiUnitaryDifferentialMLDSimulator.html" class="btn btn-neutral float-right" title="imtoolkit.SemiUnitaryDifferentialMLDSimulator module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="imtoolkit.OSTBCode.html" class="btn btn-neutral float-left" title="imtoolkit.OSTBCode module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Naoki Ishikawa
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

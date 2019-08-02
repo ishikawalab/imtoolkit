@@ -24,6 +24,9 @@ In case you would like to use the CPU backend, NumPy, please unset the environme
    CoherentOFDM-IdealRayleigh-BER
    CoherentOFDM-IdealRayleigh-BER-diversity
    CoherentOFDM-IdealRayleigh-AMI
+   DifferentialMIMO-IdealRayleigh-BER
+   SemiUnitaryDifferentialMIMO-IdealRayleigh-BER
+   NonSquareDifferentialMIMO-IdealRayleigh-BER
 
 .. raw:: html
 
@@ -42,7 +45,7 @@ In case you would like to use the CPU backend, NumPy, please unset the environme
 
 - :doc:`CoherentMIMO-IdealRayleigh-BER.py <CoherentMIMO-IdealRayleigh-BER>`
 
-    - This example compares the BER performance of the coherent BLAST and spatial modulation schemes
+    - This example compares the BER performance of the coherent Bell laboratories layered space-time (BLAST) and spatial modulation (SM) schemes.
 
 .. raw:: html
 
@@ -56,7 +59,7 @@ In case you would like to use the CPU backend, NumPy, please unset the environme
 
 - :doc:`CoherentMIMO-IdealRayleigh-AMI.py <CoherentMIMO-IdealRayleigh-AMI>`
 
-    - This example compares the AMI performance of the coherent BLAST and spatial modulation schemes
+    - This example compares the AMI performance of the coherent BLAST and SM schemes.
 
 .. raw:: html
 
@@ -70,7 +73,7 @@ In case you would like to use the CPU backend, NumPy, please unset the environme
 
 - :doc:`CoherentOFDM-IdealRayleigh-BER.py <CoherentOFDM-IdealRayleigh-BER>`
 
-    - This example compares the BER performance of the coherent OFDM and subcarrier-index modulation schemes.
+    - This example compares the BER performance of the coherent OFDM and subcarrier-index modulation (SIM) schemes.
 
 .. raw:: html
 
@@ -84,7 +87,7 @@ In case you would like to use the CPU backend, NumPy, please unset the environme
 
 - :doc:`CoherentOFDM-IdealRayleigh-BER-diversity.py <CoherentOFDM-IdealRayleigh-BER-diversity>`
 
-    - This example evaluates the BER performance of the coherent subcarrier-index modulation scheme, where three subcarrier activation patterns are considered.
+    - This example evaluates the BER performance of the coherent SIM scheme, where three subcarrier activation patterns are considered.
 
 .. raw:: html
 
@@ -98,9 +101,48 @@ In case you would like to use the CPU backend, NumPy, please unset the environme
 
 - :doc:`CoherentOFDM-IdealRayleigh-AMI.py <CoherentOFDM-IdealRayleigh-AMI>`
 
-    - This example compares the AMI performance of the coherent OFDM and subcarrier-index modulation schemes.
+    - This example compares the AMI performance of the coherent OFDM and SIM schemes.
 
 .. raw:: html
 
    <br clear="all">
 
+
+.. image:: ../../../imtoolkit/examples/DifferentialMIMO-IdealRayleigh-BER.svg
+   :align: right
+   :width: 150px
+   :target: DifferentialMIMO-IdealRayleigh-BER.html
+
+- :doc:`DifferentialMIMO-IdealRayleigh-BER.py <DifferentialMIMO-IdealRayleigh-BER>`
+
+    - This example compares the BER performance of the differential BPSK, differential orthogonal space-time block code (DOSTBC), diagonal unitary code (DUC), algebraic differential spatial modulation (ADSM), and differential threaded algebraic space-time (DTAST) schemes.
+
+.. raw:: html
+
+   <br clear="all">
+
+.. image:: ../../../imtoolkit/examples/SemiUnitaryDifferentialMIMO-IdealRayleigh-BER.svg
+   :align: right
+   :width: 150px
+   :target: SemiUnitaryDifferentialMIMO-IdealRayleigh-BER.html
+
+- :doc:`SemiUnitaryDifferentialMIMO-IdealRayleigh-BER.py <SemiUnitaryDifferentialMIMO-IdealRayleigh-BER>`
+
+    - This example compares the BER performance of the differential star-QAM (SQAM), DOSTBC with SQAM, and DUC schemes.
+
+.. raw:: html
+
+   <br clear="all">
+
+.. image:: ../../../imtoolkit/examples/NonSquareDifferentialMIMO-IdealRayleigh-BER.svg
+   :align: right
+   :width: 150px
+   :target: NonSquareDifferentialMIMO-IdealRayleigh-BER.html
+
+- :doc:`NonSquareDifferentialMIMO-IdealRayleigh-BER.py <NonSquareDifferentialMIMO-IdealRayleigh-BER>`
+
+    - This example compares the BER performance of the differential SQAM, square DUC, and nonsquare DUC schemes.
+
+.. raw:: html
+
+   <br clear="all">

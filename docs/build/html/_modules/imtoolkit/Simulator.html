@@ -84,6 +84,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../db/index.html">Active Indices Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module/modules.html">Modules</a></li>
 </ul>
 
             
@@ -159,7 +160,7 @@
     <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">xp</span>
 
 
-<div class="viewcode-block" id="Simulator"><a class="viewcode-back" href="../../imtoolkit.Simulator.html#imtoolkit.Simulator.Simulator">[docs]</a><span class="k">class</span> <span class="nc">Simulator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Simulator"><a class="viewcode-back" href="../../module/imtoolkit.Simulator.html#imtoolkit.Simulator.Simulator">[docs]</a><span class="k">class</span> <span class="nc">Simulator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A basis class for an arbitrary simulator, which has some useful functions for output simulation results.</span>
 
 <span class="sd">    The input codes are stored in the host memory (numpy), while all the calculations are conducted in the device memory (cupy), if possible.</span>
@@ -176,21 +177,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">xp</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nc</span><span class="p">)</span>  <span class="c1"># The bitwidth per codeword</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>  <span class="c1"># The specified channel generator</span>
 
-<div class="viewcode-block" id="Simulator.dicToNumpy"><a class="viewcode-back" href="../../imtoolkit.Simulator.html#imtoolkit.Simulator.Simulator.dicToNumpy">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Simulator.dicToNumpy"><a class="viewcode-back" href="../../module/imtoolkit.Simulator.html#imtoolkit.Simulator.Simulator.dicToNumpy">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">dicToNumpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dic</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">dic</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="k">if</span> <span class="s1">&#39;cupy&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="n">key</span><span class="p">])):</span>
                 <span class="n">dic</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">xp</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">dic</span></div>
 
-<div class="viewcode-block" id="Simulator.dicToDF"><a class="viewcode-back" href="../../imtoolkit.Simulator.html#imtoolkit.Simulator.Simulator.dicToDF">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Simulator.dicToDF"><a class="viewcode-back" href="../../module/imtoolkit.Simulator.html#imtoolkit.Simulator.Simulator.dicToDF">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">dicToDF</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dic</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">dic</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="k">if</span> <span class="s1">&#39;cupy&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="n">key</span><span class="p">])):</span>
                 <span class="n">dic</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">xp</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dic</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Simulator.saveCSV"><a class="viewcode-back" href="../../imtoolkit.Simulator.html#imtoolkit.Simulator.Simulator.saveCSV">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Simulator.saveCSV"><a class="viewcode-back" href="../../module/imtoolkit.Simulator.html#imtoolkit.Simulator.Simulator.saveCSV">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">saveCSV</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;results/&quot;</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s2">&quot;results/&quot;</span><span class="p">)</span>

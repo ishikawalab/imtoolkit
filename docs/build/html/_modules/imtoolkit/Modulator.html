@@ -84,6 +84,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../db/index.html">Active Indices Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module/modules.html">Modules</a></li>
 </ul>
 
             
@@ -155,7 +156,7 @@
 
 
 <span class="c1"># Pahse-shift keying</span>
-<div class="viewcode-block" id="PSK"><a class="viewcode-back" href="../../imtoolkit.Modulator.html#imtoolkit.Modulator.PSK">[docs]</a><span class="k">class</span> <span class="nc">PSK</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="PSK"><a class="viewcode-back" href="../../module/imtoolkit.Modulator.html#imtoolkit.Modulator.PSK">[docs]</a><span class="k">class</span> <span class="nc">PSK</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constellationSize</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">constellationSize</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bitWidth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">)</span>
@@ -178,7 +179,7 @@
 
 
 <span class="c1"># Quadrature amplitude modulation</span>
-<div class="viewcode-block" id="QAM"><a class="viewcode-back" href="../../imtoolkit.Modulator.html#imtoolkit.Modulator.QAM">[docs]</a><span class="k">class</span> <span class="nc">QAM</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="QAM"><a class="viewcode-back" href="../../module/imtoolkit.Modulator.html#imtoolkit.Modulator.QAM">[docs]</a><span class="k">class</span> <span class="nc">QAM</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constellationSize</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">constellationSize</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bitWidth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">)</span>
@@ -202,7 +203,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">symbols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">originalSymbols</span><span class="p">,</span> <span class="n">grayIndexes</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="StarQAM"><a class="viewcode-back" href="../../imtoolkit.Modulator.html#imtoolkit.Modulator.StarQAM">[docs]</a><span class="k">class</span> <span class="nc">StarQAM</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="StarQAM"><a class="viewcode-back" href="../../module/imtoolkit.Modulator.html#imtoolkit.Modulator.StarQAM">[docs]</a><span class="k">class</span> <span class="nc">StarQAM</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This StarQAM class is an efficient implementation of the following paper [1].</span>
 
@@ -222,13 +223,12 @@
         <span class="k">for</span> <span class="n">level_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nlevels</span><span class="p">):</span>
             <span class="n">mod</span> <span class="o">=</span> <span class="n">PSK</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subConstellationSize</span><span class="p">)</span>
             <span class="c1"># self.symbols.append((1.0 + level_id) * sigma * mod.symbols)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">symbols</span><span class="p">[(</span><span class="n">level_id</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">subConstellationSize</span><span class="p">):((</span><span class="n">level_id</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">subConstellationSize</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span>
-                                                                                                                            <span class="mf">1.0</span> <span class="o">+</span> <span class="n">level_id</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">mod</span><span class="o">.</span><span class="n">symbols</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">symbols</span><span class="p">[(</span><span class="n">level_id</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">subConstellationSize</span><span class="p">):((</span><span class="n">level_id</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">subConstellationSize</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">level_id</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">mod</span><span class="o">.</span><span class="n">symbols</span></div>
 
         <span class="c1"># print(&quot;StartQAM: the constellation size of &quot; + str(self.L) + &quot; is not supported yet&quot;)</span>
 
 
-<div class="viewcode-block" id="Modulator"><a class="viewcode-back" href="../../imtoolkit.Modulator.html#imtoolkit.Modulator.Modulator">[docs]</a><span class="k">class</span> <span class="nc">Modulator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Modulator"><a class="viewcode-back" href="../../module/imtoolkit.Modulator.html#imtoolkit.Modulator.Modulator">[docs]</a><span class="k">class</span> <span class="nc">Modulator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class generates a constellation such as PSK, QAM, and star-QAM (SQAM).</span>
 <span class="sd">    &quot;&quot;&quot;</span>

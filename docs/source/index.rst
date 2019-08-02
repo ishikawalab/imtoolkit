@@ -30,6 +30,7 @@ The major advantages of this toolkit are highlighted as follows:
    self
    tutorial/index
    db/index
+   Modules <module/modules>
 
 Installation Guide
 ==================

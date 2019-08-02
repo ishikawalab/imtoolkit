@@ -84,6 +84,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../db/index.html">Active Indices Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module/modules.html">Modules</a></li>
 </ul>
 
             
@@ -153,21 +154,21 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">sympy.combinatorics.graycode</span> <span class="k">import</span> <span class="n">GrayCode</span>
 <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="k">import</span> <span class="n">interp1d</span>
-<span class="kn">from</span> <span class="nn">numba</span> <span class="k">import</span> <span class="n">jit</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="k">import</span> <span class="n">jit</span><span class="p">,</span> <span class="n">njit</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;USECUPY&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">cupy</span> <span class="k">as</span> <span class="nn">xp</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">xp</span>
 
-<div class="viewcode-block" id="getGrayIndixes"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.getGrayIndixes">[docs]</a><span class="k">def</span> <span class="nf">getGrayIndixes</span><span class="p">(</span><span class="n">bitWidth</span><span class="p">):</span>
+<div class="viewcode-block" id="getGrayIndixes"><a class="viewcode-back" href="../../module/imtoolkit.Util.html#imtoolkit.Util.getGrayIndixes">[docs]</a><span class="k">def</span> <span class="nf">getGrayIndixes</span><span class="p">(</span><span class="n">bitWidth</span><span class="p">):</span>
     <span class="n">gray</span> <span class="o">=</span> <span class="n">GrayCode</span><span class="p">(</span><span class="n">bitWidth</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">strb</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">strb</span> <span class="ow">in</span> <span class="n">gray</span><span class="o">.</span><span class="n">generate_gray</span><span class="p">()]</span></div>
 
-<div class="viewcode-block" id="frodiff"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.frodiff">[docs]</a><span class="k">def</span> <span class="nf">frodiff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="frodiff"><a class="viewcode-back" href="../../module/imtoolkit.Util.html#imtoolkit.Util.frodiff">[docs]</a><span class="k">def</span> <span class="nf">frodiff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">xp</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">xp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="getEuclideanDistances"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.getEuclideanDistances">[docs]</a><span class="nd">@jit</span>
+<div class="viewcode-block" id="getEuclideanDistances"><a class="viewcode-back" href="../../module/imtoolkit.Util.html#imtoolkit.Util.getEuclideanDistances">[docs]</a><span class="nd">@njit</span><span class="p">([</span><span class="s1">&#39;f8[:](c16[:,:,:])&#39;</span><span class="p">,</span> <span class="s1">&#39;f8[:](f8[:,:,:])&#39;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">getEuclideanDistances</span><span class="p">(</span><span class="n">codes</span><span class="p">):</span> 
     <span class="c1"># The following implementation only supports NumPy, slow</span>
     <span class="c1">#combsfro = itertools.starmap(frodiff, itertools.combinations(codes, 2))</span>
@@ -195,7 +196,7 @@
     <span class="c1">#frodiff = xp.power(xp.linalg.norm(diffxy, axis=(2,3)), 2)</span>
     <span class="c1">#return frodiff[np.triu_indices(Nc, 1)]</span>
 
-<div class="viewcode-block" id="getMinimumEuclideanDistance"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.getMinimumEuclideanDistance">[docs]</a><span class="nd">@jit</span>
+<div class="viewcode-block" id="getMinimumEuclideanDistance"><a class="viewcode-back" href="../../module/imtoolkit.Util.html#imtoolkit.Util.getMinimumEuclideanDistance">[docs]</a><span class="nd">@njit</span><span class="p">([</span><span class="s1">&#39;f8(c16[:,:,:])&#39;</span><span class="p">,</span> <span class="s1">&#39;f8(f8[:,:,:])&#39;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">getMinimumEuclideanDistance</span><span class="p">(</span><span class="n">codes</span><span class="p">):</span>
     <span class="c1">#return min(getEuclideanDistances(codes))</span>
     <span class="c1"># The following straightforward implementation with numba is the fastest</span>
@@ -208,7 +209,7 @@
                 <span class="n">mind</span> <span class="o">=</span> <span class="n">d</span>
     <span class="k">return</span> <span class="n">mind</span></div>
 
-<div class="viewcode-block" id="getDFTMatrix"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.getDFTMatrix">[docs]</a><span class="k">def</span> <span class="nf">getDFTMatrix</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+<div class="viewcode-block" id="getDFTMatrix"><a class="viewcode-back" href="../../module/imtoolkit.Util.html#imtoolkit.Util.getDFTMatrix">[docs]</a><span class="k">def</span> <span class="nf">getDFTMatrix</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
     <span class="n">W</span> <span class="o">=</span> <span class="n">xp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">)</span>
     <span class="n">omega</span> <span class="o">=</span> <span class="n">xp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">2.0</span><span class="n">j</span> <span class="o">*</span> <span class="n">xp</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
@@ -217,30 +218,43 @@
     <span class="n">W</span> <span class="o">/=</span> <span class="n">xp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">W</span></div>
 
+<div class="viewcode-block" id="getDFTMatrixNumpy"><a class="viewcode-back" href="../../module/imtoolkit.Util.html#imtoolkit.Util.getDFTMatrixNumpy">[docs]</a><span class="k">def</span> <span class="nf">getDFTMatrixNumpy</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">)</span>
+    <span class="n">omega</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">2.0</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">W</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="n">j</span> <span class="o">*</span> <span class="n">k</span><span class="p">)</span>
+    <span class="n">W</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">W</span></div>
+
 <span class="c1">#</span>
 <span class="c1"># IT++ like functions</span>
 <span class="c1">#</span>
-<div class="viewcode-block" id="inv_dB"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.inv_dB">[docs]</a><span class="k">def</span> <span class="nf">inv_dB</span><span class="p">(</span><span class="n">dB</span><span class="p">):</span>
+<div class="viewcode-block" id="inv_dB"><a class="viewcode-back" href="../../module/imtoolkit.Util.html#imtoolkit.Util.inv_dB">[docs]</a><span class="k">def</span> <span class="nf">inv_dB</span><span class="p">(</span><span class="n">dB</span><span class="p">):</span>
     <span class="k">return</span> <span class="mf">10.0</span> <span class="o">**</span> <span class="p">(</span><span class="n">dB</span> <span class="o">/</span> <span class="mf">10.0</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="randn"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.randn">[docs]</a><span class="k">def</span> <span class="nf">randn</span><span class="p">(</span><span class="o">*</span><span class="n">size</span><span class="p">):</span>
+<div class="viewcode-block" id="randn"><a class="viewcode-back" href="../../module/imtoolkit.Util.html#imtoolkit.Util.randn">[docs]</a><span class="k">def</span> <span class="nf">randn</span><span class="p">(</span><span class="o">*</span><span class="n">size</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">xp</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">size</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="randn_c"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.randn_c">[docs]</a><span class="k">def</span> <span class="nf">randn_c</span><span class="p">(</span><span class="o">*</span><span class="n">size</span><span class="p">):</span>
+<div class="viewcode-block" id="randn_c"><a class="viewcode-back" href="../../module/imtoolkit.Util.html#imtoolkit.Util.randn_c">[docs]</a><span class="k">def</span> <span class="nf">randn_c</span><span class="p">(</span><span class="o">*</span><span class="n">size</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Complex normal distribution</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">xp</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">xp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">),</span> <span class="n">size</span> <span class="o">=</span> <span class="n">size</span><span class="p">)</span> <span class="o">+</span> <span class="n">xp</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">xp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">),</span> <span class="n">size</span> <span class="o">=</span> <span class="n">size</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span></div>
 <span class="c1">#xp.random.randn_c = randn_c</span>
 
-
-<div class="viewcode-block" id="countErrorBits"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.countErrorBits">[docs]</a><span class="k">def</span> <span class="nf">countErrorBits</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="countErrorBits"><a class="viewcode-back" href="../../module/imtoolkit.Util.html#imtoolkit.Util.countErrorBits">[docs]</a><span class="k">def</span> <span class="nf">countErrorBits</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">bin</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="getXORtoErrorBitsArray"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.getXORtoErrorBitsArray">[docs]</a><span class="k">def</span> <span class="nf">getXORtoErrorBitsArray</span><span class="p">(</span><span class="n">Nc</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">xp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">bin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nc</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))))</span></div>
+<div class="viewcode-block" id="getXORtoErrorBitsArray"><a class="viewcode-back" href="../../module/imtoolkit.Util.html#imtoolkit.Util.getXORtoErrorBitsArray">[docs]</a><span class="k">def</span> <span class="nf">getXORtoErrorBitsArray</span><span class="p">(</span><span class="n">Nc</span><span class="p">):</span>
+    <span class="c1">#return xp.array(list(map(lambda x: bin(x).count(&#39;1&#39;), range(Nc + 1))))</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">xp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Nc</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nc</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">ret</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="getErrorBitsTable"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.getErrorBitsTable">[docs]</a><span class="k">def</span> <span class="nf">getErrorBitsTable</span><span class="p">(</span><span class="n">Nc</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="getErrorBitsTable"><a class="viewcode-back" href="../../module/imtoolkit.Util.html#imtoolkit.Util.getErrorBitsTable">[docs]</a><span class="k">def</span> <span class="nf">getErrorBitsTable</span><span class="p">(</span><span class="n">Nc</span><span class="p">):</span>
     <span class="n">errorArray</span> <span class="o">=</span> <span class="n">getXORtoErrorBitsArray</span><span class="p">(</span><span class="n">Nc</span><span class="p">)</span>
     <span class="n">errorTable</span> <span class="o">=</span> <span class="n">xp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">Nc</span><span class="p">,</span> <span class="n">Nc</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">xp</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nc</span><span class="p">):</span>
@@ -249,7 +263,7 @@
     
     <span class="k">return</span> <span class="n">errorTable</span></div>
 
-<div class="viewcode-block" id="getXCorrespondingToY"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.getXCorrespondingToY">[docs]</a><span class="k">def</span> <span class="nf">getXCorrespondingToY</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span> <span class="n">yarr</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="getXCorrespondingToY"><a class="viewcode-back" href="../../module/imtoolkit.Util.html#imtoolkit.Util.getXCorrespondingToY">[docs]</a><span class="k">def</span> <span class="nf">getXCorrespondingToY</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span> <span class="n">yarr</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">yarr</span><span class="p">)</span> <span class="ow">or</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">yarr</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">xp</span><span class="o">.</span><span class="n">NaN</span>
     <span class="n">spfunc</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">yarr</span><span class="p">,</span> <span class="n">xarr</span><span class="p">)</span>
@@ -258,7 +272,7 @@
 
 <span class="c1"># c(APATH = &quot;C:/Dropbox/Project/201903_imtoolkit_paper/paper/main.aux&quot;, label = &quot;Conv. equiprobable act. \cite{wen2016equiprobable}&quot;)</span>
 <span class="c1"># c(APATH = &quot;C:/Dropbox/Project/201903_imtoolkit_paper/paper/main.aux&quot;, label = &quot;Conv. SSK \cite{liu2015ssk}&quot;)</span>
-<div class="viewcode-block" id="c"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.c">[docs]</a><span class="k">def</span> <span class="nf">c</span><span class="p">(</span><span class="n">APATH</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+<div class="viewcode-block" id="c"><a class="viewcode-back" href="../../module/imtoolkit.Util.html#imtoolkit.Util.c">[docs]</a><span class="k">def</span> <span class="nf">c</span><span class="p">(</span><span class="n">APATH</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
     <span class="kn">import</span> <span class="nn">re</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">APATH</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="c1">#</span>
@@ -278,11 +292,11 @@
         
         <span class="k">return</span> <span class="n">label</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">chit</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="s2">&quot;[&quot;</span> <span class="o">+</span> <span class="n">cn</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="testUnitary"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.testUnitary">[docs]</a><span class="k">def</span> <span class="nf">testUnitary</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
+<div class="viewcode-block" id="testUnitary"><a class="viewcode-back" href="../../module/imtoolkit.Util.html#imtoolkit.Util.testUnitary">[docs]</a><span class="k">def</span> <span class="nf">testUnitary</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
     <span class="n">codes</span> <span class="o">=</span> <span class="n">code</span><span class="o">.</span><span class="n">codes</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
     <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">codes</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">codes</span><span class="p">)</span> <span class="o">/</span> <span class="n">code</span><span class="o">.</span><span class="n">Nc</span><span class="p">,</span> <span class="n">xp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">M</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="getRandomHermitianMatrix"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.getRandomHermitianMatrix">[docs]</a><span class="k">def</span> <span class="nf">getRandomHermitianMatrix</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+<div class="viewcode-block" id="getRandomHermitianMatrix"><a class="viewcode-back" href="../../module/imtoolkit.Util.html#imtoolkit.Util.getRandomHermitianMatrix">[docs]</a><span class="k">def</span> <span class="nf">getRandomHermitianMatrix</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="n">xp</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="mi">0</span><span class="n">j</span> <span class="o">+</span> <span class="n">randn</span><span class="p">(</span><span class="n">M</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">M</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
@@ -290,11 +304,11 @@
             <span class="n">ret</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">xp</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">ret</span></div>
 
-<div class="viewcode-block" id="CayleyTransform"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.CayleyTransform">[docs]</a><span class="k">def</span> <span class="nf">CayleyTransform</span><span class="p">(</span><span class="n">H</span><span class="p">):</span>
+<div class="viewcode-block" id="CayleyTransform"><a class="viewcode-back" href="../../module/imtoolkit.Util.html#imtoolkit.Util.CayleyTransform">[docs]</a><span class="k">def</span> <span class="nf">CayleyTransform</span><span class="p">(</span><span class="n">H</span><span class="p">):</span>
     <span class="n">M</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">xp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">H</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">xp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">H</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="asnumpy"><a class="viewcode-back" href="../../imtoolkit.Util.html#imtoolkit.Util.asnumpy">[docs]</a><span class="k">def</span> <span class="nf">asnumpy</span><span class="p">(</span><span class="n">xparr</span><span class="p">):</span>
+<div class="viewcode-block" id="asnumpy"><a class="viewcode-back" href="../../module/imtoolkit.Util.html#imtoolkit.Util.asnumpy">[docs]</a><span class="k">def</span> <span class="nf">asnumpy</span><span class="p">(</span><span class="n">xparr</span><span class="p">):</span>
     <span class="k">if</span> <span class="s1">&#39;cupy&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">xparr</span><span class="p">)):</span>
         <span class="k">return</span> <span class="n">xp</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(</span><span class="n">xparr</span><span class="p">)</span> <span class="c1"># cupy to numpy</span>
     <span class="k">return</span> <span class="n">xparr</span> <span class="c1"># do nothing</span></div>

@@ -84,6 +84,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../db/index.html">Active Indices Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module/modules.html">Modules</a></li>
 </ul>
 
             
@@ -162,7 +163,7 @@
 <span class="c1">#</span>
 <span class="c1"># Utility functions for active indices of IM</span>
 <span class="c1">#</span>
-<div class="viewcode-block" id="convertIndsToVector"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.convertIndsToVector">[docs]</a><span class="k">def</span> <span class="nf">convertIndsToVector</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+<div class="viewcode-block" id="convertIndsToVector"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.convertIndsToVector">[docs]</a><span class="k">def</span> <span class="nf">convertIndsToVector</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
     <span class="n">Q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">M</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">),</span> <span class="n">Q</span><span class="p">)</span>  <span class="c1"># M \times Q</span>
     <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Q</span><span class="p">):</span>
@@ -171,7 +172,7 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">hsplit</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="convertIndsToMatrix"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.convertIndsToMatrix">[docs]</a><span class="k">def</span> <span class="nf">convertIndsToMatrix</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+<div class="viewcode-block" id="convertIndsToMatrix"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.convertIndsToMatrix">[docs]</a><span class="k">def</span> <span class="nf">convertIndsToMatrix</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
     <span class="n">Q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
     <span class="n">K</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)),</span> <span class="n">Q</span><span class="p">)</span>
@@ -184,7 +185,7 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">hsplit</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="convertIndsToIndsDec"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.convertIndsToIndsDec">[docs]</a><span class="k">def</span> <span class="nf">convertIndsToIndsDec</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+<div class="viewcode-block" id="convertIndsToIndsDec"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.convertIndsToIndsDec">[docs]</a><span class="k">def</span> <span class="nf">convertIndsToIndsDec</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">inds</span><span class="p">:</span>
         <span class="n">dec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp2</span><span class="p">(</span><span class="n">row</span><span class="p">))</span>
@@ -192,7 +193,7 @@
     <span class="k">return</span> <span class="n">ret</span></div>
 
 
-<div class="viewcode-block" id="convertIndsDecToInds"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.convertIndsDecToInds">[docs]</a><span class="k">def</span> <span class="nf">convertIndsDecToInds</span><span class="p">(</span><span class="n">indsdecs</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+<div class="viewcode-block" id="convertIndsDecToInds"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.convertIndsDecToInds">[docs]</a><span class="k">def</span> <span class="nf">convertIndsDecToInds</span><span class="p">(</span><span class="n">indsdecs</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">dec</span> <span class="ow">in</span> <span class="n">indsdecs</span><span class="p">:</span>
         <span class="n">binstr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">binary_repr</span><span class="p">(</span><span class="n">dec</span><span class="p">)</span>
@@ -206,7 +207,7 @@
     <span class="k">return</span> <span class="n">ret</span></div>
 
 
-<div class="viewcode-block" id="outputIndsToFile"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.outputIndsToFile">[docs]</a><span class="k">def</span> <span class="nf">outputIndsToFile</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+<div class="viewcode-block" id="outputIndsToFile"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.outputIndsToFile">[docs]</a><span class="k">def</span> <span class="nf">outputIndsToFile</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
     <span class="n">Q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
     <span class="n">K</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">minh</span> <span class="o">=</span> <span class="n">getMinimumHammingDistance</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
@@ -218,15 +219,16 @@
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saved to &quot;</span> <span class="o">+</span> <span class="n">fname</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fname</span></div>
 
-<div class="viewcode-block" id="getMaxQ"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getMaxQ">[docs]</a><span class="k">def</span> <span class="nf">getMaxQ</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+<div class="viewcode-block" id="getMaxQ"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.getMaxQ">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="s1">&#39;i8(i8,i8)&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">getMaxQ</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">binom</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)))))</span></div>
 
 <span class="c1"># Usage: convertIndsToMatrix(getDictionaryIndexesList(M, K, Q), M)</span>
-<div class="viewcode-block" id="getDictionaryIndexesList"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getDictionaryIndexesList">[docs]</a><span class="nd">@jit</span>
+<div class="viewcode-block" id="getDictionaryIndexesList"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.getDictionaryIndexesList">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="s1">&#39;i8[:,:](i8,i8,i8)&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">getDictionaryIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
     <span class="n">maxQ</span> <span class="o">=</span> <span class="n">getMaxQ</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">Q</span> <span class="o">&gt;</span> <span class="n">maxQ</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The given Q is larger than the maximum:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &gt; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">maxQ</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The given Q is larger than the maximum: </span><span class="si">%d</span><span class="s2"> &gt; </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">maxQ</span><span class="p">))</span>
         <span class="n">Q</span> <span class="o">=</span> <span class="n">maxQ</span>
 
     <span class="n">ret</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">K</span><span class="p">]</span> <span class="o">*</span> <span class="n">Q</span>
@@ -242,7 +244,7 @@
 <span class="c1"># This method is based on the Matlab implementation for the GSM scheme,</span>
 <span class="c1"># which is given by the following book.</span>
 <span class="c1"># R. Mesleh and A. Alhassi, Space modulation techniques. Wiley, 2018.</span>
-<div class="viewcode-block" id="getMeslehIndexesList"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getMeslehIndexesList">[docs]</a><span class="k">def</span> <span class="nf">getMeslehIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+<div class="viewcode-block" id="getMeslehIndexesList"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.getMeslehIndexesList">[docs]</a><span class="k">def</span> <span class="nf">getMeslehIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
     <span class="n">maxQ</span> <span class="o">=</span> <span class="n">getMaxQ</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">Q</span> <span class="o">&gt;</span> <span class="n">maxQ</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The given Q is larger than the maximum:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &gt; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">maxQ</span><span class="p">))</span>
@@ -262,7 +264,7 @@
 <span class="c1"># M. Wen, Y. Zhang, J. Li, E. Basar, and F. Chen,</span>
 <span class="c1"># ``Equiprobable subcarrier activation method for OFDM with index modulation,&#39;&#39;</span>
 <span class="c1"># IEEE Commun. Lett., vol. 20, no. 12, pp. 2386--2389, 2016.</span>
-<div class="viewcode-block" id="wen2016EquiprobableSubcarrierActivation"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.wen2016EquiprobableSubcarrierActivation">[docs]</a><span class="k">def</span> <span class="nf">wen2016EquiprobableSubcarrierActivation</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+<div class="viewcode-block" id="wen2016EquiprobableSubcarrierActivation"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.wen2016EquiprobableSubcarrierActivation">[docs]</a><span class="k">def</span> <span class="nf">wen2016EquiprobableSubcarrierActivation</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
     <span class="c1"># initialize an indexes set ds</span>
     <span class="n">ds</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)]</span>
     <span class="n">ds</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">K</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">M</span> <span class="o">-</span> <span class="n">K</span> <span class="o">+</span> <span class="mi">1</span>
@@ -323,7 +325,7 @@
     <span class="k">return</span> <span class="n">betas</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">Qmax</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="getRandomIndexesList"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getRandomIndexesList">[docs]</a><span class="k">def</span> <span class="nf">getRandomIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+<div class="viewcode-block" id="getRandomIndexesList"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.getRandomIndexesList">[docs]</a><span class="k">def</span> <span class="nf">getRandomIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">Q</span><span class="p">:</span>
         <span class="n">row</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
@@ -332,7 +334,7 @@
     <span class="k">return</span> <span class="n">ret</span></div>
 
 
-<div class="viewcode-block" id="downloadOptimizedIndexesList"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.downloadOptimizedIndexesList">[docs]</a><span class="k">def</span> <span class="nf">downloadOptimizedIndexesList</span><span class="p">(</span><span class="n">basePath</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+<div class="viewcode-block" id="downloadOptimizedIndexesList"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.downloadOptimizedIndexesList">[docs]</a><span class="k">def</span> <span class="nf">downloadOptimizedIndexesList</span><span class="p">(</span><span class="n">basePath</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Trying to obtain the active indices file from &quot;</span> <span class="o">+</span> <span class="n">source</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
     <span class="n">txtfilename</span> <span class="o">=</span> <span class="s2">&quot;M=</span><span class="si">%d</span><span class="s2">_K=</span><span class="si">%d</span><span class="s2">_Q=</span><span class="si">%d</span><span class="s2">.txt&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
     <span class="n">txtdstpath</span> <span class="o">=</span> <span class="n">basePath</span> <span class="o">+</span> <span class="s2">&quot;/inds/&quot;</span> <span class="o">+</span> <span class="n">txtfilename</span>
@@ -360,7 +362,7 @@
     <span class="k">return</span> <span class="kc">True</span></div>
 
 
-<div class="viewcode-block" id="getOptimizedIndexesList"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getOptimizedIndexesList">[docs]</a><span class="k">def</span> <span class="nf">getOptimizedIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">minh</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="getOptimizedIndexesList"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.getOptimizedIndexesList">[docs]</a><span class="k">def</span> <span class="nf">getOptimizedIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">minh</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="n">basePath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
 
     <span class="k">if</span> <span class="n">minh</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -387,7 +389,7 @@
     <span class="k">return</span> <span class="n">inds</span></div>
 
 
-<div class="viewcode-block" id="getIndexes"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getIndexes">[docs]</a><span class="k">def</span> <span class="nf">getIndexes</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+<div class="viewcode-block" id="getIndexes"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.getIndexes">[docs]</a><span class="k">def</span> <span class="nf">getIndexes</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
     <span class="k">if</span> <span class="s2">&quot;opt&quot;</span> <span class="ow">in</span> <span class="nb">type</span><span class="p">:</span>
         <span class="n">minh</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">type</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;opt&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">))</span>
         <span class="n">inds</span> <span class="o">=</span> <span class="n">getOptimizedIndexesList</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">minh</span><span class="p">)</span>
@@ -436,18 +438,18 @@
 <span class="c1">#</span>
 <span class="c1"># Evaluation functions</span>
 <span class="c1">#</span>
-<div class="viewcode-block" id="getProbabilityOfActivation"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getProbabilityOfActivation">[docs]</a><span class="k">def</span> <span class="nf">getProbabilityOfActivation</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+<div class="viewcode-block" id="getProbabilityOfActivation"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.getProbabilityOfActivation">[docs]</a><span class="k">def</span> <span class="nf">getProbabilityOfActivation</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
     <span class="n">prob</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)):</span>
         <span class="n">prob</span><span class="p">[</span><span class="n">inds</span><span class="p">[</span><span class="n">q</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">prob</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="getHammingDistance"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getHammingDistance">[docs]</a><span class="k">def</span> <span class="nf">getHammingDistance</span><span class="p">(</span><span class="n">arr1</span><span class="p">,</span> <span class="n">arr2</span><span class="p">):</span>
+<div class="viewcode-block" id="getHammingDistance"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.getHammingDistance">[docs]</a><span class="k">def</span> <span class="nf">getHammingDistance</span><span class="p">(</span><span class="n">arr1</span><span class="p">,</span> <span class="n">arr2</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_xor</span><span class="p">(</span><span class="n">arr1</span><span class="p">,</span> <span class="n">arr2</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="getMinimumHammingDistance"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getMinimumHammingDistance">[docs]</a><span class="k">def</span> <span class="nf">getMinimumHammingDistance</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+<div class="viewcode-block" id="getMinimumHammingDistance"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.getMinimumHammingDistance">[docs]</a><span class="k">def</span> <span class="nf">getMinimumHammingDistance</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
     <span class="n">Q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
     <span class="n">indsm</span> <span class="o">=</span> <span class="n">convertIndsToVector</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
     <span class="n">mind</span> <span class="o">=</span> <span class="n">M</span> <span class="o">+</span> <span class="mi">1</span>
@@ -459,7 +461,7 @@
     <span class="k">return</span> <span class="n">mind</span></div>
 
 
-<div class="viewcode-block" id="getSumHamming"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getSumHamming">[docs]</a><span class="k">def</span> <span class="nf">getSumHamming</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+<div class="viewcode-block" id="getSumHamming"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.getSumHamming">[docs]</a><span class="k">def</span> <span class="nf">getSumHamming</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
     <span class="n">Q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
     <span class="n">indsm</span> <span class="o">=</span> <span class="n">convertIndsToVector</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span>
@@ -470,7 +472,7 @@
     <span class="k">return</span> <span class="n">ret</span></div>
 
 
-<div class="viewcode-block" id="getSumDistanceBetweenActivatedElements"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getSumDistanceBetweenActivatedElements">[docs]</a><span class="k">def</span> <span class="nf">getSumDistanceBetweenActivatedElements</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+<div class="viewcode-block" id="getSumDistanceBetweenActivatedElements"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.getSumDistanceBetweenActivatedElements">[docs]</a><span class="k">def</span> <span class="nf">getSumDistanceBetweenActivatedElements</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
     <span class="n">Q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Q</span><span class="p">):</span>
@@ -479,7 +481,7 @@
 
 
 <span class="c1"># getInequalityL1(inds = [[0,1],[2,3]], M = 4) # = 0.0</span>
-<div class="viewcode-block" id="getInequalityL1"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getInequalityL1">[docs]</a><span class="k">def</span> <span class="nf">getInequalityL1</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+<div class="viewcode-block" id="getInequalityL1"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.getInequalityL1">[docs]</a><span class="k">def</span> <span class="nf">getInequalityL1</span><span class="p">(</span><span class="n">inds</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
     <span class="n">Q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
     <span class="n">K</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">hits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
@@ -488,7 +490,7 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">hits</span> <span class="o">-</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">K</span> <span class="o">/</span> <span class="n">M</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="checkConflict"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.checkConflict">[docs]</a><span class="k">def</span> <span class="nf">checkConflict</span><span class="p">(</span><span class="n">inds</span><span class="p">):</span>
+<div class="viewcode-block" id="checkConflict"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.checkConflict">[docs]</a><span class="k">def</span> <span class="nf">checkConflict</span><span class="p">(</span><span class="n">inds</span><span class="p">):</span>
     <span class="n">Q</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Q</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
@@ -503,7 +505,7 @@
 <span class="c1">#</span>
 <span class="c1"># Others</span>
 <span class="c1">#</span>
-<div class="viewcode-block" id="getIMParameters"><a class="viewcode-back" href="../../imtoolkit.IMUtil.html#imtoolkit.IMUtil.getIMParameters">[docs]</a><span class="k">def</span> <span class="nf">getIMParameters</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+<div class="viewcode-block" id="getIMParameters"><a class="viewcode-back" href="../../module/imtoolkit.IMUtil.html#imtoolkit.IMUtil.getIMParameters">[docs]</a><span class="k">def</span> <span class="nf">getIMParameters</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">maxQ</span> <span class="o">=</span> <span class="n">getMaxQ</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">maxQ</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
