@@ -156,7 +156,7 @@
 <span class="kn">from</span> <span class="nn">.Util</span> <span class="k">import</span> <span class="n">randn_c</span>
 
 
-<div class="viewcode-block" id="IdealRayleighChannel"><a class="viewcode-back" href="../../imtoolkit.IdealRayleighChannel.html#imtoolkit.IdealRayleighChannel.IdealRayleighChannel">[docs]</a><span class="k">class</span> <span class="nc">IdealRayleighChannel</span><span class="p">(</span><span class="n">Channel</span><span class="p">):</span>
+<div class="viewcode-block" id="IdealRayleighChannel"><a class="viewcode-back" href="../../module/imtoolkit.IdealRayleighChannel.html#imtoolkit.IdealRayleighChannel.IdealRayleighChannel">[docs]</a><span class="k">class</span> <span class="nc">IdealRayleighChannel</span><span class="p">(</span><span class="n">Channel</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A `Channel` class that generates the ideal Rayleigh fading channel coefficients.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -171,13 +171,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">=</span> <span class="n">M</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="n">N</span>
     
-<div class="viewcode-block" id="IdealRayleighChannel.randomize"><a class="viewcode-back" href="../../imtoolkit.IdealRayleighChannel.html#imtoolkit.IdealRayleighChannel.IdealRayleighChannel.randomize">[docs]</a>    <span class="k">def</span> <span class="nf">randomize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IdealRayleighChannel.randomize"><a class="viewcode-back" href="../../module/imtoolkit.IdealRayleighChannel.html#imtoolkit.IdealRayleighChannel.IdealRayleighChannel.randomize">[docs]</a>    <span class="k">def</span> <span class="nf">randomize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">channelMatrix</span> <span class="o">=</span> <span class="n">randn_c</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IT</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">)</span></div>
     
-<div class="viewcode-block" id="IdealRayleighChannel.getChannel"><a class="viewcode-back" href="../../imtoolkit.IdealRayleighChannel.html#imtoolkit.IdealRayleighChannel.IdealRayleighChannel.getChannel">[docs]</a>    <span class="k">def</span> <span class="nf">getChannel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IdealRayleighChannel.getChannel"><a class="viewcode-back" href="../../module/imtoolkit.IdealRayleighChannel.html#imtoolkit.IdealRayleighChannel.IdealRayleighChannel.getChannel">[docs]</a>    <span class="k">def</span> <span class="nf">getChannel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">channelMatrix</span></div>
 
-<div class="viewcode-block" id="IdealRayleighChannel.getEstimate"><a class="viewcode-back" href="../../imtoolkit.IdealRayleighChannel.html#imtoolkit.IdealRayleighChannel.IdealRayleighChannel.getEstimate">[docs]</a>    <span class="k">def</span> <span class="nf">getEstimate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IdealRayleighChannel.getEstimate"><a class="viewcode-back" href="../../module/imtoolkit.IdealRayleighChannel.html#imtoolkit.IdealRayleighChannel.IdealRayleighChannel.getEstimate">[docs]</a>    <span class="k">def</span> <span class="nf">getEstimate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Perfect channel state informaiton at the receiver</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">channelMatrix</span></div></div>
 
