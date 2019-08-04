@@ -15,7 +15,7 @@ class ModulatorTest(unittest.TestCase):
             meanNorm = np.mean(np.square(np.abs(mod.symbols)))
             self.assertAlmostEqual(meanNorm, 1.0, msg = "The mean power of PSK(" + str(L) + ") symbols differs from 1.0")
             
-            med = getMinimumEuclideanDistance(mod.symbols)
+            med = getMinimumEuclideanDistance(mod.symbols.reshape(L, 1, 1))
             self.assertGreater(med, 0, msg = "The minimum Euclidean distance of PSK(" + str(L) + ") symbols is too small")
 
     def test_QAM(self):
@@ -24,7 +24,7 @@ class ModulatorTest(unittest.TestCase):
             meanNorm = np.mean(np.square(np.abs(mod.symbols)))
             self.assertAlmostEqual(meanNorm, 1.0, msg = "The mean power of QAM(" + str(L) + ") symbols differs from 1.0")
             
-            med = getMinimumEuclideanDistance(mod.symbols)
+            med = getMinimumEuclideanDistance(mod.symbols.reshape(L, 1, 1))
             self.assertGreater(med, 0, msg = "The minimum Euclidean distance of QAM(" + str(L) + ") symbols is too small")
 
     def test_StarQAM(self):
@@ -33,7 +33,7 @@ class ModulatorTest(unittest.TestCase):
             meanNorm = np.mean(np.square(np.abs(mod.symbols)))
             self.assertAlmostEqual(meanNorm, 1.0, msg = "The mean power of StarQAM(" + str(L) + ") symbols differs from 1.0")
             
-            med = getMinimumEuclideanDistance(mod.symbols)
+            med = getMinimumEuclideanDistance(mod.symbols.reshape(L, 1, 1))
             self.assertGreater(med, 0, msg = "The minimum Euclidean distance of StarQAM(" + str(L) + ") symbols is too small")
 
 if __name__ == '__main__':

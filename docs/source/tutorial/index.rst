@@ -2,7 +2,11 @@
 Tutorial
 ========
 
-This webpage introduces a detailed tutorial for the ``imtoolkit`` command and APIs. Before using the command and the APIs, the CuPy-aided GPGPU acceleration is activated by setting an environment variable ``USECUPY=1`` as follows.
+This webpage introduces a detailed tutorial for the ``imtoolkit`` command and APIs.
+The ``imtoolkit`` command is a stand-alone toolkit for the spatial modulation and subcarrier-index modulation schemes, which supports Windows, Mac, and Linux.
+By contrast, the ``imtoolkit`` APIs provide various classes and functions for the general MIMO/OFDM scenarios.
+
+Before using ``imtoolkit``, one can activate the CuPy-aided GPGPU acceleration by setting an environment variable ``USECUPY=1`` as follows.
 
 .. code-block:: bash
 

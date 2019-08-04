@@ -74,7 +74,6 @@ def getMaxQ(M, K):
     return int(np.exp2(np.floor(np.log2(binom(M, K)))))
 
 # Usage: convertIndsToMatrix(getDictionaryIndexesList(M, K, Q), M)
-@jit('i8[:,:](i8,i8,i8)')
 def getDictionaryIndexesList(M, K, Q):
     maxQ = getMaxQ(M, K)
     if Q > maxQ:
@@ -102,7 +101,8 @@ def getMeslehIndexesList(M, K, Q):
 
     ret = [[0] * K] * Q
     q = 0
-    for pair in reversed(itertools.combinations(range(M), K)):
+    combs = list(itertools.combinations(range(M), K))
+    for pair in reversed(combs):
         ret[q] = list(pair)
         q += 1
         if q >= Q:

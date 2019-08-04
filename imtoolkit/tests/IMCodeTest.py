@@ -3,8 +3,6 @@
 
 import unittest
 import numpy as np
-from scipy.special import binom
-from imtoolkit.Util import testUnitary
 from imtoolkit.IMCode import IMCode
 
 
@@ -19,6 +17,8 @@ class IMCodeTest(unittest.TestCase):
         np.testing.assert_almost_equal(codes, np.array([[[1.],[0.],[0.],[0.]],[[0.],[1.],[0.],[0.]],[[0.],[0.],[1.],[0.]],[[0.],[0.],[0.],[1.]]]))
         codes = IMCode("wen", 4, 2, 4, "PSK", 1, 1).codes
         np.testing.assert_almost_equal(codes, np.array([[[0.70710678],[0.70710678],[0.],[0.]],[[0.],[0.70710678],[0.70710678],[0.]],[[0.],[0.],[0.70710678],[0.70710678]],[[0.70710678],[0.],[0.],[0.70710678]]]))
+        codes = IMCode("dic", 16, 8, 16, "PSK", 2, 1).codes
+        self.assertAlmostEqual(np.mean(codes), 0.0)
 
 if __name__ == '__main__':
     unittest.main()

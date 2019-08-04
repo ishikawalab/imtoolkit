@@ -8,15 +8,15 @@ if os.getenv("USECUPY") == "1":
 else:
     from numpy import *
 from .Simulator import Simulator
-from .Util import getXORtoErrorBitsArray, inv_dB, randn_c
+from .Util import getXORtoErrorBitsArray, inv_dB, randn_c, asnumpy
 
 
 class NonSquareDifferentialMLDSimulator(Simulator):
     """A simulator that relies on the nonsquare differential space-time block codes, which are proposed in [1-3]. This implementation uses the square-to-nonsquare projection concept of [2] and the adaptive forgetting factor of [3] for time-varying channels. The environment variable USECUPY determines whether to use cupy or not.
 
-    - [1] N. Ishikawa and S. Sugiura, ``Rectangular differential spatial modulation for open-loop noncoherent massive-MIMO downlink,'' IEEE Trans. Wirel. Commun., vol. 16, no. 3, pp. 1908--1920, 2017.
-    - [2] N. Ishikawa, R. Rajashekar, C. Xu, S. Sugiura, and L. Hanzo, ``Differential space-time coding dispensing with channel-estimation approaches the performance of its coherent counterpart in the open-loop massive MIMO-OFDM downlink,'' IEEE Trans. Commun., vol. 66, no. 12, pp. 6190--6204, 2018.
-    - [3] N. Ishikawa, R. Rajashekar, C. Xu, M. El-Hajjar, S. Sugiura, L. L. Yang, and L. Hanzo, ``Differential-detection aided large-scale generalized spatial modulation is capable of operating in high-mobility millimeter-wave channels,'' IEEE J. Sel. Top. Signal Process., in press.
+    - [1] N. Ishikawa and S. Sugiura, "Rectangular differential spatial modulation for open-loop noncoherent massive-MIMO downlink," IEEE Trans. Wirel. Commun., vol. 16, no. 3, pp. 1908--1920, 2017.
+    - [2] N. Ishikawa, R. Rajashekar, C. Xu, S. Sugiura, and L. Hanzo, "Differential space-time coding dispensing with channel-estimation approaches the performance of its coherent counterpart in the open-loop massive MIMO-OFDM downlink," IEEE Trans. Commun., vol. 66, no. 12, pp. 6190--6204, 2018.
+    - [3] N. Ishikawa, R. Rajashekar, C. Xu, M. El-Hajjar, S. Sugiura, L. L. Yang, and L. Hanzo, "Differential-detection aided large-scale generalized spatial modulation is capable of operating in high-mobility millimeter-wave channels," IEEE J. Sel. Top. Signal Process., in press.
     """
 
     def __init__(self, codes, channel, bases):
@@ -27,7 +27,7 @@ class NonSquareDifferentialMLDSimulator(Simulator):
             bases (imtoolkit.Basis): a set of bases that projects a unitary matrix on a nonsquare matrix.
         """
         super().__init__(codes, channel)
-        self.bases = asarray(bases)
+        self.bases = asnumpy(bases)
 
     def simulateBERReference(self, params, outputFile=True, printValue=True):
         """Simulates BER values at multiple SNRs, where the straightforward reference algorithm is used. Note that this time complexity is unrealistically high. 

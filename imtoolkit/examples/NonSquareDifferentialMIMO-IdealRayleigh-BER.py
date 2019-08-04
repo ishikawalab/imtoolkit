@@ -49,7 +49,8 @@ if __name__ == '__main__':
     ax.plot(ret["snr_dB"], ret["ber"], color="k", marker="s", linestyle="-", label="Differential SQAM [1]")
 
     os.environ['USECUPY'] = "0"
-    ret = simulateBER("BER_sim=diff_channel=rayleigh_code=DUC_M=4_N=4_T=4_L=65536_IT=1e5_snrfrom=0.00_to=30.00_len=16")
+    ret = simulateBER("BER_sim=diff_channel=rayleigh_code=DUC_M=4_N=4_T=4_L=65536_IT=1e4_snrfrom=0.00_to=30.00_len=16")
+    ret["ber"][ret["ber"] <= 1e-8] = np.NaN
     ax.plot(ret["snr_dB"], ret["ber"], color="b", marker="o", linestyle="-", label="Square DUC [2]")
     os.environ['USECUPY'] = "1"
 
