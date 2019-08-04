@@ -90,9 +90,7 @@ class NonSquareDifferentialMLDSimulator(Simulator):
 
                         errorBits += sum(xor2ebits[codei ^ mini])
 
-                    X0 = X1
                     S0 = S1
-                    Y0 = Y1
                     Yhat0 = Yhat1
 
             bers[i] = errorBits / (IT * B * (W - M)) * T
@@ -127,7 +125,6 @@ class NonSquareDifferentialMLDSimulator(Simulator):
         snr_dBs = linspace(params.snrfrom, params.to, params.len)
         lsnr = len(snr_dBs)
         sigmav2s = 1.0 / inv_dB(snr_dBs)
-        sqrtsigmav2s = repeat(sqrt(sigmav2s), ITi * N * T).reshape(lsnr, ITi, N, T)
         xor2ebits = getXORtoErrorBitsArray(Nc)
         eyes = tile(eye(M, dtype=complex), lsnr * ITi).T.reshape(lsnr, ITi, M, M)  # lsnr \times ITi \times M \times M
         E1 = bases[0]  # M \times T

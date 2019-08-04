@@ -2,7 +2,7 @@ import os
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
-from imtoolkit import Parameters, Modulator, OSTBCode, DiagonalUnitaryCode, IdealRayleighChannel, Basis, DifferentialMLDSimulator, SemiUnitaryDifferentialMLDSimulator, NonSquareDifferentialMLDSimulator
+from imtoolkit import Parameters, Modulator, OSTBCode, DiagonalUnitaryCode, ADSMCode, IdealRayleighChannel, Basis, DifferentialMLDSimulator, SemiUnitaryDifferentialMLDSimulator, NonSquareDifferentialMLDSimulator
 
 plt.switch_backend('agg')
 plt.rcParams['xtick.direction'] = 'in'
@@ -17,6 +17,8 @@ def simulateBER(argstr):
         codes = OSTBCode(params.M, params.mod, params.L).codes
     elif params.code == "DUC":
         codes = DiagonalUnitaryCode(params.M, params.L).codes
+    elif params.code == "ADSM":
+        codes = ADSMCode(params.M, params.mod, params.L).codes
 
     if params.mode == "BER":
         channel = IdealRayleighChannel(1, params.M, params.N)
@@ -52,10 +54,13 @@ if __name__ == '__main__':
     ret = simulateBER("BER_sim=diff_channel=rayleigh_code=DUC_M=4_N=4_T=4_L=65536_IT=1e4_snrfrom=0.00_to=30.00_len=16")
     ret["ber"][ret["ber"] <= 1e-8] = np.NaN
     ax.plot(ret["snr_dB"], ret["ber"], color="b", marker="o", linestyle="-", label="Square DUC [2]")
+
+    ret = simulateBER("BER_sim=diff_channel=rayleigh_code=ADSM_M=4_N=4_T=4_L=4096_mod=PSK_IT=1e3_snrfrom=0.00_to=30.00_len=16")
+    ax.plot(ret["snr_dB"], ret["ber"], color="b", marker="+", linestyle="-", label="Square ADSM [3]")
     os.environ['USECUPY'] = "1"
 
     ret = simulateBER("BERP_sim=nsdiff_channel=rayleigh_code=DUC_basis=d_M=4_N=4_T=1_L=16_W=80_ITo=1e3_ITi=1e4_snrfrom=0.00_to=30.00_len=16")
-    ax.plot(ret["snr_dB"], ret["ber"], color="r", marker="^", linestyle="-", label="Nonsquare DUC [4]")
+    ax.plot(ret["snr_dB"], ret["ber"], color="r", marker="^", linestyle="-", label="Nonsquare DUC [5]")
 
     handles, labels = ax.get_legend_handles_labels()
     legend = ax.legend(handles, labels, loc="best", frameon=True)
