@@ -19,42 +19,33 @@ def frodiff(x, y):
     return xp.square(xp.linalg.norm(x - y))
 
 @njit(['f8[:](c16[:,:,:])', 'f8[:](f8[:,:,:])'])
-def getEuclideanDistances(codes): 
-    # The following implementation only supports NumPy, slow
-    #combsfro = itertools.starmap(frodiff, itertools.combinations(codes, 2))
-    #return xp.asarray(list(combsfro))
-    # The following is also slow
-    #combsfro = [frodiff(p[0], p[1]) for p in itertools.combinations(codes, 2)]
-    #return xp.asarray(combsfro)
+def getEuclideanDistances(codes):
     # The following straightforward implementation with numba is the fastest
-    Nc = codes.shape[0]
+    Nc, M, T = codes.shape[0], codes.shape[1], codes.shape[2]
+    tolBase = 2.22e-16 * max(M, T)
+
     ret = xp.zeros(int(Nc * (Nc - 1) / 2))
     i = 0
     for y in range(0, Nc):
         for x in range(y+1, Nc):
-            ret[i] = xp.square(xp.linalg.norm(codes[y] - codes[x]))
+            diff = codes[y] - codes[x]
+            _, s, _ = xp.linalg.svd(diff.dot(diff.T.conj()))
+            ret[i] = xp.prod(s[s > tolBase])
             i += 1
     return ret
-    # The following implementation supports NumPy and CuPy,
-    # although it is memory-thirsty
-    #Nc = codes.shape[0]
-    #M = codes.shape[1]
-    #T = codes.shape[2]
-    #x = xp.hstack(xp.tile(codes, Nc)) # M \times T * Nc^2
-    #y = xp.tile(xp.hstack(codes), Nc) # M \times T * Nc^2
-    #diffxy = (x - y).T.reshape(Nc, Nc, M, T) # Nc \times Nc \times M \times T
-    #frodiff = xp.power(xp.linalg.norm(diffxy, axis=(2,3)), 2)
-    #return frodiff[np.triu_indices(Nc, 1)]
 
+# The rank and determinant criterion
 @njit(['f8(c16[:,:,:])', 'f8(f8[:,:,:])'])
 def getMinimumEuclideanDistance(codes):
-    #return min(getEuclideanDistances(codes))
     # The following straightforward implementation with numba is the fastest
-    Nc = codes.shape[0]
+    Nc, M, T = codes.shape[0], codes.shape[1], codes.shape[2]
+    tolBase = 2.22e-16 * max(M, T)
     mind = xp.inf
     for y in range(0, Nc):
         for x in range(y + 1, Nc):
-            d = xp.square(xp.linalg.norm(codes[y] - codes[x]))
+            diff = codes[y] - codes[x]
+            _, s, _ = xp.linalg.svd(diff.dot(diff.T.conj()))
+            d = xp.prod(s[s > tolBase])
             if d < mind:
                 mind = d
     return mind

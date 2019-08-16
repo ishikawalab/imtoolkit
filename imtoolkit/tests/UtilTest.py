@@ -37,11 +37,7 @@ class UtilTest(unittest.TestCase):
         #
         codes = DiagonalUnitaryCode(2, 2).codes
         ret = util.asnumpy(util.getEuclideanDistances(xp.array(codes)))
-        np.testing.assert_almost_equal(ret, [8.])
-        #
-        codes = IMCode("opt", 16, 8, 16, "PSK", 2, 1).codes
-        ret = util.asnumpy(util.getEuclideanDistances(xp.array(codes)))
-        self.assertAlmostEqual(xp.mean(ret), 2.000, places = 2)
+        np.testing.assert_almost_equal(ret, [16.])
 
     def test_getMinimumEuclideanDistance(self):
         codes = Modulator("PSK", 4).symbols.reshape(4, 1, 1)
@@ -55,10 +51,6 @@ class UtilTest(unittest.TestCase):
         codes = IMCode("opt", 4, 2, 4, "PSK", 4, 1).codes
         med = util.getMinimumEuclideanDistance(xp.array(codes))
         self.assertAlmostEqual(med, 1.0)
-
-        codes = IMCode("opt", 16, 8, 16, "PSK", 2, 1).codes
-        med = util.getMinimumEuclideanDistance(xp.array(codes))
-        self.assertAlmostEqual(med, 0.5, places = 2)
 
     def test_getDFTMatrix(self):
         W = util.getDFTMatrix(4)
