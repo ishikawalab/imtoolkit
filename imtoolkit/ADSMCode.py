@@ -13,19 +13,22 @@ class ADSMCode(object):
     - [2] R. Rajashekar, C. Xu, N. Ishikawa, S. Sugiura, K. V. S. Hari, and L. Hanzo, ``Algebraic differential spatial modulation is capable of approaching the performance of its coherent counterpart,'' IEEE Trans. Commun., vol. 65, no. 10, pp. 4260--4273, 2017.
     """
 
-    def __init__(self, M, modtype, L):
+    def __init__(self, M, modtype, L, u_phase = -1):
         """
         Args:
             M (int): the number of transmit antennas.
             modtype (string): the constellation type.
             L (int): the constellation size.
+            u_phase (float): the phase factor of dispersion matrices [0, pi]
         """
         self.M = M
         self.Nc = M * L
         self.B = np.log2(self.Nc)
         
         symbols = Modulator(modtype, L).symbols
-        u_phase = 2.0 * np.pi / L
+
+        if u_phase == -1:
+            u_phase = 2.0 * np.pi / L
 
         A = np.zeros((M, M), dtype=np.complex)
         A[0, M-1] = np.exp(1j * u_phase)

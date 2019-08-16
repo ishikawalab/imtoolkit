@@ -3,7 +3,7 @@
 
 import unittest
 import numpy as np
-from imtoolkit.Util import testUnitary
+from imtoolkit.Util import testUnitary, getMinimumEuclideanDistance, getEuclideanDistances
 from imtoolkit.ADSMCode import ADSMCode
 
 class ADSMCodeTest(unittest.TestCase):
@@ -12,6 +12,11 @@ class ADSMCodeTest(unittest.TestCase):
         np.set_printoptions(linewidth=np.inf)
         for L in [2, 4, 8]:
             testUnitary(2, ADSMCode(2, "PSK", L))
+
+        mind = getMinimumEuclideanDistance(ADSMCode(2, "PSK", 2).codes)
+        self.assertAlmostEqual(mind, 4.0)
+        mind = getMinimumEuclideanDistance(ADSMCode(2, "PSK", 2, 2.0 * np.pi / 4.0).codes)
+        self.assertAlmostEqual(mind, 2.0)
 
     def test_M4(self):
         for L in [4, 8, 16]:
