@@ -69,7 +69,6 @@ def outputIndsToFile(inds, M):
     print("Saved to " + fname)
     return fname
 
-@jit('i8(i8,i8)')
 def getMaxQ(M, K):
     return int(np.exp2(np.floor(np.log2(binom(M, K)))))
 

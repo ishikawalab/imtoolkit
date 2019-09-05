@@ -2,7 +2,6 @@
 # This toolkit is released under the MIT License, see LICENSE.txt
 
 import numpy as np
-import scipy
 from .Util import getDFTMatrixNumpy, CayleyTransform, getRandomHermitianMatrix
 
 
@@ -35,6 +34,7 @@ class Basis(object):
             # Random basis
             U = CayleyTransform(getRandomHermitianMatrix(M))
         elif type[0].lower() == 'h':
+            # Hybrid basis
             P = int(type.replace('h', ''))
             W = getDFTMatrixNumpy(P)
             U = np.zeros((M, M), dtype=complex)

@@ -18,7 +18,8 @@ def getGrayIndixes(bitWidth):
 def frodiff(x, y):
     return xp.square(xp.linalg.norm(x - y))
 
-@njit(['f8[:](c16[:,:,:])', 'f8[:](f8[:,:,:])'])
+#@njit(['f8[:](c16[:,:,:])', 'f8[:](f8[:,:,:])']) # unknown type errors in some environments
+@jit
 def getEuclideanDistances(codes):
     # The following straightforward implementation with numba is the fastest
     Nc, M, T = codes.shape[0], codes.shape[1], codes.shape[2]
@@ -29,13 +30,14 @@ def getEuclideanDistances(codes):
     for y in range(0, Nc):
         for x in range(y+1, Nc):
             diff = codes[y] - codes[x]
-            _, s, _ = xp.linalg.svd(diff.dot(diff.T.conj()))
+            _, s, _ = xp.linalg.svd(diff.dot(np.conj(diff.T)))
             ret[i] = xp.prod(s[s > tolBase])
             i += 1
     return ret
 
 # The rank and determinant criterion
-@njit(['f8(c16[:,:,:])', 'f8(f8[:,:,:])'])
+#@njit(['f8(c16[:,:,:])', 'f8(f8[:,:,:])']) # unknown type errors in some environments
+@jit
 def getMinimumEuclideanDistance(codes):
     # The following straightforward implementation with numba is the fastest
     Nc, M, T = codes.shape[0], codes.shape[1], codes.shape[2]
@@ -44,7 +46,7 @@ def getMinimumEuclideanDistance(codes):
     for y in range(0, Nc):
         for x in range(y + 1, Nc):
             diff = codes[y] - codes[x]
-            _, s, _ = xp.linalg.svd(diff.dot(diff.T.conj()))
+            _, s, _ = xp.linalg.svd(diff.dot(np.conj(diff.T)))
             d = xp.prod(s[s > tolBase])
             if d < mind:
                 mind = d
@@ -147,7 +149,7 @@ def getRandomHermitianMatrix(M):
 
 def CayleyTransform(H):
     M = H.shape[0]
-    return (xp.eye(M, dtype=complex) - 1j * H).dot(xp.linalg.inv(xp.eye(M, dtype=complex) + 1j * H))
+    return (np.eye(M, dtype=complex) - 1j * H).dot(np.linalg.inv(np.eye(M, dtype=complex) + 1j * H))
 
 def asnumpy(xparr):
     if 'cupy' in str(type(xparr)):

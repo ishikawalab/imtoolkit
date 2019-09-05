@@ -22,10 +22,13 @@ class Simulator(object):
             codes (numpy.ndarray): the input codebook, which is an (Nc,M,T)-sized tensor.
             channel (imtoolkit.Channel): the channel class used for simulations.
         """
-        self.codes = xp.asarray(codes)  # Copy codes to the GPU memory
+        self.codes = self.toXpArray(codes)  # Copy codes to the GPU memory
         self.Nc = len(codes)  # The number of codewords
         self.B = xp.log2(self.Nc)  # The bitwidth per codeword
         self.channel = channel  # The specified channel generator
+
+    def toXpArray(self, arr):
+        return xp.asarray(arr)
 
     @classmethod
     def dicToNumpy(self, dic):

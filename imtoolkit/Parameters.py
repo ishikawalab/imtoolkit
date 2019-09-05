@@ -51,7 +51,7 @@ class Parameters(object):
     dec = code = Wmode = Fmode = dmi = ""
     det = basis = CR = option = ""
     minh = 0
-    x0 = 0.51
+    x0 = 0.51 # the initial parameter of logistic map
 
     def __init__(self, arg):
         """
