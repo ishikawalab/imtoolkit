@@ -24,5 +24,3 @@ class IMCode(object):
     
     def putRate(self):
         print("B = B1 + B2 = %d + %d = %d [bit/symbol]"%(self.B1, self.B2, self.B))
-    
-

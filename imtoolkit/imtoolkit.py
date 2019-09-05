@@ -5,12 +5,9 @@ import os
 import re
 import sys
 import time
-import math
-import itertools
 import numpy as np
-from scipy import special
-from imtoolkit import IMTOOLKIT_VERSION, Parameters, IMCode, OSTBCode, IdealRayleighChannel, IdealOFDMChannel, CoherentMLDSimulator, \
-    getMinimumEuclideanDistance, getInequalityL1, getMinimumHammingDistance, convertIndsToVector
+from imtoolkit import IMTOOLKIT_VERSION, Parameters, SymbolCode, IMCode, OSTBCode, DiagonalUnitaryCode, ADSMCode, TASTCode, IdealRayleighChannel, IdealOFDMChannel, CoherentMLDSimulator, DifferentialMLDSimulator, SemiUnitaryDifferentialMLDSimulator, NonSquareDifferentialMLDSimulator, Basis, getMinimumEuclideanDistance, getInequalityL1, getMinimumHammingDistance, convertIndsToVector
+
 
 def main():
     np.set_printoptions(threshold=np.inf)
@@ -48,14 +45,22 @@ def main():
         if params.channel == "ofdm":
             # For the OFDM scenario, the mean power of symbol vectors is normalized to M
             meanPower = params.M
-        
-        if params.code == "index":
+
+        if params.code == "symbol":
+            code = SymbolCode(params.mod, params.L)
+        elif params.code == "index":
             code = IMCode(params.dm, params.M, params.K, params.Q, params.mod, params.L, meanPower)
         elif params.code == "OSTBC":
             if params.isSpeficied("O"):
                 code = OSTBCode(params.M, params.mod, params.L, params.O)
             else:
                 code = OSTBCode(params.M, params.mod, params.L)
+        elif params.code == "DUC":
+            code = DiagonalUnitaryCode(params.M, params.L)
+        elif params.code == "ADSM":
+            code = ADSMCode(params.M, params.mod, params.L)
+        elif params.code == "TAST":
+            code = TASTCode(params.M, params.Q, params.L)
         
         # initialize a channel generator
         if params.channel == "rayleigh": # quasi-static Rayleigh fading
@@ -75,7 +80,15 @@ def main():
                 channel = IdealOFDMChannel(1, params.M)
 
         # initialize a simulator
-        sim = CoherentMLDSimulator(code.codes, channel)
+        if params.sim == "coh":
+            sim = CoherentMLDSimulator(code.codes, channel)
+        elif params.sim == "diff":
+            sim = DifferentialMLDSimulator(code.codes, channel)
+        elif params.sim == "sudiff":
+            sim = SemiUnitaryDifferentialMLDSimulator(code.codes, channel)
+        elif params.sim == "nsdiff":
+            bases = Basis(params.basis, params.M, params.T).bases
+            sim = NonSquareDifferentialMLDSimulator(code.codes, channel, bases)
 
         start_time = time.time()
 
@@ -99,12 +112,8 @@ def main():
             print("Inequality L1 = %d" % getInequalityL1(code.inds, params.M))
         elif params.mode == "VIEWIMTEX":
             print("$\\a$(%d, %d, %d) $=$ [" % (params.M, params.K, params.Q))
-            #[\e_1 ~ \e_2], [\e_1 ~ \e_3], [\e_2 ~ \e_4], [\e_3 ~ \e_4] 
-            #for iarr in code.inds:
-            #    print(" ~ ".join(["\\e_{%d}" % i for i in iarr]))
             es = [", ".join(["%d" % (i+1) for i in iarr]) for iarr in code.inds]
             print(", ".join(["[" + e + "]" for e in es]) + "].")
-            #print(",".join(["[" + iarrstr + "]\n" for iarrstr in " ~ ".join(["\\e_{%d}" % i for i in iarr])]))
 
         elapsed_time = time.time() - start_time
         print ("Elapsed time = %.10f seconds" % (elapsed_time))

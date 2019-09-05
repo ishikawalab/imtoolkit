@@ -133,7 +133,7 @@ def c(APATH, label):
         
         return label.replace(chit.group(0), "[" + cn + "]")
 
-def testUnitary(M, code):
+def testUnitaryCode(M, code):
     codes = code.codes.reshape(-1, M)
     np.testing.assert_almost_equal(np.conj(codes.T).dot(codes) / code.Nc, xp.eye(M))
 

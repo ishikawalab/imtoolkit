@@ -51,6 +51,7 @@ class Parameters(object):
     dec = code = Wmode = Fmode = dmi = ""
     det = basis = CR = option = ""
     minh = 0
+    x0 = 0.51
 
     def __init__(self, arg):
         """
