@@ -117,6 +117,9 @@ def getXCorrespondingToY(xarr, yarr, y):
 # c(APATH = "C:/Dropbox/Project/201903_imtoolkit_paper/paper/main.aux", label = "Conv. SSK \cite{liu2015ssk}")
 def c(APATH, label):
     import re
+    if not os.path.exists(APATH):
+        return label
+
     with open(APATH, mode='r') as f:
         #
         chit = re.search(r'\\cite{(\S+)}', label)

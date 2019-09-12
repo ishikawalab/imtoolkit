@@ -27,7 +27,7 @@ class NonSquareDifferentialMLDSimulator(Simulator):
             bases (imtoolkit.Basis): a set of bases that projects a unitary matrix on a nonsquare matrix.
         """
         super().__init__(codes, channel)
-        self.bases = asnumpy(bases)
+        self.bases = self.toXpArray(bases)
 
     def simulateBERReference(self, params, outputFile=True, printValue=True):
         """Simulates BER values at multiple SNRs, where the straightforward reference algorithm is used. Note that this time complexity is unrealistically high. 
