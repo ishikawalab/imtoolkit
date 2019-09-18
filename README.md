@@ -10,7 +10,7 @@ The major advantages of this toolkit are highlighted as follows:
 
 For more information, please refer to the following webpages.
 - [IMToolkit official website](https://ishikawa.cc/imtoolkit/).
-- [A detailed tutorial for the imtoolkit command](https://ishikawa.cc/imtoolkit/tutorial.html).
+- [A detailed tutorial for the imtoolkit command](https://ishikawa.cc/imtoolkit/tutorial/index.html).
 - [A comprehensive database of the designed active indices](https://ishikawa.cc/imtoolkit/db/index.html).
 - [A compute capsule on Code Ocean](https://codeocean.com/capsule/4685246/tree), that reproduces the same results as those reported in [1].
 
@@ -39,7 +39,7 @@ In that case, it would be better to install the latest package and activate the 
     > git clone https://github.com/imtoolkit/imtoolkit
     > pip install -e ./imtoolkit # this activates the editable mode
 
-[A detailed tutorial for the installed imtoolkit command is available here.](https://ishikawa.cc/imtoolkit/tutorial.html)
+[A detailed tutorial for the installed imtoolkit command is available here.](https://ishikawa.cc/imtoolkit/tutorial/index.html)
 
 ## Citations
 
