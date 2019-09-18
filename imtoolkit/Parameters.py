@@ -45,7 +45,8 @@ class Parameters(object):
     Rx = 0.0  # Horizontal position of a receiver
     FdTs = 0.0  # Normalized Doppler frequency in Jakes channel model
     delta = Herr = cfo = 0.0
-    Kf = Dt = Dr = 0.0
+    Kf = 0.0 # the Rice factor in dB
+    Dt = Dr = 0.0
 
     dm = ""  # Type of dispersion matrices or active indices
     dec = code = Wmode = Fmode = dmi = ""

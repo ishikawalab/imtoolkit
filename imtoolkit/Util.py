@@ -4,6 +4,7 @@
 import os
 from sympy.combinatorics.graycode import GrayCode
 from scipy.interpolate import interp1d
+from scipy.constants import speed_of_light
 from numba import jit, njit
 import numpy as np
 if os.getenv("USECUPY") == "1":
@@ -150,12 +151,23 @@ def getRandomHermitianMatrix(M):
             ret[x, y] = xp.conj(ret[y, x])
     return ret
 
+# cp.linalg.inv does not support a complex-valued matrix.
 def CayleyTransform(H):
     M = H.shape[0]
-    return (np.eye(M, dtype=complex) - 1j * H).dot(np.linalg.inv(np.eye(M, dtype=complex) + 1j * H))
+    I = np.eye(M, dtype=np.complex)
+    U = np.matmul(I - 1.j * H, np.linalg.inv(I + 1.j * H))
+    return U
 
 def asnumpy(xparr):
     if 'cupy' in str(type(xparr)):
         return xp.asnumpy(xparr) # cupy to numpy
     return xparr # do nothing
 
+def ascupy(nparr):
+    if 'numpy' in str(type(nparr)):
+        return xp.asarray(nparr) # numpy to cupy
+    return nparr # do nothing
+
+# frequency [Hz], wavelength [m]
+def frequencyToWavelength(frequency):
+    return speed_of_light / frequency

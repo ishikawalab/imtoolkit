@@ -10,6 +10,7 @@ from .Parameters import Parameters
 from .Channel import Channel
 from .AWGNChannel import AWGNChannel
 from .IdealRayleighChannel import IdealRayleighChannel
+from .IdealRicianChannel import IdealRicianChannel
 from .IdealOFDMChannel import IdealOFDMChannel
 
 from .Simulator import Simulator
@@ -19,6 +20,7 @@ from .SemiUnitaryDifferentialMLDSimulator import SemiUnitaryDifferentialMLDSimul
 from .NonSquareDifferentialMLDSimulator import NonSquareDifferentialMLDSimulator
 from .Basis import Basis
 
+from .SymbolCode import SymbolCode
 from .IMCode import IMCode
 from .OSTBCode import OSTBCode
 from .DiagonalUnitaryCode import DiagonalUnitaryCode
