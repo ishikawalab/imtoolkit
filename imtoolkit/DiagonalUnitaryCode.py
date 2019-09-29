@@ -54,6 +54,9 @@ class DiagonalUnitaryCode:
             u = [1, 1, 1, 1]
         elif M == 4 and L == 16:
             u = [1, 3, 5, 7]
+        elif M == 4 and L == 64:
+            # maxp = 0.0366101
+            u = [1, 21, 24, 25]
         elif M == 4 and L == 256:
             u = [1, 25, 97, 107]
         elif M == 4 and L == 4096:

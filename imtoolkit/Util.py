@@ -26,13 +26,13 @@ def getEuclideanDistances(codes):
     Nc, M, T = codes.shape[0], codes.shape[1], codes.shape[2]
     tolBase = 2.22e-16 * max(M, T)
 
-    ret = xp.zeros(int(Nc * (Nc - 1) / 2))
+    ret = np.zeros(int(Nc * (Nc - 1) / 2))
     i = 0
     for y in range(0, Nc):
         for x in range(y+1, Nc):
             diff = codes[y] - codes[x]
-            _, s, _ = xp.linalg.svd(diff.dot(np.conj(diff.T)))
-            ret[i] = xp.prod(s[s > tolBase])
+            _, s, _ = np.linalg.svd(diff.dot(np.conj(diff.T)))
+            ret[i] = np.prod(s[s > tolBase])
             i += 1
     return ret
 
@@ -43,12 +43,12 @@ def getMinimumEuclideanDistance(codes):
     # The following straightforward implementation with numba is the fastest
     Nc, M, T = codes.shape[0], codes.shape[1], codes.shape[2]
     tolBase = 2.22e-16 * max(M, T)
-    mind = xp.inf
+    mind = np.inf
     for y in range(0, Nc):
         for x in range(y + 1, Nc):
             diff = codes[y] - codes[x]
-            _, s, _ = xp.linalg.svd(diff.dot(np.conj(diff.T)))
-            d = xp.prod(s[s > tolBase])
+            _, s, _ = np.linalg.svd(diff.dot(np.conj(diff.T)))
+            d = np.prod(s[s > tolBase])
             if d < mind:
                 mind = d
     return mind
@@ -151,12 +151,21 @@ def getRandomHermitianMatrix(M):
             ret[x, y] = xp.conj(ret[y, x])
     return ret
 
-# cp.linalg.inv does not support a complex-valued matrix.
+# TODO: need to support cp
 def CayleyTransform(H):
     M = H.shape[0]
     I = np.eye(M, dtype=np.complex)
     U = np.matmul(I - 1.j * H, np.linalg.inv(I + 1.j * H))
+    #U = np.matmul(H - 1.j * I, np.linalg.inv(H + 1.j * I))
     return U
+
+# TODO: need to support cp
+def CayleyTransformInv(U):
+    M = U.shape[0]
+    I = np.eye(M, dtype=np.complex)
+    #H = 1.j * np.matmul(I + U,np.linalg.inv(I - U))
+    H = -1.j * np.matmul(np.linalg.inv(I + U), I - U)
+    return H
 
 def asnumpy(xparr):
     if 'cupy' in str(type(xparr)):
