@@ -97,7 +97,7 @@ class Parameters(object):
     def parseValue(self, value):
         if re.match(r'-*\d+', value):
             if value.find("e") > 0:
-                return int(float(value))  # e.g. IT=1e5, IT=2.5e7
+                return float(value)  # e.g. IT=1e5, IT=2.5e7
             elif value.find(".") > 0:
                 return float(value)  # e.g. to=50.00
             else:
