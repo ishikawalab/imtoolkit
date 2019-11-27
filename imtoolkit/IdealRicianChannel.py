@@ -16,7 +16,7 @@ class IdealRicianChannel(Channel):
 
     [1] F. Bøhagen, P. Orten, and G. E. Øien, ``Design of optimal high-rank line-of-sight MIMO channels,'' IEEE Trans. Wirel. Commun., vol. 6, no. 4, pp. 1420--1424, 2007.
     """
-    def __init__(self, IT, K_dB, wavelength, tx, ty, rx, ry):
+    def __init__(self, IT, K_dB, wavelength, tx, ty, tz, rx, ry, rz):
         """
         Args:
             IT (int): the number of parallel channel matrices.
@@ -35,7 +35,7 @@ class IdealRicianChannel(Channel):
         r = xp.zeros((self.N, self.M), dtype = xp.complex)
         for n in range(self.N):
             for m in range(self.M):
-                r[n][m] = xp.sqrt(xp.square(rx[n] - tx[m]) + xp.square(ry[n] - ty[m]))
+                r[n][m] = xp.sqrt(xp.square(rx[n] - tx[m]) + xp.square(ry[n] - ty[m]) + xp.square(rz[n] - tz[m]))
 
         anHLoS = xp.exp(-1j * 2.0 * xp.pi / wavelength * r)
         self.HLoS = xp.tile(anHLoS.T, IT).T # IT \cdot N \times M
@@ -51,15 +51,25 @@ class IdealRicianChannel(Channel):
         return self.channelMatrix
 
     @classmethod
-    def getPositionsSingleArray(cls, M, N, ae_spacing, distance_tx_rx):
-        tx = xp.arange(M) * ae_spacing
-        rx = xp.arange(N) * ae_spacing
+    def getPositionsUniformLinearArray(cls, Nae, ae_spacing, height):
+        x = xp.arange(Nae) * ae_spacing
+        x -= xp.mean(x) # centering
+        y = xp.zeros(Nae)
+        z = xp.repeat(xp.array(height), Nae)
 
-        # centering
-        tx -= (tx[0] + tx[-1]) / 2.0
-        rx -= (rx[0] + rx[-1]) / 2.0
+        return x, y, z
 
-        ty = xp.array([distance_tx_rx] * M)
-        ry = xp.zeros(N)
+    @classmethod
+    def getPositionsRectangular2d(cls, Nae, ae_spacing, height):
+        sq = xp.floor(xp.sqrt(Nae))
+        x = xp.arange(Nae) % sq
+        y = xp.floor(xp.arange(Nae) / sq)
+        z = xp.repeat(xp.array(height), Nae)
 
-        return tx, ty, rx, ry
+        x *= ae_spacing
+        y *= ae_spacing
+
+        x -= xp.mean(x)
+        y -= xp.mean(y)
+
+        return x, y, z
