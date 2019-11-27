@@ -5,7 +5,7 @@ import os
 from sympy.combinatorics.graycode import GrayCode
 from scipy.interpolate import interp1d
 from scipy.constants import speed_of_light
-from numba import jit, njit
+from numba import jit, prange
 import numpy as np
 if os.getenv("USECUPY") == "1":
     import cupy as xp
@@ -28,7 +28,7 @@ def getEuclideanDistances(codes):
 
     ret = np.zeros(int(Nc * (Nc - 1) / 2))
     i = 0
-    for y in range(0, Nc):
+    for y in prange(0, Nc):
         for x in range(y+1, Nc):
             diff = codes[y] - codes[x]
             _, s, _ = np.linalg.svd(diff.dot(np.conj(diff.T)))
@@ -44,7 +44,7 @@ def getMinimumEuclideanDistance(codes):
     Nc, M, T = codes.shape[0], codes.shape[1], codes.shape[2]
     tolBase = 2.22e-16 * max(M, T)
     mind = np.inf
-    for y in range(0, Nc):
+    for y in prange(0, Nc):
         for x in range(y + 1, Nc):
             diff = codes[y] - codes[x]
             _, s, _ = np.linalg.svd(diff.dot(np.conj(diff.T)))
@@ -180,3 +180,10 @@ def ascupy(nparr):
 # frequency [Hz], wavelength [m]
 def frequencyToWavelength(frequency):
     return speed_of_light / frequency
+
+def kurtosis(x):
+    mu = xp.mean(x)
+    mu2 = xp.mean(xp.power(x - mu, 2))
+    mu4 = xp.mean(xp.power(x - mu, 4))
+    beta2 = mu4 / (mu2 * mu2) - 3.0
+    return beta2

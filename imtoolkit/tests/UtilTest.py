@@ -52,6 +52,10 @@ class UtilTest(unittest.TestCase):
         med = util.getMinimumEuclideanDistance(xp.array(codes))
         self.assertAlmostEqual(med, 1.0)
 
+        codes = IMCode("opt", 8, 4, 64, "PSK", 2, 1).codes
+        med = util.getMinimumEuclideanDistance(xp.array(codes))
+        self.assertAlmostEqual(med, 0.5)
+
     def test_getDFTMatrix(self):
         W = util.getDFTMatrix(4)
         np.testing.assert_almost_equal(W.dot(W.conj().T), xp.eye(4, dtype=xp.complex), decimal=3)
@@ -109,6 +113,9 @@ class UtilTest(unittest.TestCase):
         np.testing.assert_almost_equal(util.asnumpy(U.dot(U.conj().T)), np.eye(8, dtype=np.complex))
         U = util.CayleyTransform(util.asnumpy(util.getRandomHermitianMatrix(16)))
         np.testing.assert_almost_equal(util.asnumpy(U.dot(U.conj().T)), np.eye(16, dtype=np.complex))
+
+    def test_kurtosis(self):
+        self.assertAlmostEqual(util.kurtosis(util.randn(10000000)), 0.0, places=2)
 
 if __name__ == '__main__':
     unittest.main()
