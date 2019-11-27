@@ -39,13 +39,12 @@ class QAM(object):
             print("The specified constellationSize is not an even power of two")
             return
 
-        logsqL = np.floor(np.log2(sqrtL))
         sigma = np.sqrt((self.L - 1) * 2.0 / 3.0)
         y = np.floor(np.arange(self.L) / sqrtL)
         x = np.arange(self.L) % sqrtL
         originalSymbols = ((sqrtL - 1) - 2.0 * x) / sigma + 1j * ((sqrtL - 1) - 2.0 * y) / sigma
-        # originalSymbols
 
+        logsqL = np.floor(np.log2(sqrtL))
         grayIndexes = getGrayIndixes(logsqL)
         grayIndexes = (np.take(grayIndexes, list(y)) * 2 ** logsqL + np.take(grayIndexes, list(x))).astype(np.int)
         # grayIndexes
