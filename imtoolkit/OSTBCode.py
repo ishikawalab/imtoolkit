@@ -27,19 +27,19 @@ class OSTBCode(object):
             nsymbols = M
 
         elif M == 4:
-            if modtype == "PSK" or modtype == "SQAM":
+            if modtype == "PAM":
+                nsymbols = M
+            else:
                 if nsymbols != 2 and nsymbols != 3:
                     print("Please specify nsymbols = 2 or 3. I use nsymbols = 2.")
                     nsymbols = 2
-            elif modtype == "PAM":
-                nsymbols = M
-
+                if modtype == "QAM":
+                    print("Note that the space-time codewords become non-orthogonal.")
         elif M == 8:
-            if modtype == "PSK" or modtype == "SQAM":
-                print("OSTBC with M=8 and PSK is not supported")
-            elif modtype == "PAM":
+            if modtype == "PAM":
                 nsymbols = M
-
+            else:
+                print("OSTBC with M=8 and PSK is not supported")
         elif M == 16:
             nsymbols = M
 
@@ -58,7 +58,25 @@ class OSTBCode(object):
                 self.codes[i] /= np.sqrt(nsymbols)
 
             if M == 4:
-                if modtype == "PSK" or modtype == "SQAM":
+                if modtype == "PAM":
+                    self.codes[i, 0, 0] = s[0]
+                    self.codes[i, 0, 1] = s[1]
+                    self.codes[i, 0, 2] = s[2]
+                    self.codes[i, 0, 3] = s[3]
+                    self.codes[i, 1, 0] = -s[1]
+                    self.codes[i, 1, 1] = s[0]
+                    self.codes[i, 1, 2] = -s[3]
+                    self.codes[i, 1, 3] = s[2]
+                    self.codes[i, 2, 0] = -s[2]
+                    self.codes[i, 2, 1] = s[3]
+                    self.codes[i, 2, 2] = s[0]
+                    self.codes[i, 2, 3] = -s[1]
+                    self.codes[i, 3, 0] = -s[3]
+                    self.codes[i, 3, 1] = -s[2]
+                    self.codes[i, 3, 2] = s[1]
+                    self.codes[i, 3, 3] = s[0]
+                    self.codes[i] /= np.sqrt(nsymbols)
+                else:
                     if nsymbols == 2:
                         self.codes[i, 0, 0] = s[0]
                         self.codes[i, 0, 1] = s[1]
@@ -83,24 +101,7 @@ class OSTBCode(object):
                         self.codes[i, 3, 2] = -np.conj(s[1])
                         self.codes[i, 3, 3] = -s[0]
                         self.codes[i] /= np.sqrt(nsymbols)
-                elif modtype == "PAM":
-                    self.codes[i, 0, 0] = s[0]
-                    self.codes[i, 0, 1] = s[1]
-                    self.codes[i, 0, 2] = s[2]
-                    self.codes[i, 0, 3] = s[3]
-                    self.codes[i, 1, 0] = -s[1]
-                    self.codes[i, 1, 1] = s[0]
-                    self.codes[i, 1, 2] = -s[3]
-                    self.codes[i, 1, 3] = s[2]
-                    self.codes[i, 2, 0] = -s[2]
-                    self.codes[i, 2, 1] = s[3]
-                    self.codes[i, 2, 2] = s[0]
-                    self.codes[i, 2, 3] = -s[1]
-                    self.codes[i, 3, 0] = -s[3]
-                    self.codes[i, 3, 1] = -s[2]
-                    self.codes[i, 3, 2] = s[1]
-                    self.codes[i, 3, 3] = s[0]
-                    self.codes[i] /= np.sqrt(nsymbols)
+
 
             elif M == 8:
                 if modtype == "PAM":
