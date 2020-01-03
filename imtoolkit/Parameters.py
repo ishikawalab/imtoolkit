@@ -74,6 +74,11 @@ class Parameters(object):
         for op in options:
             pair = op.split("=")
             pv = self.parseValue(pair[1])
+
+            # exception
+            if "IT" in pair[0]:
+                pv = int(pv)
+
             self.table[pair[0]] = pv
             self.__setattr__(pair[0], pv)
 
