@@ -9,13 +9,18 @@ class BasisTest(unittest.TestCase):
     def getMeanNorm(self, b):
         return np.mean(np.square(np.linalg.norm(b, axis=(1,2))))
     
-    def test_IdentityBasis(self):
+    def test_Basis(self):
         np.set_printoptions(linewidth=np.inf)
         self.assertAlmostEqual(self.getMeanNorm(Basis("i", 4, 2).bases), 2)
         self.assertAlmostEqual(self.getMeanNorm(Basis("d", 4, 2).bases), 2)
         self.assertAlmostEqual(self.getMeanNorm(Basis("r", 4, 2).bases), 2)
         self.assertAlmostEqual(self.getMeanNorm(Basis("h2", 4, 1).bases), 1)
         self.assertAlmostEqual(self.getMeanNorm(Basis("h4", 8, 2).bases), 2)
+
+    def test_GSPBasis(self):
+        np.set_printoptions(linewidth=np.inf)
+        self.assertAlmostEqual(self.getMeanNorm(Basis("g", 16, 1).bases), 1)
+
 
 if __name__ == '__main__':
     unittest.main()
