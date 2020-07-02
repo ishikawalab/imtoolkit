@@ -12,7 +12,6 @@ if os.getenv("USECUPY") == "1":
 else:
     import numpy as xp
 
-@jit
 def getGrayIndixes(bitWidth):
     gray = GrayCode(bitWidth)
     return [int(strb, 2) for strb in gray.generate_gray()]
@@ -21,7 +20,6 @@ def frodiff(x, y):
     return xp.square(xp.linalg.norm(x - y))
 
 #@njit(['f8[:](c16[:,:,:])', 'f8[:](f8[:,:,:])']) # unknown type errors in some environments
-@jit
 def getEuclideanDistances(codes):
     # The following straightforward implementation with numba is the fastest
     Nc, M, T = codes.shape[0], codes.shape[1], codes.shape[2]
