@@ -5,7 +5,7 @@ import itertools
 import numpy as np
 from .Modulator import Modulator
 
-
+#from numba import jitclass, uint32, complex64
 class OSTBCode(object):
     """Orthogonal space-time block code (OSTBC). A seminal research can be found in [1].
 

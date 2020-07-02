@@ -1,12 +1,10 @@
 # Copyright (c) IMToolkit Development Team
 # This toolkit is released under the MIT License, see LICENSE.txt
 
-import os
 import re
 import sys
 import time
-import numpy as np
-from imtoolkit import IMTOOLKIT_VERSION, Parameters, SymbolCode, IMCode, OSTBCode, DiagonalUnitaryCode, ADSMCode, TASTCode, IdealRayleighChannel, IdealOFDMChannel, CoherentMLDSimulator, DifferentialMLDSimulator, SemiUnitaryDifferentialMLDSimulator, NonSquareDifferentialMLDSimulator, Basis, getMinimumEuclideanDistance, getInequalityL1, getMinimumHammingDistance, convertIndsToVector
+from imtoolkit import *
 
 
 def main():
@@ -58,9 +56,12 @@ def main():
         elif params.code == "DUC":
             code = DiagonalUnitaryCode(params.M, params.L)
         elif params.code == "ADSM":
-            code = ADSMCode(params.M, params.mod, params.L)
+            if params.isSpeficied("u1"):
+                code = ADSMCode(params.M, params.mod, params.L, params.u1)
+            else:
+                code = ADSMCode(params.M, params.mod, params.L)
         elif params.code == "TAST":
-            code = TASTCode(params.M, params.Q, params.L)
+            code = TASTCode(params.M, params.Q, params.L, params.mod)
         
         # initialize a channel generator
         if params.channel == "rayleigh": # quasi-static Rayleigh fading
@@ -78,6 +79,25 @@ def main():
             else:
                 # Single channel
                 channel = IdealOFDMChannel(1, params.M)
+        elif params.channel == "rice": # ideal Rician fading
+            # channel parameters, that need to be modified based on your setup
+            print("bohagen2007los")
+            frequency = 5.0 * 10**9 # 5 [GHz]
+            wavelength = frequencyToWavelength(frequency)
+            height = params.R if params.isSpeficied("R") else 3.0
+            dTx = params.dTx if params.isSpeficied("dTx") else height / max(params.M, params.N)
+            print("dTx = %1.2f"%dTx)
+            rx, ry, rz = IdealRicianChannel.getPositionsUniformLinearArray(params.N, wavelength, 0)
+            tx, ty, tz = IdealRicianChannel.getPositionsUniformLinearArray(params.M, dTx, height)
+            #tx, ty, tz = IdealRicianChannel.getPositionsRectangular2d(params.M, wavelength, 3.0)
+            #rx, ry, rz = IdealRicianChannel.getPositionsRectangular2d(params.N, wavelength, 0.0)
+
+            if re.match(r'.*P$', params.mode):
+                # Parallel channel
+                channel = IdealRicianChannel(params.ITi, params.Kf, wavelength, tx, ty, tz, rx, ry, rz)
+            else:
+                # Single channel
+                channel = IdealRicianChannel(1, params.Kf, wavelength, tx, ty, tz, rx, ry, rz)
 
         # initialize a simulator
         if params.sim == "coh":
@@ -87,7 +107,8 @@ def main():
         elif params.sim == "sudiff":
             sim = SemiUnitaryDifferentialMLDSimulator(code.codes, channel)
         elif params.sim == "nsdiff":
-            bases = Basis(params.basis, params.M, params.T).bases
+            E1 = Basis.getGSPE1(params) if params.basis[0] == "g" else None
+            bases = Basis(params.basis, params.M, params.T, E1=E1).bases
             sim = NonSquareDifferentialMLDSimulator(code.codes, channel, bases)
 
         start_time = time.time()
@@ -95,7 +116,10 @@ def main():
         if params.mode == "RATE":
             code.putRate()
         elif params.mode == "MED":
-            print("MED = " + str(getMinimumEuclideanDistance(code.codes)))
+            if params.sim == "nsdiff":
+                print("MED = " + str(getMinimumEuclideanDistance(np.matmul(code.codes, bases[0]))))
+            else:
+                print("MED = " + str(getMinimumEuclideanDistance(code.codes)))
         elif params.mode == "BER":
             sim.simulateBERReference(params)
         elif params.mode == "BERP":
@@ -105,7 +129,10 @@ def main():
         elif params.mode == "AMIP":
             sim.simulateAMIParallel(params)
         elif params.mode == "VIEW":
-            print(code.codes)
+            if params.sim == "nsdiff":
+                print(np.matmul(code.codes, bases[0]))
+            else:
+                print(code.codes)
         elif params.mode == "VIEWIM":
             print(np.array(convertIndsToVector(code.inds, params.M)).reshape(-1, params.Q))
             print("Minimum Hamming distance = %d" % getMinimumHammingDistance(code.inds, params.M))

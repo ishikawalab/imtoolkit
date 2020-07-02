@@ -3,7 +3,6 @@
 
 import re
 
-
 class Parameters(object):
     """This class is used to pack various simulation parameters into an instance."""
 

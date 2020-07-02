@@ -23,9 +23,11 @@ class IdealRicianChannel(Channel):
             K_dB (float): the rician K factor in dB.
             wavelength (float): the wavelength.
             tx (numpy.array): the x positions of transmit antenna elements.
-            ty (numpy.array): the x positions of transmit antenna elements.
+            ty (numpy.array): the y positions of transmit antenna elements.
+            tz (numpy.array): the z positions of transmit antenna elements.
             rx (numpy.array): the x positions of receive antenna elements.
-            ry (numpy.array): the x positions of receive antenna elements.
+            ry (numpy.array): the y positions of receive antenna elements.
+            rz (numpy.array): the z positions of receive antenna elements.
         """
         self.IT = IT
         self.K = 10 ** (K_dB / 10.0)

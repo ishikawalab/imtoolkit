@@ -12,6 +12,7 @@ if os.getenv("USECUPY") == "1":
 else:
     import numpy as xp
 
+@jit
 def getGrayIndixes(bitWidth):
     gray = GrayCode(bitWidth)
     return [int(strb, 2) for strb in gray.generate_gray()]
@@ -74,12 +75,14 @@ def getDFTMatrixNumpy(N):
 #
 # IT++ like functions
 #
+@jit
 def inv_dB(dB):
     return 10.0 ** (dB / 10.0)
 
 def randn(*size):
     return xp.random.normal(0, 1, size = size)
 
+@jit
 def randn_c(*size):
     """
     Complex normal distribution
@@ -90,6 +93,7 @@ def randn_c(*size):
 def countErrorBits(x, y):
     return bin(x^y).count('1')
 
+@jit
 def getXORtoErrorBitsArray(Nc):
     #return xp.array(list(map(lambda x: bin(x).count('1'), range(Nc + 1))))
     ret = xp.zeros(Nc + 1)
@@ -167,6 +171,7 @@ def CayleyTransformInv(U):
     H = -1.j * np.matmul(np.linalg.inv(I + U), I - U)
     return H
 
+@jit
 def asnumpy(xparr):
     if 'cupy' in str(type(xparr)):
         return xp.asnumpy(xparr) # cupy to numpy
@@ -178,6 +183,7 @@ def ascupy(nparr):
     return nparr # do nothing
 
 # frequency [Hz], wavelength [m]
+@jit
 def frequencyToWavelength(frequency):
     return speed_of_light / frequency
 

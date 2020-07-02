@@ -81,21 +81,21 @@ class Basis(object):
             if params.M == 4 and params.L == 16:
                 #print("Basis.py: E1 designed for DUC, M=4, L=16, MED = 1.9999999999999978")
                 #return np.array([[0.5],[0.5],[0.5],[0.5]], dtype=np.complex)
-                print("Basis.py: E1 designed for DUC, M=4, L=16, Powell MED = 1.9999999918507845")
-                return np.array([[-0.1552578934 - 0.4752841151j],
-                      [0.4308312897 - 0.2537408069j],
-                      [0.4788382708 + 0.1439232794j],
-                      [-0.2577704955 - 0.4284324579j]])
+                #print("Basis.py: E1 designed for DUC, M=4, L=16, Powell MED = 1.9999999918507845")
+                #return np.array([[-0.1552578934 - 0.4752841151j],
+                #      [0.4308312897 - 0.2537408069j],
+                #      [0.4788382708 + 0.1439232794j],
+                #      [-0.2577704955 - 0.4284324579j]])
                 # print("Basis.py: E1 designed for DUC, M=4, L=16, [-19, 21] Powell MED = 1.909912484636119")
                 # return np.array([[0.5303513637 - 0.1181744979j],
                 #       [0.3900705105 + 0.3696020962j],
                 #       [0.3630695691 + 0.3227808541j],
                 #       [0.3398999781 + 0.2538947017j]])
-                # print("Basis.py: E1 designed for DUC, M=4, L=16, [0.5, 1.5] Powell MED = 1.9709200541641247")
-                # return np.array([[0.4114066914-0.2749088908j],
-                #      [0.3337686103-0.3770792774j],
-                #      [0.4787497316-0.1444313845j],
-                #      [0.3201948057-0.3859960174j]])
+                print("Basis.py: E1 designed for DUC, M=4, L=16, [0.5, 1.5] Powell MED = 1.9709200541641247")
+                return np.array([[0.4114066914-0.2749088908j],
+                     [0.3337686103-0.3770792774j],
+                     [0.4787497316-0.1444313845j],
+                     [0.3201948057-0.3859960174j]])
 
             if params.M == 4 and params.L == 256:
                 print("Basis.py: E1 designed for DUC, M=4, L=256, Powell MED = 0.5664886704273715")
