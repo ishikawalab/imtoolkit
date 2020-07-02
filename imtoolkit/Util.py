@@ -39,7 +39,6 @@ def getEuclideanDistances(codes):
 
 # The rank and determinant criterion
 #@njit(['f8(c16[:,:,:])', 'f8(f8[:,:,:])']) # unknown type errors in some environments
-@jit
 def getMinimumEuclideanDistance(codes):
     # The following straightforward implementation with numba is the fastest
     Nc, M, T = codes.shape[0], codes.shape[1], codes.shape[2]
@@ -75,14 +74,12 @@ def getDFTMatrixNumpy(N):
 #
 # IT++ like functions
 #
-@jit
 def inv_dB(dB):
     return 10.0 ** (dB / 10.0)
 
 def randn(*size):
     return xp.random.normal(0, 1, size = size)
 
-@jit
 def randn_c(*size):
     """
     Complex normal distribution
@@ -93,7 +90,6 @@ def randn_c(*size):
 def countErrorBits(x, y):
     return bin(x^y).count('1')
 
-@jit
 def getXORtoErrorBitsArray(Nc):
     #return xp.array(list(map(lambda x: bin(x).count('1'), range(Nc + 1))))
     ret = xp.zeros(Nc + 1)
@@ -171,7 +167,6 @@ def CayleyTransformInv(U):
     H = -1.j * np.matmul(np.linalg.inv(I + U), I - U)
     return H
 
-@jit
 def asnumpy(xparr):
     if 'cupy' in str(type(xparr)):
         return xp.asnumpy(xparr) # cupy to numpy
@@ -183,7 +178,6 @@ def ascupy(nparr):
     return nparr # do nothing
 
 # frequency [Hz], wavelength [m]
-@jit
 def frequencyToWavelength(frequency):
     return speed_of_light / frequency
 
