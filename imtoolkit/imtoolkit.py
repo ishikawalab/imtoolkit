@@ -110,6 +110,14 @@ def main():
             E1 = Basis.getGSPE1(params) if params.basis[0] == "g" else None
             bases = Basis(params.basis, params.M, params.T, E1=E1).bases
             sim = NonSquareDifferentialMLDSimulator(code.codes, channel, bases)
+        elif params.sim == "nsdiffc" or params.sim == "nsdiffce":
+            E1 = Basis.getGSPE1(params) if params.basis[0] == "g" else None
+            txbases = ChaosBasis(params.basis, params.M, params.T, params.W, params.x0, params.Ns, E1 = E1).bases
+            if params.isSpeficied("d"):
+                rxbases = ChaosBasis(params.basis, params.M, params.T, params.W, params.x0 + params.d, params.Ns, E1 = E1).bases
+            else:
+                rxbases = txbases
+            sim = NonSquareDifferentialChaosMLDSimulator(code.codes, channel, txbases, rxbases)
 
         start_time = time.time()
 
@@ -141,6 +149,19 @@ def main():
             print("$\\a$(%d, %d, %d) $=$ [" % (params.M, params.K, params.Q))
             es = [", ".join(["%d" % (i+1) for i in iarr]) for iarr in code.inds]
             print(", ".join(["[" + e + "]" for e in es]) + "].")
+        elif params.mode == "CONST":
+            if params.sim == "nsdiffc":
+                Nc = code.codes.shape[0]
+                symbols = np.array([np.matmul(code.codes[i], txbases[:, :, 0]) for i in range(Nc)]).reshape(-1)
+            elif params.sim == "nsdiff":
+                symbols = np.matmul(code.codes, bases[0]).reshape(-1)
+            else:
+                symbols = code.codes.reshape(-1)
+            df = {"real": np.real(symbols), "imag": np.imag(symbols)}
+            Simulator.saveCSV(arg, df)
+        elif params.mode == "SEARCH":
+            if params.code == "TAST":
+                TASTCode.search(params.M, params.Q, params.L)
 
         elapsed_time = time.time() - start_time
         print ("Elapsed time = %.10f seconds" % (elapsed_time))
