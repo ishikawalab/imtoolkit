@@ -1,6 +1,6 @@
 # IMToolkit
 
-<a href="https://github.com/imtoolkit/imtoolkit"><img align="right" width="150px" height="150px" src="https://github.com/imtoolkit/imtoolkit/blob/master/docs/source/_static/imtoolkit-logo.png?raw=true"></a>
+<a href="https://github.com/ishikawalab/imtoolkit"><img align="right" width="150px" height="150px" src="https://user-images.githubusercontent.com/62990567/88035979-def26700-cb7d-11ea-99a0-db4a4c9bec30.png"></a>
 IMToolkit, an open-source index modulation (IM) toolkit, attempts to facilitate reproducible research in wireless communications.
 The major advantages of this toolkit are highlighted as follows:
 
@@ -31,13 +31,22 @@ Note that the CuPy-based simulation is 145 times faster than the NumPy-based cal
 Hence, this reduced-size PyPi package will automatically download a required file from the GitHub repository or a mirror website.
 If you need all the project files, to use `imtoolkit` offline, it is recommended to obtain the whole package from GitHub as follows:
 
-    > pip install git+https://github.com/imtoolkit/imtoolkit
+    > pip install git+https://github.com/ishikawalab/imtoolkit
 
 The IMToolkit development team welcomes other researchers' contributions and pull requests.
 In that case, it would be better to install the latest package and activate the editable mode as follows:
 
-    > git clone https://github.com/imtoolkit/imtoolkit
+    > git clone https://github.com/ishikawalab/imtoolkit
     > pip install -e ./imtoolkit # this activates the editable mode
+
+If you use Anaonda version 4.6.0 or above, the following commands will work.
+
+    > conda config --set pip_interop_enabled True
+    > # for typical users
+    > pip install imtoolkit
+    > # for developers
+    > git clone https://github.com/ishikawalab/imtoolkit
+    > pip install -e ./imtoolkit
 
 [A detailed tutorial for the installed imtoolkit command is available here.](https://ishikawa.cc/imtoolkit/tutorial/index.html)
 
