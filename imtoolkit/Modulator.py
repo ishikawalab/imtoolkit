@@ -2,7 +2,6 @@
 # This toolkit is released under the MIT License, see LICENSE.txt
 
 import numpy as np
-from numba import jitclass, uint32, complex64
 from .Util import getGrayIndixes
 
 
